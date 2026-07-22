@@ -24,11 +24,11 @@ export function UserMenu() {
 
   // Fallback default info if not signed in for some reason (handled gracefully)
   const userImageUrl = isSignedIn && user?.imageUrl;
-  const fullName = (isSignedIn && user?.fullName) || "EducAI Scholar";
-  const email = (isSignedIn && user?.primaryEmailAddress?.emailAddress) || "scholar@educai.dev";
+  const fullName = (isSignedIn && user?.fullName) || "Diya Ghosh";
+  const email = (isSignedIn && user?.primaryEmailAddress?.emailAddress) || "diyaghosh030805@gmail.com";
   const initials = (isSignedIn && user?.firstName) 
     ? (user.firstName.charAt(0) + (user.lastName?.charAt(0) || "")) 
-    : "EA";
+    : "DG";
 
   return (
     <div className="flex items-center gap-3 px-3 py-2.5 rounded-2xl bg-slate-200/20 dark:bg-white/[0.02] border border-slate-300/20 dark:border-white/[0.04] transition-all hover:bg-slate-200/40 dark:hover:bg-white/[0.04]">

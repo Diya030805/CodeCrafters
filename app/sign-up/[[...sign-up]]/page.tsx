@@ -87,7 +87,7 @@ export default function SignUpPage() {
     try {
       await signUp.authenticateWithRedirect({
         strategy: 'oauth_google',
-        redirectUrl: '/sign-in/sso-callback', // Same callback is perfectly valid & public in middleware
+        redirectUrl: '/sign-up/sso-callback',
         redirectUrlComplete: '/dashboard',
       });
     } catch (err: any) {
@@ -114,6 +114,7 @@ export default function SignUpPage() {
         await setActive({ session: result.createdSessionId });
         setSuccess('Account verified successfully!');
         router.push('/dashboard');
+        router.refresh();
       } else {
         setError('Verification incomplete. Please try again.');
       }
@@ -301,8 +302,20 @@ export default function SignUpPage() {
                   {/* Feedback Messages */}
                   {error && (
                     <div className="mb-4 flex items-start gap-2.5 p-3.5 rounded-xl bg-rose-500/10 border border-rose-500/20 text-rose-400 text-xs font-semibold leading-relaxed">
-                      <AlertCircle className="w-4 h-4 shrink-0 text-rose-500" />
-                      <span>{error}</span>
+                      <AlertCircle className="w-4 h-4 shrink-0 text-rose-500 mt-0.5" />
+                      <div className="flex-1">
+                        <p>{error}</p>
+                        {(error.toLowerCase().includes('taken') || error.toLowerCase().includes('already') || error.toLowerCase().includes('exists')) && (
+                          <div className="mt-2 pt-2 border-t border-rose-500/20">
+                            <Link
+                              href={`/sign-in?email=${encodeURIComponent(email)}`}
+                              className="inline-flex items-center gap-1.5 text-amber-400 hover:text-amber-300 font-bold underline transition-colors"
+                            >
+                              Sign in with this email instead →
+                            </Link>
+                          </div>
+                        )}
+                      </div>
                     </div>
                   )}
 

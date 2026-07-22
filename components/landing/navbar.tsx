@@ -115,7 +115,7 @@ export function Navbar({ view = 'landing', onGetStarted, onBrandClick, activeSec
                   className="flex items-center gap-2 px-3 py-1.5 rounded-full border border-black/[0.08] dark:border-white/[0.08] bg-white/50 dark:bg-zinc-900/50 hover:bg-slate-100 dark:hover:bg-zinc-800 text-slate-700 dark:text-zinc-300 transition-all duration-300 cursor-pointer shadow-sm active:scale-95 outline-none group"
                 >
                   <div className="w-7 h-7 rounded-full overflow-hidden border border-amber-500/30 group-hover:border-amber-500 transition-colors shrink-0">
-                    {user.imageUrl ? (
+                    {(user && user.imageUrl) ? (
                       // eslint-disable-next-line @next/next/no-img-element
                       <img 
                         src={user.imageUrl} 
@@ -124,12 +124,12 @@ export function Navbar({ view = 'landing', onGetStarted, onBrandClick, activeSec
                       />
                     ) : (
                       <div className="w-full h-full bg-amber-600 flex items-center justify-center text-white font-bold text-xs">
-                        {user.firstName?.charAt(0) || "U"}
+                        {user?.firstName?.charAt(0) || "D"}
                       </div>
                     )}
                   </div>
                   <span className="text-xs font-semibold text-slate-700 dark:text-zinc-300 group-hover:text-slate-950 dark:group-hover:text-white transition-colors max-w-[120px] truncate">
-                    {user.firstName || "Scholar"}
+                    {user?.firstName || "Diya"}
                   </span>
                   <ChevronDown className={cn("w-3.5 h-3.5 text-slate-500 transition-transform duration-300", showDropdown && "rotate-180")} />
                 </button>
@@ -147,10 +147,10 @@ export function Navbar({ view = 'landing', onGetStarted, onBrandClick, activeSec
                       {/* User Header Block */}
                       <div className="px-3 py-3 border-b border-black/[0.06] dark:border-white/[0.06] flex flex-col text-left mb-1">
                         <span className="text-xs font-bold text-slate-900 dark:text-white truncate">
-                          {user.fullName || "EducAI Scholar"}
+                          {user?.fullName || "Diya Ghosh"}
                         </span>
                         <span className="text-[10px] font-medium text-slate-500 dark:text-zinc-400 truncate mt-0.5">
-                          {user.primaryEmailAddress?.emailAddress || "scholar@educai.dev"}
+                          {user?.primaryEmailAddress?.emailAddress || "diyaghosh030805@gmail.com"}
                         </span>
                       </div>
 
@@ -299,7 +299,7 @@ export function Navbar({ view = 'landing', onGetStarted, onBrandClick, activeSec
                   {/* User Header Block (Mobile) */}
                   <div className="flex items-center gap-3 p-3 rounded-2xl bg-white/[0.04] border border-white/[0.06]">
                     <div className="w-10 h-10 rounded-full overflow-hidden border border-amber-500/30">
-                      {user.imageUrl ? (
+                      {(user && user.imageUrl) ? (
                         // eslint-disable-next-line @next/next/no-img-element
                         <img 
                           src={user.imageUrl} 
@@ -308,16 +308,16 @@ export function Navbar({ view = 'landing', onGetStarted, onBrandClick, activeSec
                         />
                       ) : (
                         <div className="w-full h-full bg-amber-600 flex items-center justify-center text-white font-bold text-sm">
-                          {user.firstName?.charAt(0) || "U"}
+                          {user?.firstName?.charAt(0) || "D"}
                         </div>
                       )}
                     </div>
                     <div className="flex-1 min-w-0 flex flex-col">
                       <span className="text-xs font-bold text-white truncate">
-                        {user.fullName || "EducAI Scholar"}
+                        {user?.fullName || "Diya Ghosh"}
                       </span>
                       <span className="text-[10px] font-medium text-zinc-400 truncate mt-0.5">
-                        {user.primaryEmailAddress?.emailAddress || "scholar@educai.dev"}
+                        {user?.primaryEmailAddress?.emailAddress || "diyaghosh030805@gmail.com"}
                       </span>
                     </div>
                   </div>

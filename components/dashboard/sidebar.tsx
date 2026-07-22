@@ -34,10 +34,10 @@ const navItems = [
 ];
 
 const themeAccents = [
-  { id: 'amber', name: 'Amber', color: 'bg-amber-600', ring: 'ring-amber-600' },
+  { id: 'amber', name: 'Orange', color: 'bg-amber-500', ring: 'ring-amber-500' },
   { id: 'blue', name: 'Blue', color: 'bg-blue-600', ring: 'ring-blue-600' },
-  { id: 'green', name: 'Green', color: 'bg-emerald-600', ring: 'ring-emerald-600' },
-  { id: 'crimson', name: 'Crimson', color: 'bg-rose-600', ring: 'ring-rose-600' },
+  { id: 'green', name: 'Green', color: 'bg-emerald-500', ring: 'ring-emerald-500' },
+  { id: 'crimson', name: 'Pink', color: 'bg-pink-500', ring: 'ring-pink-500' },
 ] as const;
 
 export function Sidebar() {

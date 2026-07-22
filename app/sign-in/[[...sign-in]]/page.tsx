@@ -28,20 +28,26 @@ export default function SignInPage() {
   const { isLoaded, signIn, setActive } = useSignIn();
   const { isSignedIn } = useUser();
 
+  // UI state
+  const [email, setEmail] = React.useState(() => {
+    if (typeof window !== 'undefined') {
+      const params = new URLSearchParams(window.location.search);
+      return params.get('email') || '';
+    }
+    return '';
+  });
+  const [password, setPassword] = React.useState('');
+  const [newPassword, setNewPassword] = React.useState('');
+  const [resetCode, setResetCode] = React.useState('');
+  const [showPassword, setShowPassword] = React.useState(false);
+  const [rememberMe, setRememberMe] = React.useState(false);
+
   // Redirect to dashboard if already signed in
   React.useEffect(() => {
     if (isSignedIn) {
       router.push('/dashboard');
     }
   }, [isSignedIn, router]);
-
-  // UI state
-  const [email, setEmail] = React.useState('');
-  const [password, setPassword] = React.useState('');
-  const [newPassword, setNewPassword] = React.useState('');
-  const [resetCode, setResetCode] = React.useState('');
-  const [showPassword, setShowPassword] = React.useState(false);
-  const [rememberMe, setRememberMe] = React.useState(false);
   
   // "signin", "forgot-password", "reset-password"
   const [mode, setMode] = React.useState<'signin' | 'forgot-password' | 'reset-password'>('signin');
@@ -66,6 +72,7 @@ export default function SignInPage() {
       if (result.status === 'complete') {
         await setActive({ session: result.createdSessionId });
         router.push('/dashboard');
+        router.refresh();
       } else {
         console.warn('Sign in incomplete status:', result.status);
         setError('Verification or secondary factor required. Please sign in via the widget.');
@@ -148,6 +155,7 @@ export default function SignInPage() {
         await setActive({ session: result.createdSessionId });
         setSuccess('Password updated successfully!');
         router.push('/dashboard');
+        router.refresh();
       } else {
         setError('Password reset incomplete. Please try again.');
       }
