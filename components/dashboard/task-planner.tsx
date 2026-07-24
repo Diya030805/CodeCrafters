@@ -2,6 +2,7 @@
 
 import * as React from 'react';
 import { motion, AnimatePresence } from 'motion/react';
+import confetti from 'canvas-confetti';
 import { 
   Plus, 
   Trash2, 
@@ -13,7 +14,10 @@ import {
   BellOff,
   BellRing,
   AlertCircle,
-  Volume2
+  Volume2,
+  Check,
+  CheckCircle2,
+  PartyPopper
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
@@ -89,6 +93,76 @@ export function TaskPlanner() {
   // Notification and alarm settings
   const [notifPermission, setNotifPermission] = React.useState<NotificationPermission | 'unsupported'>('default');
   const [testCountdown, setTestCountdown] = React.useState<number | null>(null);
+
+  // Completion celebration states
+  const [recentlyCompletedId, setRecentlyCompletedId] = React.useState<string | null>(null);
+  const [showCelebrationBanner, setShowCelebrationBanner] = React.useState(false);
+
+  const playCompletionChime = () => {
+    if (typeof window === 'undefined') return;
+    try {
+      const AudioContext = window.AudioContext || (window as any).webkitAudioContext;
+      if (!AudioContext) return;
+      const ctx = new AudioContext();
+      const now = ctx.currentTime;
+      
+      const playNote = (freq: number, start: number, duration: number) => {
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.type = 'triangle';
+        osc.frequency.setValueAtTime(freq, start);
+        gain.gain.setValueAtTime(0, start);
+        gain.gain.linearRampToValueAtTime(0.12, start + 0.03);
+        gain.gain.exponentialRampToValueAtTime(0.001, start + duration);
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        osc.start(start);
+        osc.stop(start + duration);
+      };
+
+      playNote(523.25, now, 0.2); // C5
+      playNote(659.25, now + 0.08, 0.2); // E5
+      playNote(783.99, now + 0.16, 0.35); // G5
+    } catch (e) {
+      // ignore audio context errors
+    }
+  };
+
+  const fireConfetti = (isAllDone: boolean = false) => {
+    if (typeof window === 'undefined') return;
+    
+    if (isAllDone) {
+      confetti({
+        particleCount: 110,
+        spread: 100,
+        origin: { y: 0.6 },
+        colors: ['#10b981', '#3b82f6', '#f59e0b', '#ec4899', '#8b5cf6']
+      });
+      setTimeout(() => {
+        confetti({
+          particleCount: 50,
+          angle: 60,
+          spread: 55,
+          origin: { x: 0 },
+          colors: ['#10b981', '#f59e0b', '#3b82f6']
+        });
+        confetti({
+          particleCount: 50,
+          angle: 120,
+          spread: 55,
+          origin: { x: 1 },
+          colors: ['#ec4899', '#8b5cf6', '#10b981']
+        });
+      }, 250);
+    } else {
+      confetti({
+        particleCount: 50,
+        spread: 60,
+        origin: { y: 0.7 },
+        colors: ['#10b981', '#3b82f6', '#f59e0b', '#8b5cf6']
+      });
+    }
+  };
   
   const [newTask, setNewTask] = React.useState<Partial<Task> & { enableReminder?: boolean }>({
     title: '',
@@ -252,8 +326,28 @@ export function TaskPlanner() {
   };
 
   const updateTask = (updatedTask: Task) => {
-    setTasks(tasks.map(t => t.id === updatedTask.id ? updatedTask : t));
+    const existingTask = tasks.find(t => t.id === updatedTask.id);
+    const isBecomingCompleted = updatedTask.status === 'completed' && existingTask?.status !== 'completed';
+
+    const newTasks = tasks.map(t => t.id === updatedTask.id ? updatedTask : t);
+    setTasks(newTasks);
     setEditingTask(null);
+
+    if (isBecomingCompleted) {
+      const remainingActive = newTasks.filter(t => t.status !== 'completed').length;
+      const allCompleted = newTasks.length > 0 && remainingActive === 0;
+
+      playCompletionChime();
+      fireConfetti(allCompleted);
+
+      setRecentlyCompletedId(updatedTask.id);
+      setTimeout(() => setRecentlyCompletedId(null), 3000);
+
+      if (allCompleted) {
+        setShowCelebrationBanner(true);
+        setTimeout(() => setShowCelebrationBanner(false), 6000);
+      }
+    }
   };
 
   const deleteTask = (id: string) => {
@@ -283,8 +377,47 @@ export function TaskPlanner() {
     return matchesSearch && matchesStatus && matchesCategory;
   });
 
+  const completedCount = tasks.filter(t => t.status === 'completed').length;
+  const totalCount = tasks.length;
+  const completionPercentage = totalCount > 0 ? Math.round((completedCount / totalCount) * 100) : 0;
+
   return (
-    <div className={cn("p-6 space-y-8", glassStyles.container)}>
+    <div className={cn("p-6 space-y-8 relative", glassStyles.container)}>
+      {/* Floating Celebration Banner */}
+      <AnimatePresence>
+        {showCelebrationBanner && (
+          <motion.div
+            initial={{ opacity: 0, y: -20, scale: 0.95 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: -20, scale: 0.95 }}
+            className="mb-4 p-4 rounded-2xl bg-gradient-to-r from-emerald-500/20 via-teal-500/20 to-emerald-500/20 border border-emerald-500/40 text-emerald-600 dark:text-emerald-400 flex items-center justify-between shadow-xl backdrop-blur-md z-20"
+          >
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 rounded-full bg-emerald-500 text-white flex items-center justify-center animate-bounce shadow-lg shadow-emerald-500/30">
+                <PartyPopper className="w-5 h-5" />
+              </div>
+              <div>
+                <h3 className="font-extrabold text-sm tracking-tight text-slate-900 dark:text-white flex items-center gap-2">
+                  Daily Goals Met! 🎉
+                  <span className="px-2 py-0.5 text-[10px] font-black uppercase tracking-wider bg-emerald-500 text-white rounded-full">
+                    100% Streak
+                  </span>
+                </h3>
+                <p className="text-xs text-slate-600 dark:text-slate-300 font-medium">
+                  Outstanding job! You have completed all scheduled tasks for today.
+                </p>
+              </div>
+            </div>
+            <button
+              onClick={() => setShowCelebrationBanner(false)}
+              className="text-xs font-bold text-slate-400 hover:text-slate-200 transition-colors px-2 py-1"
+            >
+              Dismiss
+            </button>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
       {/* Header Stack */}
       <div className="space-y-6">
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
@@ -404,6 +537,43 @@ export function TaskPlanner() {
           </div>
         </div>
 
+        {/* Daily Progress Tracker */}
+        {totalCount > 0 && (
+          <div className="p-4 rounded-2xl bg-slate-200/50 dark:bg-white/[0.03] border border-slate-300/40 dark:border-white/[0.06] flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div className="flex items-center gap-3">
+              <div className={cn(
+                "w-10 h-10 rounded-xl flex items-center justify-center font-bold transition-all duration-300",
+                completedCount === totalCount
+                  ? "bg-emerald-500 text-white shadow-lg shadow-emerald-500/30 animate-pulse"
+                  : "bg-slate-300/50 dark:bg-white/10 text-slate-700 dark:text-slate-300"
+              )}>
+                <CheckCircle2 className="w-5 h-5" />
+              </div>
+              <div>
+                <h4 className="text-sm font-bold text-slate-800 dark:text-white flex items-center gap-2">
+                  Daily Progress
+                  {completedCount === totalCount && (
+                    <span className="px-2 py-0.5 text-[10px] font-extrabold bg-emerald-500 text-white rounded-full animate-pulse">
+                      Completed! 🎉
+                    </span>
+                  )}
+                </h4>
+                <p className="text-xs text-slate-500 dark:text-slate-400">
+                  {completedCount} of {totalCount} tasks finished ({completionPercentage}%)
+                </p>
+              </div>
+            </div>
+            <div className="w-full sm:w-52 h-2.5 bg-slate-200 dark:bg-white/10 rounded-full overflow-hidden p-0.5 border border-slate-300/30 dark:border-white/10">
+              <motion.div 
+                className="h-full bg-gradient-to-r from-emerald-500 via-teal-400 to-emerald-400 rounded-full"
+                initial={{ width: 0 }}
+                animate={{ width: `${completionPercentage}%` }}
+                transition={{ duration: 0.6, ease: "easeOut" }}
+              />
+            </div>
+          </div>
+        )}
+
 
 
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-t border-black/[0.04] dark:border-white/[0.04] pt-4">
@@ -459,16 +629,32 @@ export function TaskPlanner() {
                 <div className={cn(
                   "group overflow-hidden active:scale-[0.99] flex items-center justify-between transition-all duration-500 relative", 
                   glassStyles.card,
-                  task.status === 'completed' && "border-emerald-500/30 bg-emerald-500/5 dark:bg-emerald-500/10"
+                  task.status === 'completed' && "border-emerald-500/30 bg-emerald-500/5 dark:bg-emerald-500/10",
+                  recentlyCompletedId === task.id && "ring-2 ring-emerald-500/60 shadow-[0_0_25px_rgba(16,185,129,0.35)]"
                 )}>
+                  {/* Floating "+10 XP" or "Completed!" badge on completion */}
+                  <AnimatePresence>
+                    {recentlyCompletedId === task.id && (
+                      <motion.div
+                        initial={{ opacity: 0, y: 10, scale: 0.8 }}
+                        animate={{ opacity: 1, y: -28, scale: 1 }}
+                        exit={{ opacity: 0, y: -35, scale: 0.8 }}
+                        transition={{ duration: 0.5, ease: "backOut" }}
+                        className="absolute right-14 top-3 px-2.5 py-1 rounded-full bg-emerald-500 text-white font-extrabold text-[11px] shadow-lg flex items-center gap-1 z-20 pointer-events-none"
+                      >
+                        <Sparkles className="w-3 h-3 animate-spin" /> Completed! +10 XP
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+
                   {/* Success Pulse Effect */}
                   <AnimatePresence>
                     {task.status === 'completed' && (
                       <motion.div 
                         initial={{ opacity: 0, scale: 0.5 }}
-                        animate={{ opacity: 1, scale: 1.5 }}
+                        animate={{ opacity: [0.2, 0.6, 0.2], scale: [1, 1.2, 1] }}
                         exit={{ opacity: 0 }}
-                        transition={{ duration: 0.6 }}
+                        transition={{ duration: 1.8, repeat: Infinity, ease: "easeInOut" }}
                         className="absolute inset-0 bg-emerald-500/10 blur-2xl pointer-events-none"
                       />
                     )}
@@ -522,23 +708,23 @@ export function TaskPlanner() {
                   <div className="flex items-center gap-2">
                     {task.status !== 'completed' ? (
                       <motion.button 
-                        whileHover={{ scale: 1.1 }}
+                        whileHover={{ scale: 1.15 }}
                         whileTap={{ scale: 0.9 }}
                         onClick={() => updateTask({ ...task, status: 'completed' })}
-                        className="w-8 h-8 rounded-full bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-500 hover:bg-emerald-500 hover:text-white transition-all cursor-pointer"
+                        className="w-9 h-9 rounded-full bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center text-emerald-500 hover:bg-emerald-500 hover:text-white transition-all cursor-pointer shadow-sm hover:shadow-emerald-500/30"
                         title="Mark Complete"
                       >
                         <Plus className="w-4 h-4 rotate-45 scale-125" />
                       </motion.button>
                     ) : (
                       <motion.button 
-                        whileHover={{ scale: 1.1 }}
+                        whileHover={{ scale: 1.15 }}
                         whileTap={{ scale: 0.9 }}
                         onClick={() => updateTask({ ...task, status: 'todo' })}
-                        className="w-8 h-8 rounded-full bg-slate-200/50 dark:bg-white/5 border border-slate-300/30 dark:border-white/5 flex items-center justify-center text-slate-500 transition-all cursor-pointer"
+                        className="w-9 h-9 rounded-full bg-emerald-500 text-white border border-emerald-400 flex items-center justify-center transition-all cursor-pointer shadow-md shadow-emerald-500/20"
                         title="Mark Incomplete"
                       >
-                        <Plus className="w-4 h-4" />
+                        <Check className="w-4 h-4 stroke-[3]" />
                       </motion.button>
                     )}
                     <button 

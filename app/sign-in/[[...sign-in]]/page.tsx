@@ -72,7 +72,6 @@ export default function SignInPage() {
       if (result.status === 'complete') {
         await setActive({ session: result.createdSessionId });
         router.push('/dashboard');
-        router.refresh();
       } else {
         console.warn('Sign in incomplete status:', result.status);
         setError('Verification or secondary factor required. Please sign in via the widget.');
@@ -97,14 +96,19 @@ export default function SignInPage() {
     setSuccess('');
 
     try {
+      const origin = typeof window !== 'undefined' ? window.location.origin : '';
       await signIn.authenticateWithRedirect({
         strategy: 'oauth_google',
-        redirectUrl: '/sign-in/sso-callback',
-        redirectUrlComplete: '/dashboard',
+        redirectUrl: `${origin}/sign-in/sso-callback`,
+        redirectUrlComplete: `${origin}/dashboard`,
       });
     } catch (err: any) {
       console.error('Google OAuth error:', err);
-      setError(err.errors?.[0]?.longMessage || err.errors?.[0]?.message || 'Google authentication failed.');
+      setError(
+        err.errors?.[0]?.longMessage || 
+        err.errors?.[0]?.message || 
+        'Google authentication failed. Please ensure popups/redirects are allowed or try opening in a new tab.'
+      );
       setIsLoading(false);
     }
   };
@@ -155,7 +159,6 @@ export default function SignInPage() {
         await setActive({ session: result.createdSessionId });
         setSuccess('Password updated successfully!');
         router.push('/dashboard');
-        router.refresh();
       } else {
         setError('Password reset incomplete. Please try again.');
       }

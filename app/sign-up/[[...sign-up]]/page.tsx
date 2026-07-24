@@ -67,11 +67,15 @@ export default function SignUpPage() {
       setMode('verify-email');
     } catch (err: any) {
       console.error('Sign up error:', err);
-      setError(
-        err.errors?.[0]?.longMessage || 
-        err.errors?.[0]?.message || 
-        'Sign up failed. Please check your credentials.'
-      );
+      const code = err.errors?.[0]?.code;
+      const msg = err.errors?.[0]?.longMessage || err.errors?.[0]?.message || '';
+      if (code === 'form_identifier_exists' || msg.toLowerCase().includes('taken') || msg.toLowerCase().includes('already')) {
+        setError('An account with this email address already exists.');
+      } else {
+        setError(
+          msg || 'Sign up failed. Please check your credentials.'
+        );
+      }
     } finally {
       setIsLoading(false);
     }
@@ -85,14 +89,19 @@ export default function SignUpPage() {
     setSuccess('');
 
     try {
+      const origin = typeof window !== 'undefined' ? window.location.origin : '';
       await signUp.authenticateWithRedirect({
         strategy: 'oauth_google',
-        redirectUrl: '/sign-up/sso-callback',
-        redirectUrlComplete: '/dashboard',
+        redirectUrl: `${origin}/sign-up/sso-callback`,
+        redirectUrlComplete: `${origin}/dashboard`,
       });
     } catch (err: any) {
       console.error('Google OAuth error:', err);
-      setError(err.errors?.[0]?.longMessage || err.errors?.[0]?.message || 'Google signup failed.');
+      setError(
+        err.errors?.[0]?.longMessage || 
+        err.errors?.[0]?.message || 
+        'Google signup failed. Please ensure popups/redirects are allowed or try opening in a new tab.'
+      );
       setIsLoading(false);
     }
   };
@@ -114,7 +123,6 @@ export default function SignUpPage() {
         await setActive({ session: result.createdSessionId });
         setSuccess('Account verified successfully!');
         router.push('/dashboard');
-        router.refresh();
       } else {
         setError('Verification incomplete. Please try again.');
       }

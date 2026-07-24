@@ -8,6 +8,7 @@ const nextConfig: NextConfig = {
   typescript: {
     ignoreBuildErrors: false,
   },
+  allowedDevOrigins: ['*.run.app', 'localhost:3000'],
   // Allow access to remote image placeholder.
   images: {
     remotePatterns: [

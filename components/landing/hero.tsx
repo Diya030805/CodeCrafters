@@ -85,6 +85,7 @@ export function Hero({ onStartFreeTrial }: HeroProps) {
                       src={`https://picsum.photos/seed/${i + 10}/100/100`} 
                       alt="Student" 
                       fill
+                      sizes="40px"
                       className="object-cover"
                       referrerPolicy="no-referrer"
                     />
