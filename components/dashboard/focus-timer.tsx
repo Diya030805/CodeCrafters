@@ -7,6 +7,7 @@ import { cn } from '@/lib/utils';
 import { glassStyles } from '@/lib/glass';
 import { useAccent } from '@/components/accent-provider';
 import { useTheme } from '@/components/theme-provider';
+import { Tooltip } from '@/components/ui/tooltip';
 
 export function FocusTimer() {
   const { darkMode, soundEnabled } = useTheme();
@@ -196,15 +197,18 @@ export function FocusTimer() {
             </>
           )}
         </button>
-        <button 
-          onClick={() => {
-            setIsActive(false);
-            setTimeLeft(totalTime);
-          }}
-          className={cn("w-14 h-14 rounded-2xl flex items-center justify-center", glassStyles.card)}
-        >
-          <RotateCcw className="w-5 h-5" />
-        </button>
+        <Tooltip content="Reset Timer Session" side="top">
+          <button 
+            onClick={() => {
+              setIsActive(false);
+              setTimeLeft(totalTime);
+            }}
+            className={cn("w-14 h-14 rounded-2xl flex items-center justify-center transition-all cursor-pointer hover:bg-slate-200 dark:hover:bg-white/10", glassStyles.card)}
+            aria-label="Reset Timer"
+          >
+            <RotateCcw className="w-5 h-5" />
+          </button>
+        </Tooltip>
       </div>
 
       {/* Focus Metadata */}

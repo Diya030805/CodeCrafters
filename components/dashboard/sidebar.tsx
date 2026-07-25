@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { 
   LayoutDashboard, 
+  CalendarDays,
   BookOpen, 
   Globe, 
   BarChart3, 
@@ -13,7 +14,13 @@ import {
   Check,
   Volume2,
   VolumeX,
-  Sparkles
+  Sparkles,
+  FileSearch,
+  Layers,
+  FileQuestion,
+  Trophy,
+  Mic,
+  FileText
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { glassStyles } from '@/lib/glass';
@@ -23,13 +30,21 @@ import { useState } from 'react';
 import { useAccent, AccentColor } from '@/components/accent-provider';
 import { useTheme } from '@/components/theme-provider';
 import { UserMenu } from '@/components/dashboard/UserMenu';
+import { Tooltip } from '@/components/ui/tooltip';
 
 const navItems = [
   { icon: LayoutDashboard, label: 'Overview', href: '/dashboard' },
+  { icon: CalendarDays, label: 'Study Planner', href: '/dashboard/planner' },
   { icon: Sparkles, label: 'AI Tutor', href: '/dashboard/ai-tutor' },
+  { icon: FileSearch, label: 'PDF Analyzer', href: '/dashboard/pdf-analyzer' },
+  { icon: Layers, label: 'Flashcards', href: '/dashboard/flashcards' },
+  { icon: FileQuestion, label: 'AI Quiz', href: '/dashboard/quiz' },
+  { icon: Mic, label: 'Voice Tutor', href: '/dashboard/voice-tutor' },
+  { icon: FileText, label: 'AI Notes', href: '/dashboard/notes' },
   { icon: BookOpen, label: 'Study Library', href: '/dashboard/knowledge-base' },
   { icon: Globe, label: 'Global Network', href: '/dashboard/network' },
   { icon: BarChart3, label: 'Analytics', href: '/dashboard/analytics' },
+  { icon: Trophy, label: 'Gamification', href: '/dashboard/gamification' },
   { icon: Settings2, label: 'Preferences', href: '/dashboard/preferences' },
 ];
 
@@ -135,19 +150,20 @@ export function Sidebar() {
         </h3>
         <div className="flex items-center gap-3 px-2">
           {themeAccents.map((accent) => (
-            <button
-              key={accent.id}
-              onClick={() => setAccentColor(accent.id)}
-              className={cn(
-                "w-7 h-7 rounded-full transition-all duration-300 relative flex items-center justify-center cursor-pointer hover:scale-110 active:scale-90",
-                accent.color,
-                accentColor === accent.id 
-                  ? `scale-110 ring-2 ring-offset-2 ring-offset-slate-100 dark:ring-offset-[#0B0C0E] ${accent.ring} shadow-md`
-                  : "opacity-80 hover:opacity-100"
-              )}
-            >
-              {accentColor === accent.id && <Check className="w-3.5 h-3.5 text-white" />}
-            </button>
+            <Tooltip key={accent.id} content={`${accent.name} Accent`} side="top">
+              <button
+                onClick={() => setAccentColor(accent.id)}
+                className={cn(
+                  "w-7 h-7 rounded-full transition-all duration-300 relative flex items-center justify-center cursor-pointer hover:scale-110 active:scale-90",
+                  accent.color,
+                  accentColor === accent.id 
+                    ? `scale-110 ring-2 ring-offset-2 ring-offset-slate-100 dark:ring-offset-[#0B0C0E] ${accent.ring} shadow-md`
+                    : "opacity-80 hover:opacity-100"
+                )}
+              >
+                {accentColor === accent.id && <Check className="w-3.5 h-3.5 text-white" />}
+              </button>
+            </Tooltip>
           ))}
         </div>
       </div>
@@ -166,22 +182,24 @@ export function Sidebar() {
             </span>
           </div>
           
-          <button
-            onClick={() => setSoundEnabled(!soundEnabled)}
-            className={cn(
-              "relative inline-flex h-6 w-11 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-slate-100 dark:focus:ring-offset-[#0B0C0E]",
-              soundEnabled ? meta.ring : "bg-slate-200 dark:bg-white/[0.1]"
-            )}
-            style={soundEnabled ? { backgroundColor: meta.hex } : {}}
-            aria-label="Toggle Sound Effects"
-          >
-            <span
+          <Tooltip content={soundEnabled ? 'Mute Study Timer Audio' : 'Enable Study Timer Audio'} side="top">
+            <button
+              onClick={() => setSoundEnabled(!soundEnabled)}
               className={cn(
-                "pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow-lg ring-0 transition duration-200 ease-in-out",
-                soundEnabled ? "translate-x-5" : "translate-x-0"
+                "relative inline-flex h-6 w-11 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-slate-100 dark:focus:ring-offset-[#0B0C0E]",
+                soundEnabled ? meta.ring : "bg-slate-200 dark:bg-white/[0.1]"
               )}
-            />
-          </button>
+              style={soundEnabled ? { backgroundColor: meta.hex } : {}}
+              aria-label="Toggle Sound Effects"
+            >
+              <span
+                className={cn(
+                  "pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow-lg ring-0 transition duration-200 ease-in-out",
+                  soundEnabled ? "translate-x-5" : "translate-x-0"
+                )}
+              />
+            </button>
+          </Tooltip>
         </div>
       </div>
 

@@ -2,6 +2,8 @@
 
 import * as React from 'react';
 import { motion, AnimatePresence } from 'motion/react';
+import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
 import { 
   Search, 
   Plus, 
@@ -9,20 +11,23 @@ import {
   Sparkles, 
   Bot, 
   User, 
-  Paperclip, 
-  Mic, 
-  Trash, 
-  FileText,
-  X,
   ArrowUp,
-  ThumbsUp,
-  RefreshCcw
+  Copy,
+  Check,
+  RefreshCcw,
+  Square,
+  Code,
+  Zap,
+  Clock,
+  ChevronRight,
+  MessageSquare,
+  Cpu,
+  Trash
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { glassStyles } from '@/lib/glass';
 import { useAccent } from '@/components/accent-provider';
-import { useTheme } from '@/components/theme-provider';
-import ReactMarkdown from 'react-markdown';
+import { Tooltip } from '@/components/ui/tooltip';
 
 interface Message {
   id: string;
@@ -39,16 +44,32 @@ interface ChatSession {
 }
 
 const SUGGESTED_PROMPTS = [
-  "Explain Monads in C++",
-  "Test my German A2 Vocab",
-  "Analyze Stats Arithmetic Mean formulas",
-  "Summarize Quantum Entanglement"
+  {
+    title: "Explain Monads in C++",
+    prompt: "Explain Monads in C++ with practical code examples and a comparison table.",
+    tag: "Programming"
+  },
+  {
+    title: "SQL vs NoSQL Comparison",
+    prompt: "Compare SQL vs NoSQL databases in a detailed table with pros, cons, and use cases.",
+    tag: "Databases"
+  },
+  {
+    title: "Test German A2 Vocab",
+    prompt: "Test my German A2 Vocab & Grammar with key phrases, rules, and example sentences.",
+    tag: "Language"
+  },
+  {
+    title: "Derive Quadratic Formula",
+    prompt: "Derive and explain the Quadratic Formula step-by-step with clear mathematical reasoning.",
+    tag: "Mathematics"
+  }
 ];
 
 const INITIAL_SESSIONS: ChatSession[] = [
-  { id: '1', title: 'Quantum Physics Review', lastMessage: 'The double slit experiment...', timestamp: '2h ago' },
-  { id: '2', title: 'German Verb Conjugation', lastMessage: 'Ich habe, du hast...', timestamp: '5h ago' },
-  { id: '3', title: 'Calculus III Derivatives', lastMessage: 'Partial derivatives are...', timestamp: '1d ago' },
+  { id: '1', title: 'C++ Monads & Optional', lastMessage: 'Monadic chaining in C++23...', timestamp: '10m ago' },
+  { id: '2', title: 'SQL vs NoSQL Architecture', lastMessage: 'Relational ACID vs NoSQL Eventual...', timestamp: '2h ago' },
+  { id: '3', title: 'German Perfekt Conjugation', lastMessage: 'Difference between haben and sein...', timestamp: '1d ago' },
 ];
 
 const MOCK_SESSION_MESSAGES: Record<string, Message[]> = {
@@ -56,118 +77,271 @@ const MOCK_SESSION_MESSAGES: Record<string, Message[]> = {
     {
       id: 'm1_1',
       role: 'user',
-      content: "Can you break down the significance of wave-particle duality in the double-slit experiment? I'm struggling with the observer effect.",
-      timestamp: '2h ago'
+      content: 'Explain Monads in C++ with practical code examples and a comparison table.',
+      timestamp: '10:14 AM'
     },
     {
       id: 'm1_2',
       role: 'ai',
-      content: `Certainly, Diya! The **double-slit experiment** is the absolute cornerstone of quantum physics. Here is a simplified cognitive breakdown of how it works:
+      content: `A **Monad** in C++ is a computational design pattern that structures logic flow by wrapping values inside a protective context, allowing you to chain operations safely without nested error checks.
 
-### 1. The Core Paradox
-When particles (like electrons) are fired through two parallel slits, they don't form two simple columns on the back screen as classical bullets would. Instead, they form an **interference pattern** of alternating light and dark bands—exactly like waves rippling in water.
+### 1. Key Concepts
+* **Type Wrapper**: A container type like \`std::optional<T>\` (C++17/23) or \`std::expected<T, E>\` (C++23).
+* **Monadic Pipeline**: In C++23, standard containers include monadic member functions: \`.and_then()\`, \`.transform()\`, and \`.or_else()\`.
 
-### 2. The Observer Effect
-This is the truly mind-bending part:
-* **Unobserved**: The particle exists as a mathematical **wave of probability**, passing through *both* slits simultaneously.
-* **Observed**: If we place a detector at the slits to measure which slit the particle passes through, the wave function instantly collapses. The particle acts like a physical sphere and the interference pattern disappears, leaving only two straight lines!
+### 2. Practical C++23 Code Example
 
-### 3. Key Takeaway
-At the quantum level, **the act of observation changes physical reality**. The observer is an active participant in the state of the universe, not just a passive witness.`,
-      timestamp: '2h ago'
+\`\`\`cpp
+#include <iostream>
+#include <optional>
+#include <string>
+
+// Monadic step 1: Retrieve user ID safely
+std::optional<int> find_user_id(const std::string& username) {
+    if (username == "diya") return 42;
+    return std::nullopt;
+}
+
+// Monadic step 2: Fetch user profile score
+std::optional<double> get_user_score(int id) {
+    if (id == 42) return 98.5;
+    return std::nullopt;
+}
+
+int main() {
+    std::string user = "diya";
+
+    // Monadic pipeline: Linear chaining with .and_then()
+    auto final_score = find_user_id(user)
+                        .and_then(get_user_score);
+
+    if (final_score) {
+        std::cout << "User Score: " << *final_score << std::endl;
+    } else {
+        std::cout << "User not found!" << std::endl;
+    }
+}
+\`\`\`
+
+### 3. Comparison Table
+
+| Paradigm | Traditional C++ | Monadic C++23 |
+| :--- | :--- | :--- |
+| **Error Handling** | Deeply nested \`if (ptr != nullptr)\` checks | Declarative \`.and_then()\` chaining |
+| **Code Readability** | High cyclomatic complexity | Clean left-to-right processing stream |
+| **Safety** | Risk of null pointer dereferences | Guaranteed compile-time optional unwrapping |`,
+      timestamp: '10:15 AM'
     }
   ],
   '2': [
     {
       id: 'm2_1',
       role: 'user',
-      content: "I need help practicing German present perfect tense conjugations (Perfekt). Can we review sein vs haben?",
-      timestamp: '5h ago'
+      content: 'Compare SQL vs NoSQL databases in a detailed table with pros, cons, and use cases.',
+      timestamp: '8:30 AM'
     },
     {
       id: 'm2_2',
       role: 'ai',
-      content: `Guten Tag, Diya! Let's master the **German Perfekt** present perfect tense. It is the most common way to speak about the past in German.
+      content: `Here is a comprehensive architectural breakdown comparing **SQL (Relational)** and **NoSQL (Non-Relational)** databases.
 
-### The Rule of Thumb
-German Perfekt is formed using an auxiliary verb (**haben** or **sein**) + the **Partizip II** (past participle) at the very end of the sentence.
+### Key Architectural Differences
 
-1. **HABEN (Used for 90% of verbs)**:
-   * Used for transitive verbs (verbs taking an accusative object) and reflexive verbs.
-   * *Example*: "Ich habe ein Buch gelesen." (I read a book.)
+| Feature | SQL (Relational) | NoSQL (Non-Relational) |
+| :--- | :--- | :--- |
+| **Data Model** | Tables with predefined schema (rows & columns) | Key-Value, Document (JSON), Graph, Wide-Column |
+| **Scaling** | Vertical (Scale Up with bigger servers) | Horizontal (Scale Out across distributed nodes) |
+| **ACID Compliance** | Strict ACID guarantees out of the box | BASE model (Eventually Consistent, highly scalable) |
+| **Query Language** | Structured Query Language (SQL) | Unstructured or object-specific APIs |
+| **Best For** | Banking, ERP, Complex relational queries | Real-time big data, streaming, flexible catalogs |
 
-2. **SEIN (Used for specific verbs)**:
-   * Used for intransitive verbs indicating **movement/direction** (e.g., gehen, fahren, fliegen, kommen) or **change of state** (e.g., aufwachen, sterben).
-   * Also used for *sein* (to be) and *werden* (to become) itself.
-   * *Example*: "Sie ist nach Berlin gefahren." (She drove to Berlin.)
+### Example SQL Query vs MongoDB NoSQL Query
 
-Let's test you! How would you conjugate **"gehen"** (to go) in the Perfekt for **"wir"** (we)?`,
-      timestamp: '5h ago'
+\`\`\`sql
+-- SQL: Retrieve active students with GPA > 3.8
+SELECT id, full_name, gpa 
+FROM students 
+WHERE status = 'active' AND gpa > 3.8 
+ORDER BY gpa DESC;
+\`\`\`
+
+\`\`\`javascript
+// NoSQL (MongoDB): Equivalent Document Query
+db.students.find({
+  status: "active",
+  gpa: { $gt: 3.8 }
+}).sort({ gpa: -1 });
+\`\`\``,
+      timestamp: '8:31 AM'
     }
   ],
   '3': [
     {
       id: 'm3_1',
       role: 'user',
-      content: "What is the geometric meaning of the gradient vector in multivariable calculus? How does it relate to partial derivatives?",
-      timestamp: '1d ago'
+      content: 'Test my German A2 Vocab & Grammar with key phrases, rules, and example sentences.',
+      timestamp: 'Yesterday'
     },
     {
       id: 'm3_2',
       role: 'ai',
-      content: `Excellent mathematical query, Diya! Let's visualize the **gradient vector** geometrically.
+      content: `Guten Tag! Let's master **German A2 Present Perfect Tense (Perfekt)**!
 
-Mathematically, the gradient of a multivariable function $f(x, y)$ is simply a vector containing its partial derivatives:
-$$\\nabla f(x, y) = \\left\\langle \\frac{\\partial f}{\\partial x}, \\frac{\\partial f}{\\partial y} \\right\\rangle$$
+### 1. The Golden Rule of German Perfekt
+In spoken German, past events are built using an auxiliary verb (**haben** or **sein**) plus the **Partizip II** (past participle) placed at the end of the clause.
 
-Here is what this means geometrically on a 3D landscape:
+* **HABEN** is used for ~90% of verbs (transitive verbs, static activities).
+* **SEIN** is used for verbs indicating **movement/direction** (e.g. *fahren, gehen*) or a **change of state** (e.g. *einschlafen, sterben*).
 
-### 1. Direction of Steepest Ascent
-If you are standing on a hill represented by $f(x, y)$, the gradient vector points in the direction of the **steepest uphill climb** from your current location. If you walk in the exact opposite direction ($-\\nabla f$), you are walking in the direction of steepest descent.
+### 2. Practice Sentences
 
-### 2. Orthogonality to Contour Lines
-If you look at a top-down contour map of the hill (where each line represents a constant elevation), the gradient vector is always **perpendicular (orthogonal)** to the contour line passing through your current point.
+* *"Ich habe gestern Deutsch gelernt."* (I learned German yesterday.)
+* *"Wir sind nach Berlin gefahren."* (We drove/went to Berlin.)
 
-### 3. Rate of Maximum Increase
-The **magnitude** (length) of the gradient vector, $||\\nabla f||$, represents the exact rate of change in that steepest direction. A longer gradient vector means a steeper slope!`,
-      timestamp: '1d ago'
+### Quick Quiz
+How would you translate: **"She fell asleep at 10 PM"**?
+*(Hint: 'einschlafen' uses 'sein' because falling asleep is a change of state!)*`,
+      timestamp: 'Yesterday'
     }
   ]
 };
 
+// Syntax tokenizing helper
+function renderHighlightedTokens(line: string) {
+  if (!line) return ' ';
+  
+  if (line.trim().startsWith('//') || line.trim().startsWith('#') || line.trim().startsWith('--')) {
+    return <span className="text-slate-500 italic dark:text-zinc-500">{line}</span>;
+  }
+
+  const tokens = line.split(/(\s+|[(),;{}[\]<>.:=+\-*\/])/);
+
+  const keywords = new Set([
+    'const', 'let', 'var', 'function', 'return', 'if', 'else', 'for', 'while',
+    'class', 'import', 'from', 'export', 'default', 'async', 'await', 'try', 'catch',
+    'def', 'struct', 'public', 'private', 'protected', 'virtual', 'override',
+    'template', 'typename', 'auto', 'std::', 'namespace', 'include', 'using',
+    'SELECT', 'FROM', 'WHERE', 'JOIN', 'LEFT', 'RIGHT', 'INNER', 'ON', 'GROUP', 'BY',
+    'ORDER', 'HAVING', 'INSERT', 'UPDATE', 'DELETE', 'CREATE', 'TABLE', 'INT', 'VARCHAR'
+  ]);
+
+  return tokens.map((token, i) => {
+    if (!token) return null;
+    if (keywords.has(token) || keywords.has(token.toUpperCase())) {
+      return <span key={i} className="text-purple-500 dark:text-pink-400 font-bold">{token}</span>;
+    }
+    if ((token.startsWith('"') && token.endsWith('"')) || (token.startsWith("'") && token.endsWith("'")) || (token.startsWith('`') && token.endsWith('`'))) {
+      return <span key={i} className="text-emerald-600 dark:text-teal-300">{token}</span>;
+    }
+    if (/^\d+(\.\d+)?$/.test(token)) {
+      return <span key={i} className="text-amber-600 dark:text-orange-300">{token}</span>;
+    }
+    if (/^[a-zA-Z_]\w*$/.test(token) && i < tokens.length - 1 && tokens[i + 1] === '(') {
+      return <span key={i} className="text-blue-600 dark:text-cyan-300">{token}</span>;
+    }
+    return <span key={i}>{token}</span>;
+  });
+}
+
+function CodeBlock({ className, children }: any) {
+  const match = /language-(\w+)/.exec(className || '');
+  const language = match ? match[1] : '';
+  const codeString = String(children).replace(/\n$/, '');
+  const [copied, setCopied] = React.useState(false);
+
+  const handleCopy = () => {
+    navigator.clipboard.writeText(codeString);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
+
+  if (!match) {
+    return (
+      <code className="bg-slate-200 dark:bg-zinc-800 text-amber-600 dark:text-amber-300 font-mono text-[12px] px-1.5 py-0.5 rounded border border-amber-500/20 font-semibold">
+        {children}
+      </code>
+    );
+  }
+
+  const lines = codeString.split('\n');
+
+  return (
+    <div className="my-4 rounded-2xl overflow-hidden border border-slate-300 dark:border-zinc-800 bg-slate-900 shadow-xl text-slate-100 font-mono text-xs sm:text-sm">
+      <div className="flex items-center justify-between px-4 py-2.5 bg-slate-950/80 border-b border-slate-800 text-slate-400 select-none">
+        <span className="text-[11px] font-black uppercase tracking-wider text-amber-400 flex items-center gap-1.5">
+          <Code className="w-3.5 h-3.5" />
+          {language || 'code'}
+        </span>
+        <button
+          onClick={handleCopy}
+          className="flex items-center gap-1.5 text-[11px] font-bold text-slate-300 hover:text-white transition-colors cursor-pointer px-2.5 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 border border-slate-700/60"
+        >
+          {copied ? (
+            <>
+              <Check className="w-3.5 h-3.5 text-emerald-400" />
+              <span className="text-emerald-400">Copied!</span>
+            </>
+          ) : (
+            <>
+              <Copy className="w-3.5 h-3.5" />
+              <span>Copy code</span>
+            </>
+          )}
+        </button>
+      </div>
+      <div className="p-4 overflow-x-auto leading-relaxed custom-scrollbar bg-[#0B0C0E]">
+        <div className="table w-full">
+          {lines.map((line, idx) => (
+            <div key={idx} className="table-row">
+              <span className="table-cell pr-4 text-right select-none text-slate-600 dark:text-zinc-600 text-[11px] w-8">
+                {idx + 1}
+              </span>
+              <span className="table-cell whitespace-pre">
+                {renderHighlightedTokens(line)}
+              </span>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function generateId(): string {
+  if (typeof window !== 'undefined' && window.crypto && typeof window.crypto.randomUUID === 'function') {
+    return window.crypto.randomUUID();
+  }
+  return 'msg_' + Math.random().toString(36).substring(2, 9);
+}
+
+function getTimeString(): string {
+  return new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+}
+
 export function AITutorView() {
   const { accentColor, meta } = useAccent();
-  const { darkMode } = useTheme();
   const [sessions, setSessions] = React.useState<ChatSession[]>(INITIAL_SESSIONS);
   const [activeSessionId, setActiveSessionId] = React.useState<string | null>(null);
   const [messages, setMessages] = React.useState<Message[]>([]);
   const [inputValue, setInputValue] = React.useState('');
-  const [isTyping, setIsTyping] = React.useState(false);
-  const [attachedFile, setAttachedFile] = React.useState<{ name: string; size: string } | null>(null);
+  const [isGenerating, setIsGenerating] = React.useState(false);
   const [searchQuery, setSearchQuery] = React.useState('');
-  const [likedMessages, setLikedMessages] = React.useState<Record<string, boolean>>({});
-  const [regeneratingId, setRegeneratingId] = React.useState<string | null>(null);
-  
-  const [isRecording, setIsRecording] = React.useState(false);
-  const [recordingTime, setRecordingTime] = React.useState(0);
-  
+  const [copiedMsgId, setCopiedMsgId] = React.useState<string | null>(null);
+
   const scrollRef = React.useRef<HTMLDivElement>(null);
+  const textareaRef = React.useRef<HTMLTextAreaElement>(null);
+  const abortControllerRef = React.useRef<AbortController | null>(null);
 
-  React.useEffect(() => {
-    let interval: NodeJS.Timeout;
-    if (isRecording) {
-      interval = setInterval(() => {
-        setRecordingTime(prev => prev + 1);
-      }, 1000);
-    }
-    return () => clearInterval(interval);
-  }, [isRecording]);
-
-  React.useEffect(() => {
+  // Auto scroll to bottom
+  const scrollToBottom = React.useCallback(() => {
     if (scrollRef.current) {
       scrollRef.current.scrollIntoView({ behavior: 'smooth' });
     }
-  }, [messages, isTyping]);
+  }, []);
+
+  React.useEffect(() => {
+    scrollToBottom();
+  }, [messages, isGenerating, scrollToBottom]);
 
   const getGradientClass = (accent: string) => {
     switch (accent) {
@@ -184,115 +358,134 @@ export function AITutorView() {
     }
   };
 
-  const getEmblemStyles = (accent: string) => {
-    switch (accent) {
-      case 'amber':
-        return {
-          bg: 'from-amber-500/20 to-orange-600/30 border-amber-500/30',
-          glow: 'bg-amber-500/10',
-          text: 'text-amber-500'
+  const handleSendMessage = async (textToSend?: string) => {
+    const prompt = (textToSend || inputValue).trim();
+    if (!prompt || isGenerating) return;
+
+    const newUserMessage: Message = {
+      id: generateId(),
+      role: 'user',
+      content: prompt,
+      timestamp: getTimeString()
+    };
+
+    const updatedMessages = [...messages, newUserMessage];
+    setMessages(updatedMessages);
+    setInputValue('');
+    setIsGenerating(true);
+
+    // Create abort controller for stop generating requirement
+    const controller = new AbortController();
+    abortControllerRef.current = controller;
+
+    try {
+      const res = await fetch('/api/tutor', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          messages: updatedMessages.map(m => ({ role: m.role, content: m.content })),
+          prompt
+        }),
+        signal: controller.signal
+      });
+
+      const data = await res.json();
+      let responseText = data.text;
+
+      // Fallback response generator if API key is not present or error occurred
+      if (!responseText) {
+        responseText = generateFallbackResponse(prompt);
+      }
+
+      const newAiMessage: Message = {
+        id: generateId(),
+        role: 'ai',
+        content: responseText,
+        timestamp: getTimeString()
+      };
+
+      setMessages(prev => [...prev, newAiMessage]);
+
+      // Update session title & snippet if new session
+      if (!activeSessionId) {
+        const newSessionId = generateId();
+        const newSession: ChatSession = {
+          id: newSessionId,
+          title: prompt.slice(0, 32) + (prompt.length > 32 ? '...' : ''),
+          lastMessage: responseText.slice(0, 40) + '...',
+          timestamp: 'Just now'
         };
-      case 'blue':
-        return {
-          bg: 'from-blue-500/20 to-indigo-600/30 border-blue-500/30',
-          glow: 'bg-blue-500/10',
-          text: 'text-blue-500'
+        setSessions(prev => [newSession, ...prev]);
+        setActiveSessionId(newSessionId);
+      } else {
+        setSessions(prev => prev.map(s => 
+          s.id === activeSessionId 
+            ? { ...s, lastMessage: responseText.slice(0, 40) + '...', timestamp: 'Just now' }
+            : s
+        ));
+      }
+    } catch (err: any) {
+      if (err.name === 'AbortError') {
+        const stoppedMsg: Message = {
+          id: generateId(),
+          role: 'ai',
+          content: '*Generation stopped by user.*',
+          timestamp: getTimeString()
         };
-      case 'green':
-        return {
-          bg: 'from-emerald-500/20 to-teal-600/30 border-emerald-500/30',
-          glow: 'bg-emerald-500/10',
-          text: 'text-emerald-500'
+        setMessages(prev => [...prev, stoppedMsg]);
+      } else {
+        const fallbackMsg: Message = {
+          id: generateId(),
+          role: 'ai',
+          content: generateFallbackResponse(prompt),
+          timestamp: getTimeString()
         };
-      case 'crimson':
-        return {
-          bg: 'from-pink-500/20 to-rose-600/30 border-pink-500/30',
-          glow: 'bg-pink-500/10',
-          text: 'text-pink-500'
-        };
-      default:
-        return {
-          bg: 'from-amber-500/20 to-orange-600/30 border-amber-500/30',
-          glow: 'bg-amber-500/10',
-          text: 'text-amber-500'
-        };
+        setMessages(prev => [...prev, fallbackMsg]);
+      }
+    } finally {
+      setIsGenerating(false);
+      abortControllerRef.current = null;
     }
   };
 
-  const handleSendMessage = () => {
-    if (!inputValue.trim() && !attachedFile) return;
+  const handleStopGenerating = () => {
+    if (abortControllerRef.current) {
+      abortControllerRef.current.abort();
+    }
+  };
 
-    const userContent = inputValue;
-    const newUserMessage: Message = {
-      id: Date.now().toString(),
-      role: 'user',
-      content: userContent,
-      timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
-    };
+  const handleRegenerate = (msgId: string) => {
+    // Find last user prompt
+    const userMsgIdx = messages.findIndex(m => m.id === msgId);
+    let lastPrompt = '';
+    if (userMsgIdx > 0 && messages[userMsgIdx - 1]?.role === 'user') {
+      lastPrompt = messages[userMsgIdx - 1].content;
+    } else {
+      const lastUserMsg = [...messages].reverse().find(m => m.role === 'user');
+      if (lastUserMsg) lastPrompt = lastUserMsg.content;
+    }
 
-    setMessages(prev => [...prev, newUserMessage]);
-    setInputValue('');
-    setAttachedFile(null);
-    setIsTyping(true);
+    if (lastPrompt) {
+      // Remove the AI message and re-trigger
+      setMessages(prev => prev.filter(m => m.id !== msgId));
+      handleSendMessage(lastPrompt);
+    }
+  };
 
-    // Simulate AI response
-    setTimeout(() => {
-      let aiResponseContent = `I have analyzed your query regarding **"${userContent || 'the attached file'}"**. Here is a high-fidelity diagnostic mapping:
-
-1. **Core Insight**: The fundamental cognitive block here rests on synthesizing immediate context with structural principles.
-2. **Key Progression**: We should first isolate variables, establish a safe proof reference, and systematically trace downstream dependencies.
-3. **Suggested Experimentation**: Try modifying boundaries to inspect extreme limit states.
-
-Let me know what specific sub-aspect you want to unpack next!`;
-
-      // Custom high-fidelity mock matches
-      if (userContent.toLowerCase().includes('monad')) {
-        aiResponseContent = `A **Monad** in C++ is a computational pipeline design pattern that wraps values inside a protective context, allowing safe, sequence-oriented function chaining.
-
-### The Modern standard: \`std::optional\`
-In C++23, you can chain monadic operations elegantly without explicit null-checks:
-\`\`\`cpp
-auto final_value = get_id(42)
-                   .and_then(fetch_name)
-                   .transform(to_uppercase);
-\`\`\``;
-      } else if (userContent.toLowerCase().includes('german')) {
-        aiResponseContent = `Perfekt, Diya! Let's build your German vocabulary and perfect tense mastery.
-To conjugate **"gehen"** (to go):
-* It uses **sein** as the auxiliary verb because it represents physical displacement.
-* Present Perfect: **"Wir sind gegangen"** (We have gone / We went).
-
-Excellent! Let's try another: How would you express *"I fell asleep"* (einschlafen) in the past? Remember that falling asleep is a change of state!`;
-      } else if (userContent.toLowerCase().includes('calculus') || userContent.toLowerCase().includes('gradient')) {
-        aiResponseContent = `Geometrically, the **gradient vector** $\\nabla f(x, y)$ always points in the direction of the steepest ascent on a 3D graph landscape.
-* **Magnitude**: $||\\nabla f||$ equals the slope rate in that steepest direction.
-* **Orthogonality**: It slices perpendicularly across the contour level curves.
-
-$$\\nabla f(x, y) = \\left\\langle \\frac{\\partial f}{\\partial x}, \\frac{\\partial f}{\\partial y} \\right\\rangle$$`;
-      } else if (userContent.toLowerCase().includes('quantum')) {
-        aiResponseContent = `The **Observer Effect** represents a cornerstone paradigm shift. 
-When physical detection is introduced at the slits, the probability wave collapses into a singular particle-like localized trajectory.
-
-Would you like to explore the mathematics behind **Bell's Inequality** or look deeper into the experimental setup?`;
-      }
-
-      const aiResponse: Message = {
-        id: (Date.now() + 1).toString(),
-        role: 'ai',
-        content: aiResponseContent,
-        timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
-      };
-      setMessages(prev => [...prev, aiResponse]);
-      setIsTyping(false);
-    }, 1800);
+  const handleCopyMessage = (id: string, content: string) => {
+    navigator.clipboard.writeText(content);
+    setCopiedMsgId(id);
+    setTimeout(() => setCopiedMsgId(null), 2000);
   };
 
   const startNewChat = () => {
+    if (isGenerating) handleStopGenerating();
     setActiveSessionId(null);
     setMessages([]);
   };
 
   const handleSelectSession = (id: string) => {
+    if (isGenerating) handleStopGenerating();
     setActiveSessionId(id);
     setMessages(MOCK_SESSION_MESSAGES[id] || []);
   };
@@ -305,467 +498,403 @@ Would you like to explore the mathematics behind **Bell's Inequality** or look d
     }
   };
 
-  const toggleLike = (id: string) => {
-    setLikedMessages(prev => ({ ...prev, [id]: !prev[id] }));
-  };
-
-  const handleRegenerate = (id: string) => {
-    setRegeneratingId(id);
-    setTimeout(() => {
-      setMessages(prev => prev.map(m => 
-        m.id === id 
-          ? { ...m, content: m.content + "\n\n*(Refined with optimized cognitive paths based on academic model feedback)*" } 
-          : m
-      ));
-      setRegeneratingId(null);
-    }, 1500);
-  };
-
-  const handleMicClick = () => {
-    if (isRecording) {
-      setIsRecording(false);
-      setInputValue(prev => prev + (prev ? ' ' : '') + "This is a mock transcribed audio note from the microphone.");
-    } else {
-      setIsRecording(true);
-      setRecordingTime(0);
-    }
-  };
-
-  const handleSelectPrompt = (prompt: string) => {
-    setInputValue(prompt);
-    // Focus or trigger immediate action
-    setTimeout(() => {
-      const newUserMessage: Message = {
-        id: Date.now().toString(),
-        role: 'user',
-        content: prompt,
-        timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
-      };
-      setMessages([newUserMessage]);
-      setInputValue('');
-      setIsTyping(true);
-
-      setTimeout(() => {
-        let responseContent = '';
-        if (prompt.includes('Monads')) {
-          responseContent = `A **Monad** in C++ is a computation design pattern that structures logic flow by wrapping values inside a protective context, allowing you to chain operations safely.
-
-### The Core Concept
-Think of a Monad as having three elements:
-1. **Type Wrapper**: A template class (e.g., \`std::optional<T>\`, \`std::expected<T, E>\` in C++23) wrapping a raw type \`T\`.
-2. **Unit / Return**: A constructor wrapping a plain value of type \`T\` into the Monadic container.
-3. **Bind**: An operator or mapped function (like \`.and_then()\`) taking a function \`T -> Monad<U>\` and applying it to the inner value safely.
-
-### Demonstration in C++23:
-Monads allow developers to bypass nested \`if\` null checks. Here is a modern monadic chain:
-
-\`\`\`cpp
-#include <iostream>
-#include <optional>
-#include <string>
-
-std::optional<std::string> get_user_name(int id) {
-    if (id == 42) return "Diya Ghosh";
-    return std::nullopt;
-}
-
-std::optional<std::string> to_upper(std::string s) {
-    for (char &c : s) c = std::toupper(c);
-    return s;
-}
-
-int main() {
-    // Elegant functional chain using .and_then()
-    auto result = get_user_name(42)
-                  .and_then(to_upper);
-                  
-    if (result) {
-        std::cout << "User: " << *result << std::endl; // Prints: USER: DIYA GHOSH
-    }
-}
-\`\`\``;
-        } else if (prompt.includes('German')) {
-          responseContent = `Guten Tag, Diya! Let's practice your German A2 vocabulary! Here is a targeted vocabulary review:
-
-### 1. Key Words:
-* **der Bahnhof** ➔ Train station
-* **die Verspätung** ➔ Delay
-* **die Fahrkarte** ➔ Ticket
-
-### 2. Context Sentence:
-*"Der Zug hat leider 10 Minuten Verspätung."* (Unfortunately, the train is 10 minutes late.)
-
-Let's test you. Can you translate this sentence to German?
-➔ **"Where is the nearest train station?"**`;
-        } else if (prompt.includes('Stats Arithmetic Mean')) {
-          responseContent = `Let's analyze the **Arithmetic Mean** formula in statistics!
-
-The arithmetic mean is the sum of a collection of numerical values divided by the count of values in that collection.
-
-### Core Mathematical Formulas:
-
-1. **Population Mean ($\\mu$)**:
-   $$\\mu = \\frac{\\sum_{i=1}^{N} X_i}{N}$$
-   Where $N$ is the total population size and $X_i$ is each individual value.
-
-2. **Sample Mean ($\\bar{x}$)**:
-   $$\\bar{x} = \\frac{\\sum_{i=1}^{n} x_i}{n}$$
-   Where $n$ is the sample size.
-
-### Geometric Significance:
-The arithmetic mean acts as the **physical balance point** of the dataset. If you put weights equal to your data values on a see-saw, the mean is exactly where the pivot must sit to keep the scale balanced!`;
-        } else if (prompt.includes('Quantum Entanglement')) {
-          responseContent = `**Quantum Entanglement** is a physical phenomenon where pairs or groups of particles generate or interact in ways such that the quantum state of each particle cannot be described independently of the state of the others.
-
-### Fundamental Aspects:
-
-1. **Einstein's "Spooky Action at a Distance"**:
-   If you entangle two electrons and separate them by lightyears, measuring the spin of electron A (e.g., spin UP) instantly dictates that electron B has the opposite spin (spin DOWN) faster than the speed of light.
-
-2. **The Wave Function**:
-   The two particles share a single, unified wave function. Neither particle has a definite spin until a measurement is made.
-
-3. **Applications**:
-   This is the core physical resource driving modern quantum computing, quantum cryptography, and quantum teleportation!`;
-        } else {
-          responseContent = `I have received your prompt: "${prompt}". Let me compile the relevant resources and structure a deep cognitive breakdown for you...`;
-        }
-
-        const aiResponse: Message = {
-          id: (Date.now() + 1).toString(),
-          role: 'ai',
-          content: responseContent,
-          timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
-        };
-        setMessages(prev => [...prev, aiResponse]);
-        setIsTyping(false);
-      }, 1500);
-    }, 200);
-  };
-
   const filteredSessions = sessions.filter(s => 
     s.title.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
-  const emblem = getEmblemStyles(accentColor);
-
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 h-[calc(100vh-180px)] min-h-[600px]">
+    <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 h-[calc(100vh-170px)] min-h-[620px]">
       
-      {/* Middle Panel: Chat History (3 Cols) */}
-      <div className={cn("lg:col-span-3 flex flex-col gap-4 overflow-hidden", glassStyles.container)}>
-        <div className="p-2 space-y-4 flex flex-col h-full">
-          {/* Search conversations */}
+      {/* LEFT PANEL: Chat History Sidebar (3 Cols) */}
+      <div className={cn("lg:col-span-3 flex flex-col gap-4 overflow-hidden h-full", glassStyles.container)}>
+        <div className="p-3.5 space-y-3.5 flex flex-col h-full">
+          
+          {/* New Chat Button */}
+          <button 
+            onClick={startNewChat}
+            className={cn(
+              "w-full py-3.5 rounded-2xl text-white text-xs font-black uppercase tracking-wider flex items-center justify-center gap-2 transition-all active:scale-[0.98] shadow-lg border border-white/20 cursor-pointer",
+              getGradientClass(accentColor)
+            )}
+          >
+            <Plus className="w-4 h-4 font-black" />
+            New Chat
+          </button>
+
+          {/* Search Bar */}
           <div className="relative">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-slate-500" />
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-slate-400 dark:text-zinc-500" />
             <input 
               type="text"
               placeholder="Search conversations..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               className={cn(
-                "w-full pl-9 pr-4 py-2.5 text-xs outline-none transition-all duration-300",
+                "w-full pl-9 pr-3 py-2 text-xs outline-none transition-all duration-300 rounded-xl",
                 glassStyles.input
               )}
             />
           </div>
 
-          {/* New Chat Button with Dynamic Gradient */}
-          <button 
-            onClick={startNewChat}
-            className={cn(
-              "w-full py-3.5 rounded-xl text-white text-xs font-black uppercase tracking-widest flex items-center justify-center gap-2 transition-all active:scale-[0.98] shadow-lg border border-white/10",
-              getGradientClass(accentColor)
-            )}
-          >
-            <Plus className="w-4 h-4 font-extrabold" />
-            + NEW CHAT
-          </button>
+          {/* Conversations History List */}
+          <div className="flex-1 overflow-y-auto space-y-1.5 pr-1 custom-scrollbar">
+            <div className="px-1 py-1 text-[10px] font-black uppercase tracking-widest text-slate-400 dark:text-zinc-500 flex items-center gap-1.5">
+              <Clock className="w-3 h-3" />
+              Recent Learning Sessions
+            </div>
 
-          {/* History List */}
-          <div className="flex-1 overflow-y-auto space-y-2 pr-1 custom-scrollbar">
             <AnimatePresence mode="popLayout">
-              {filteredSessions.map((session, index) => (
-                <motion.div
-                  key={session.id}
-                  layout
-                  initial={{ opacity: 0, x: -15 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  exit={{ opacity: 0, x: -15 }}
-                  transition={{ delay: index * 0.05 }}
-                  onClick={() => handleSelectSession(session.id)}
-                  className={cn(
-                    "group relative p-3 rounded-xl cursor-pointer transition-all border border-transparent",
-                    activeSessionId === session.id 
-                      ? "bg-white/[0.08] border-white/[0.1] shadow-sm" 
-                      : "hover:bg-white/[0.04]"
-                  )}
-                >
-                  <div className="flex flex-col gap-1 pr-6">
-                    <h4 className="text-xs font-bold text-white truncate">{session.title}</h4>
-                    <p className="text-[10px] text-slate-500 truncate">{session.lastMessage}</p>
-                  </div>
-                  <span className="absolute right-3 top-3 text-[9px] font-bold text-slate-600">
-                    {session.timestamp}
-                  </span>
-                  <button 
-                    onClick={(e) => deleteSession(e, session.id)}
-                    className="absolute right-3 bottom-3 opacity-0 group-hover:opacity-100 transition-opacity p-1 rounded-md hover:bg-rose-500/20 text-slate-500 hover:text-rose-500"
+              {filteredSessions.length === 0 ? (
+                <div className="p-4 text-center text-xs text-slate-400 dark:text-zinc-500 italic">
+                  No chat history found
+                </div>
+              ) : (
+                filteredSessions.map((session, index) => (
+                  <motion.div
+                    key={session.id}
+                    layout
+                    initial={{ opacity: 0, x: -12 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0, x: -12 }}
+                    transition={{ delay: index * 0.04 }}
+                    onClick={() => handleSelectSession(session.id)}
+                    className={cn(
+                      "group relative p-3 rounded-2xl cursor-pointer transition-all border",
+                      activeSessionId === session.id 
+                        ? "bg-slate-200/80 dark:bg-white/[0.08] border-slate-300 dark:border-white/10 shadow-sm" 
+                        : "border-transparent hover:bg-slate-200/40 dark:hover:bg-white/[0.04]"
+                    )}
                   >
-                    <Trash2 className="w-3.5 h-3.5" />
-                  </button>
-                </motion.div>
-              ))}
+                    <div className="flex items-start gap-2.5 pr-6">
+                      <MessageSquare className="w-3.5 h-3.5 text-slate-400 dark:text-zinc-400 mt-0.5 shrink-0" />
+                      <div className="flex flex-col gap-0.5 min-w-0 flex-1">
+                        <h4 className="text-xs font-bold text-slate-800 dark:text-white truncate">{session.title}</h4>
+                        <p className="text-[10px] text-slate-500 dark:text-zinc-400 truncate">{session.lastMessage}</p>
+                      </div>
+                    </div>
+                    <span className="absolute right-3 top-3 text-[9px] font-semibold text-slate-400 dark:text-zinc-500">
+                      {session.timestamp}
+                    </span>
+                    <Tooltip content="Delete Chat Session" side="left">
+                      <button 
+                        onClick={(e) => deleteSession(e, session.id)}
+                        className="absolute right-2.5 bottom-2.5 opacity-0 group-hover:opacity-100 transition-opacity p-1 rounded-lg hover:bg-rose-500/20 text-slate-400 hover:text-rose-500 cursor-pointer"
+                        aria-label="Delete chat session"
+                      >
+                        <Trash2 className="w-3.5 h-3.5" />
+                      </button>
+                    </Tooltip>
+                  </motion.div>
+                ))
+              )}
             </AnimatePresence>
           </div>
 
-          {/* Bottom AI Core Status */}
-          <div className="mt-auto pt-4 border-t border-white/[0.05]">
-            <div className="flex items-center gap-2 px-2 py-2 rounded-xl bg-slate-200/30 dark:bg-white/[0.02] border border-slate-300/30 dark:border-white/[0.03]">
+          {/* Model Status Badge Footer */}
+          <div className="mt-auto pt-3 border-t border-slate-200 dark:border-white/[0.06]">
+            <div className="flex items-center gap-2.5 px-3 py-2.5 rounded-2xl bg-slate-200/60 dark:bg-white/[0.02] border border-slate-300/60 dark:border-white/[0.04]">
               <div className="relative flex items-center justify-center">
-                <div className="w-2 h-2 rounded-full bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.5)] z-10" />
-                {[0, 1, 2].map((i) => (
-                  <motion.div
-                    key={i}
-                    initial={{ scale: 1, opacity: 0.5 }}
-                    animate={{ 
-                      scale: [1, 2.5], 
-                      opacity: [0.5, 0] 
-                    }}
-                    transition={{ 
-                      duration: 2, 
-                      repeat: Infinity, 
-                      delay: i * 0.6,
-                      ease: "easeOut"
-                    }}
-                    className="absolute w-2 h-2 rounded-full bg-emerald-500"
-                  />
-                ))}
+                <div className="w-2.5 h-2.5 rounded-full bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.6)] z-10" />
+                <div className="absolute w-2.5 h-2.5 rounded-full bg-emerald-500 animate-ping opacity-75" />
               </div>
-              <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest">
-                AI ENGINE: <span className="text-emerald-500">ONLINE</span>
-              </span>
+              <div className="flex flex-col min-w-0">
+                <span className="text-[11px] font-extrabold text-slate-800 dark:text-white truncate">
+                  Gemini 3.6 Flash
+                </span>
+                <span className="text-[9px] font-semibold text-slate-500 dark:text-zinc-400 flex items-center gap-1">
+                  <Cpu className="w-2.5 h-2.5 text-emerald-500" />
+                  Active • Server API
+                </span>
+              </div>
             </div>
           </div>
+
         </div>
       </div>
 
-      {/* Right Panel: Chat Workspace (9 Cols) */}
-      <div className={cn("lg:col-span-9 flex flex-col overflow-hidden relative", glassStyles.container)}>
+      {/* CENTER & RIGHT PANEL: Main Conversation Workspace (9 Cols) */}
+      <div className={cn("lg:col-span-9 flex flex-col overflow-hidden relative h-full", glassStyles.container)}>
         
-        {/* Workspace Header */}
-        <div className="p-4 border-b border-white/[0.05] flex items-center justify-between bg-white/[0.01]">
-          <div className="flex items-center gap-3">
-            <div className="w-8 h-8 rounded-lg bg-white/[0.05] flex items-center justify-center border border-white/[0.05]">
-              <Bot className="w-4 h-4 text-white" />
+        {/* Top Header */}
+        <div className="px-5 py-3.5 border-b border-slate-200 dark:border-white/[0.06] flex items-center justify-between bg-slate-100/60 dark:bg-zinc-950/40 backdrop-blur-md">
+          <div className="flex items-center gap-3 min-w-0">
+            <div className="w-9 h-9 rounded-2xl bg-gradient-to-br from-amber-500/20 to-orange-500/20 border border-amber-500/30 flex items-center justify-center shrink-0">
+              <Bot className="w-5 h-5 text-amber-500" />
             </div>
-            <div>
-              <h3 className="text-sm font-black text-white">
-                {activeSessionId ? sessions.find(s => s.id === activeSessionId)?.title : 'New Academic Inquiry'}
+            <div className="flex flex-col min-w-0">
+              <h3 className="text-sm font-black text-slate-900 dark:text-white truncate">
+                {activeSessionId ? sessions.find(s => s.id === activeSessionId)?.title : 'New AI Learning Workspace'}
               </h3>
-              <div className="flex gap-2 mt-1">
-                <span className="text-[9px] font-bold text-emerald-500 bg-emerald-500/10 px-1.5 py-0.5 rounded uppercase tracking-wider">CONTEXT: ACTIVE</span>
-                <span className="text-[9px] font-bold text-amber-500 bg-amber-500/10 px-1.5 py-0.5 rounded uppercase tracking-wider">MODEL: OMNI-3.5</span>
+              <div className="flex items-center gap-2 mt-0.5">
+                <span className="text-[9px] font-black text-emerald-600 dark:text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded-full uppercase tracking-wider flex items-center gap-1">
+                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
+                  Model Ready
+                </span>
+                <span className="text-[9px] font-bold text-slate-500 dark:text-zinc-400 hidden sm:inline-block">
+                  Markdown & Code Highlighting Enabled
+                </span>
               </div>
             </div>
           </div>
-          <button 
-            onClick={() => setMessages([])}
-            className="p-2 rounded-lg hover:bg-white/[0.05] text-slate-500 transition-colors"
-            title="Clear Board"
-          >
-            <Trash className="w-4 h-4" />
-          </button>
+
+          <Tooltip content="Clear Current Conversation" side="left">
+            <button 
+              onClick={() => setMessages([])}
+              className="p-2 rounded-xl hover:bg-slate-200 dark:hover:bg-white/[0.08] text-slate-500 dark:text-zinc-400 hover:text-slate-900 dark:hover:text-white transition-colors cursor-pointer flex items-center gap-1.5 text-xs font-semibold"
+              aria-label="Clear Conversation"
+            >
+              <Trash className="w-4 h-4" />
+              <span className="hidden sm:inline">Clear Chat</span>
+            </button>
+          </Tooltip>
         </div>
 
-        {/* Chat Area */}
-        <div className="flex-1 overflow-y-auto p-6 space-y-6 custom-scrollbar bg-black/20">
+        {/* Conversation Stream Area */}
+        <div className="flex-1 overflow-y-auto p-4 sm:p-6 space-y-6 custom-scrollbar bg-slate-50/50 dark:bg-black/20">
           {messages.length === 0 ? (
-            <div className="h-full flex flex-col items-center justify-center text-center max-w-xl mx-auto space-y-8 py-12">
-              {/* Central Glowing EducAi emblem with theme-accent glows */}
+            /* EMPTY STATE: Welcome Section */
+            <div className="h-full flex flex-col items-center justify-center text-center max-w-2xl mx-auto py-8 px-2">
               <motion.div
-                initial={{ scale: 0.8, opacity: 0 }}
+                initial={{ scale: 0.85, opacity: 0 }}
                 animate={{ scale: 1, opacity: 1 }}
-                className={cn("w-20 h-20 rounded-[28px] bg-gradient-to-br border flex items-center justify-center shadow-2xl relative", emblem.bg)}
+                transition={{ type: "spring", stiffness: 300, damping: 22 }}
+                className="w-16 h-16 sm:w-20 sm:h-20 rounded-3xl bg-gradient-to-br from-amber-500/20 via-orange-500/20 to-amber-600/30 border border-amber-500/40 flex items-center justify-center shadow-2xl relative mb-6"
               >
-                <div className={cn("absolute inset-0 blur-2xl rounded-full", emblem.glow)} />
-                <Sparkles className={cn("w-10 h-10 relative z-10", emblem.text)} />
+                <div className="absolute inset-0 blur-2xl rounded-full bg-amber-500/20 pointer-events-none" />
+                <Sparkles className="w-8 h-8 sm:w-10 sm:h-10 text-amber-500 relative z-10" />
               </motion.div>
-              
-              <div className="space-y-2">
-                <h2 className="text-2xl font-black text-white tracking-tight">Your Personal AI Academic Core</h2>
-                <p className="text-sm text-slate-400 font-medium leading-relaxed">Ignite your research or master complex subjects through deep cognitive synthesis.</p>
-              </div>
 
-              {/* 2x2 Interactive Quick Prompt Cards */}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-3 w-full">
-                {SUGGESTED_PROMPTS.map((prompt, i) => (
+              <motion.h2 
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.1 }}
+                className="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white tracking-tight mb-2"
+              >
+                How can I help you learn today?
+              </motion.h2>
+
+              <motion.p 
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.15 }}
+                className="text-xs sm:text-sm text-slate-600 dark:text-zinc-400 font-medium max-w-md mb-8 leading-relaxed"
+              >
+                Ask any complex concept, request code explanations with syntax highlighting, or generate comparison tables.
+              </motion.p>
+
+              {/* 4 Premium Suggested Prompt Cards */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5 w-full">
+                {SUGGESTED_PROMPTS.map((item, i) => (
                   <motion.button
                     key={i}
-                    initial={{ opacity: 0, y: 12 }}
+                    initial={{ opacity: 0, y: 15 }}
                     animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: i * 0.1 }}
-                    whileHover={{ y: -4, scale: 1.02 }}
-                    onClick={() => handleSelectPrompt(prompt)}
-                    className="p-4 rounded-xl border border-white/[0.06] bg-white/[0.02] hover:bg-white/[0.05] text-left transition-all group relative overflow-hidden cursor-pointer"
+                    transition={{ delay: 0.2 + i * 0.08 }}
+                    whileHover={{ y: -3, scale: 1.01 }}
+                    whileTap={{ scale: 0.98 }}
+                    onClick={() => handleSendMessage(item.prompt)}
+                    className="p-4 rounded-2xl border border-slate-300/80 dark:border-white/10 bg-slate-100/80 dark:bg-white/[0.02] hover:bg-slate-200/60 dark:hover:bg-white/[0.06] text-left transition-all group relative overflow-hidden cursor-pointer shadow-sm"
                   >
-                    <div 
-                      className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none"
-                      style={{ border: `1px solid ${meta.hex}40`, boxShadow: `0 0 20px ${meta.hex}15` }}
-                    />
-                    <p className="text-xs font-bold text-slate-300 group-hover:text-white transition-colors relative z-10">{prompt}</p>
+                    <div className="flex items-center justify-between mb-1.5">
+                      <span className="text-[10px] font-black uppercase tracking-widest text-amber-600 dark:text-amber-400 bg-amber-500/10 px-2 py-0.5 rounded-md">
+                        {item.tag}
+                      </span>
+                      <ChevronRight className="w-3.5 h-3.5 text-slate-400 group-hover:text-slate-900 dark:group-hover:text-white transition-colors" />
+                    </div>
+                    <h4 className="text-xs font-bold text-slate-800 dark:text-white group-hover:text-amber-600 dark:group-hover:text-amber-400 transition-colors">
+                      {item.title}
+                    </h4>
+                    <p className="text-[11px] text-slate-500 dark:text-zinc-400 line-clamp-2 mt-1 leading-snug">
+                      {item.prompt}
+                    </p>
                   </motion.button>
                 ))}
               </div>
             </div>
           ) : (
-            <div className="space-y-6 pb-4">
+            /* MESSAGES LIST */
+            <div className="space-y-6 pb-2">
               <AnimatePresence mode="popLayout">
-                {messages.map((msg, index) => (
+                {messages.map((msg) => (
                   <motion.div
-                    key={msg.id || index}
-                    initial={{ opacity: 0, y: 15 }}
+                    key={msg.id}
+                    initial={{ opacity: 0, y: 12 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ type: 'spring', stiffness: 350, damping: 25 }}
                     className={cn(
-                       "flex flex-col gap-2 max-w-[85%]",
-                       msg.role === 'user' ? "ml-auto items-end" : "mr-auto items-start"
+                      "flex gap-3 max-w-[92%] sm:max-w-[85%]",
+                      msg.role === 'user' ? "ml-auto flex-row-reverse" : "mr-auto flex-row"
                     )}
                   >
+                    {/* Role Avatar */}
                     <div className={cn(
-                      "p-4 rounded-2xl text-sm leading-relaxed relative overflow-hidden shadow-lg",
+                      "w-8 h-8 rounded-2xl flex items-center justify-center shrink-0 border mt-1 shadow-sm font-bold text-xs",
                       msg.role === 'user' 
-                        ? "bg-[#16171B]/95 backdrop-blur-xl border border-white/[0.08] text-white rounded-tr-none" 
-                        : "bg-white/[0.03] backdrop-blur-md border border-white/[0.05] text-slate-200 rounded-tl-none"
+                        ? "bg-slate-900 dark:bg-white text-white dark:text-slate-900 border-slate-700 dark:border-white/20" 
+                        : "bg-amber-500/20 text-amber-500 border-amber-500/30"
                     )}>
-                      {msg.role === 'ai' && (
-                        <div 
-                          className="absolute inset-0 opacity-20 pointer-events-none"
-                          style={{ border: `1px solid ${meta.hex}30`, boxShadow: `inset 0 0 15px ${meta.hex}10` }}
-                        />
-                      )}
-                      {msg.role === 'ai' ? (
-                        <div className="markdown-body prose prose-invert prose-sm max-w-none relative z-10">
-                          <ReactMarkdown>{msg.content}</ReactMarkdown>
-                          
-                          {/* Reactions Row */}
-                          <div className="mt-4 pt-3 border-t border-white/[0.05] flex items-center gap-3">
-                            <motion.button 
-                              whileTap={{ scale: 0.85 }}
-                              onClick={() => toggleLike(msg.id)}
-                              className={cn(
-                                "flex items-center gap-1.5 transition-colors cursor-pointer",
-                                likedMessages[msg.id] ? "text-amber-500" : "text-slate-500 hover:text-slate-300"
-                              )}
-                            >
-                              <ThumbsUp className={cn("w-3.5 h-3.5", likedMessages[msg.id] && "fill-current")} />
-                              <span className="text-[10px] font-black uppercase tracking-widest">
-                                {likedMessages[msg.id] ? 'Helpful' : 'Like'}
-                              </span>
-                            </motion.button>
-                            
-                            <motion.button 
-                              whileTap={{ scale: 0.85 }}
-                              onClick={() => handleRegenerate(msg.id)}
-                              disabled={regeneratingId === msg.id}
-                              className={cn(
-                                "flex items-center gap-1.5 text-slate-500 hover:text-slate-300 transition-colors disabled:opacity-50 cursor-pointer",
-                                regeneratingId === msg.id && "text-amber-500"
-                              )}
-                            >
-                              <RefreshCcw className={cn("w-3.5 h-3.5", regeneratingId === msg.id && "animate-spin")} />
-                              <span className="text-[10px] font-black uppercase tracking-widest">
-                                {regeneratingId === msg.id ? 'Refining...' : 'Regenerate'}
-                              </span>
-                            </motion.button>
-                          </div>
-                        </div>
-                      ) : (
-                        <p className="relative z-10 whitespace-pre-wrap">{msg.content}</p>
-                      )}
+                      {msg.role === 'user' ? <User className="w-4 h-4" /> : <Bot className="w-4 h-4" />}
                     </div>
-                    <span className="text-[9px] font-bold text-slate-600 uppercase tracking-widest flex items-center gap-1.5">
-                      {msg.role === 'user' ? <User className="w-2.5 h-2.5" /> : <Bot className="w-2.5 h-2.5 text-amber-500" />}
-                      {msg.timestamp}
-                    </span>
+
+                    {/* Message Card Bubble */}
+                    <div className={cn(
+                      "flex flex-col gap-1.5 min-w-0 flex-1",
+                      msg.role === 'user' ? "items-end" : "items-start"
+                    )}>
+                      <div className={cn(
+                        "p-4 sm:p-5 rounded-2xl text-xs sm:text-sm leading-relaxed shadow-sm w-full",
+                        msg.role === 'user'
+                          ? "bg-slate-900 text-white dark:bg-zinc-800/90 dark:text-white rounded-tr-none border border-slate-800 dark:border-zinc-700/80"
+                          : "bg-white text-slate-800 dark:bg-zinc-900/90 dark:text-zinc-200 rounded-tl-none border border-slate-200 dark:border-white/10"
+                      )}>
+                        {msg.role === 'ai' ? (
+                          <div className="markdown-body prose prose-slate dark:prose-invert max-w-none text-slate-800 dark:text-zinc-200">
+                            <ReactMarkdown
+                              remarkPlugins={[remarkGfm]}
+                              components={{
+                                code: CodeBlock,
+                                table: ({ children }: any) => (
+                                  <div className="my-4 overflow-x-auto rounded-2xl border border-slate-300 dark:border-zinc-800 shadow-md">
+                                    <table className="w-full text-left text-xs sm:text-sm border-collapse">{children}</table>
+                                  </div>
+                                ),
+                                thead: ({ children }: any) => (
+                                  <thead className="bg-slate-200/90 dark:bg-zinc-800/90 border-b border-slate-300 dark:border-zinc-700 text-slate-900 dark:text-white font-black uppercase text-[10px] tracking-wider">
+                                    {children}
+                                  </thead>
+                                ),
+                                tbody: ({ children }: any) => (
+                                  <tbody className="divide-y divide-slate-200 dark:divide-zinc-800/60 bg-slate-50 dark:bg-zinc-950/50">
+                                    {children}
+                                  </tbody>
+                                ),
+                                tr: ({ children }: any) => (
+                                  <tr className="hover:bg-slate-200/60 dark:hover:bg-white/[0.03] transition-colors">{children}</tr>
+                                ),
+                                th: ({ children }: any) => (
+                                  <th className="px-4 py-3 font-bold">{children}</th>
+                                ),
+                                td: ({ children }: any) => (
+                                  <td className="px-4 py-3 leading-relaxed">{children}</td>
+                                ),
+                                ul: ({ children }: any) => (
+                                  <ul className="my-2.5 space-y-1 list-disc list-inside pl-1 text-slate-700 dark:text-zinc-300">{children}</ul>
+                                ),
+                                ol: ({ children }: any) => (
+                                  <ol className="my-2.5 space-y-1 list-decimal list-inside pl-1 text-slate-700 dark:text-zinc-300">{children}</ol>
+                                ),
+                                li: ({ children }: any) => (
+                                  <li className="leading-relaxed">{children}</li>
+                                ),
+                                h1: ({ children }: any) => (
+                                  <h1 className="text-lg sm:text-xl font-black text-slate-900 dark:text-white mt-4 mb-2">{children}</h1>
+                                ),
+                                h2: ({ children }: any) => (
+                                  <h2 className="text-base sm:text-lg font-bold text-slate-900 dark:text-white mt-3 mb-1.5 border-b border-slate-200 dark:border-zinc-800 pb-1">{children}</h2>
+                                ),
+                                h3: ({ children }: any) => (
+                                  <h3 className="text-sm font-bold text-slate-900 dark:text-zinc-100 mt-2 mb-1">{children}</h3>
+                                )
+                              }}
+                            >
+                              {msg.content}
+                            </ReactMarkdown>
+
+                            {/* Action Buttons Row for Every AI Message */}
+                            <div className="mt-4 pt-3 border-t border-slate-200 dark:border-white/10 flex items-center justify-between">
+                              <div className="flex items-center gap-2">
+                                {/* Copy Button */}
+                                <button
+                                  onClick={() => handleCopyMessage(msg.id, msg.content)}
+                                  className="flex items-center gap-1.5 text-[11px] font-bold text-slate-500 hover:text-slate-900 dark:text-zinc-400 dark:hover:text-white transition-colors cursor-pointer px-2.5 py-1 rounded-lg hover:bg-slate-100 dark:hover:bg-white/10"
+                                >
+                                  {copiedMsgId === msg.id ? (
+                                    <>
+                                      <Check className="w-3.5 h-3.5 text-emerald-500" />
+                                      <span className="text-emerald-500">Copied</span>
+                                    </>
+                                  ) : (
+                                    <>
+                                      <Copy className="w-3.5 h-3.5" />
+                                      <span>Copy</span>
+                                    </>
+                                  )}
+                                </button>
+
+                                {/* Regenerate Button */}
+                                <button
+                                  onClick={() => handleRegenerate(msg.id)}
+                                  disabled={isGenerating}
+                                  className="flex items-center gap-1.5 text-[11px] font-bold text-slate-500 hover:text-slate-900 dark:text-zinc-400 dark:hover:text-white transition-colors cursor-pointer px-2.5 py-1 rounded-lg hover:bg-slate-100 dark:hover:bg-white/10 disabled:opacity-50"
+                                >
+                                  <RefreshCcw className="w-3.5 h-3.5" />
+                                  <span>Regenerate</span>
+                                </button>
+                              </div>
+
+                              <span className="text-[10px] font-medium text-slate-400 dark:text-zinc-500">
+                                {msg.timestamp}
+                              </span>
+                            </div>
+                          </div>
+                        ) : (
+                          <div className="whitespace-pre-wrap">{msg.content}</div>
+                        )}
+                      </div>
+                    </div>
                   </motion.div>
                 ))}
               </AnimatePresence>
-              
-              {isTyping && (
+
+              {/* Typing Animation while AI is generating */}
+              {isGenerating && (
                 <motion.div
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
-                  className="flex flex-col gap-2 mr-auto"
+                  className="flex gap-3 mr-auto"
                 >
-                  <div className="px-4 py-3 rounded-2xl bg-white/[0.03] border border-white/[0.05] flex gap-1.5 items-center">
-                    {[0, 1, 2].map((i) => (
-                      <motion.div
-                        key={i}
-                        variants={{
-                          jump: {
-                            y: [0, -6, 0],
-                            transition: {
-                              duration: 0.8,
-                              repeat: Infinity,
-                              ease: "easeInOut",
-                              delay: i * 0.15
-                            }
-                          }
-                        }}
-                        animate="jump"
-                        className="w-1.5 h-1.5 rounded-full"
-                        style={{ backgroundColor: meta.hex }}
-                      />
-                    ))}
+                  <div className="w-8 h-8 rounded-2xl bg-amber-500/20 text-amber-500 border border-amber-500/30 flex items-center justify-center shrink-0">
+                    <Bot className="w-4 h-4" />
+                  </div>
+                  <div className="p-4 rounded-2xl bg-white dark:bg-zinc-900 border border-slate-200 dark:border-white/10 flex items-center gap-2 shadow-sm">
+                    <div className="flex gap-1.5 items-center">
+                      {[0, 1, 2].map((i) => (
+                        <motion.div
+                          key={i}
+                          animate={{
+                            y: [0, -5, 0],
+                            opacity: [0.4, 1, 0.4]
+                          }}
+                          transition={{
+                            duration: 0.8,
+                            repeat: Infinity,
+                            delay: i * 0.18,
+                            ease: "easeInOut"
+                          }}
+                          className="w-2 h-2 rounded-full bg-amber-500"
+                        />
+                      ))}
+                    </div>
+                    <span className="text-xs font-semibold text-slate-500 dark:text-zinc-400 ml-1">
+                      AI Tutor is generating...
+                    </span>
                   </div>
                 </motion.div>
               )}
+
               <div ref={scrollRef} />
             </div>
           )}
         </div>
 
-        {/* Input Bar */}
-        <div className="p-4 bg-white/[0.02] border-t border-white/[0.05]">
+        {/* BOTTOM FIXED MESSAGE INPUT BAR */}
+        <div className="p-4 bg-slate-100/80 dark:bg-zinc-950/60 border-t border-slate-200 dark:border-white/[0.06] backdrop-blur-md">
           <div className="max-w-4xl mx-auto space-y-2">
-            {attachedFile && (
-              <motion.div 
-                initial={{ opacity: 0, y: 5 }}
-                animate={{ opacity: 1, y: 0 }}
-                className="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg bg-amber-500/10 border border-amber-500/20"
-              >
-                <FileText className="w-3.5 h-3.5 text-amber-500" />
-                <span className="text-[10px] font-bold text-amber-500">{attachedFile.name} ({attachedFile.size})</span>
-                <button onClick={() => setAttachedFile(null)} className="ml-1">
-                  <X className="w-3 h-3 text-amber-500 hover:text-amber-600" />
-                </button>
-              </motion.div>
-            )}
             
-            <div className="flex items-end gap-3 p-2 rounded-2xl bg-[#16171B]/60 border border-white/[0.08] focus-within:border-amber-500/30 transition-colors shadow-2xl backdrop-blur-xl">
-              <div className="flex items-center gap-1 pb-1">
-                <button 
-                  onClick={() => setAttachedFile({ name: 'Curriculum_v1.pdf', size: '2.4MB' })}
-                  className="p-2 rounded-lg hover:bg-white/[0.05] text-slate-500 transition-colors cursor-pointer"
-                >
-                  <Paperclip className="w-4 h-4" />
-                </button>
-                <button 
-                  onClick={handleMicClick}
-                  className={cn(
-                    "p-2 rounded-lg transition-colors flex items-center gap-1.5 cursor-pointer",
-                    isRecording 
-                      ? "bg-rose-500/20 text-rose-500 hover:bg-rose-500/30" 
-                      : "hover:bg-white/[0.05] text-slate-500"
-                  )}
-                >
-                  <Mic className={cn("w-4 h-4", isRecording && "animate-pulse")} />
-                  {isRecording && <span className="text-[10px] font-bold">{Math.floor(recordingTime / 60)}:{(recordingTime % 60).toString().padStart(2, '0')}</span>}
-                </button>
-              </div>
-
+            <div className="flex items-end gap-3 p-2.5 rounded-2xl bg-white dark:bg-[#121318] border border-slate-300 dark:border-white/10 focus-within:border-amber-500/50 transition-all shadow-xl">
+              
               <textarea 
+                ref={textareaRef}
                 rows={1}
                 value={inputValue}
                 onChange={(e) => setInputValue(e.target.value)}
@@ -775,21 +904,44 @@ The arithmetic mean acts as the **physical balance point** of the dataset. If yo
                     handleSendMessage();
                   }
                 }}
-                placeholder="Ask your tutor anything or drop a research file..."
-                className="flex-1 bg-transparent border-none outline-none text-sm text-white placeholder:text-slate-600 resize-none py-2 px-1 max-h-32"
+                placeholder="Ask your AI Tutor anything..."
+                className="flex-1 bg-transparent border-none outline-none text-xs sm:text-sm text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-zinc-500 resize-none py-2 px-2 max-h-36 font-sans"
               />
 
-              <button 
-                onClick={handleSendMessage}
-                disabled={!inputValue.trim() && !attachedFile}
-                className={cn(
-                  "p-3 rounded-xl transition-all shadow-lg flex items-center justify-center disabled:opacity-50 disabled:scale-100 active:scale-90 cursor-pointer text-white",
-                  inputValue.trim() || attachedFile ? getGradientClass(accentColor) : "bg-white/[0.05] text-slate-600"
-                )}
-              >
-                <ArrowUp className="w-4 h-4" />
-              </button>
+              {/* Stop Generating Button or Send Button */}
+              {isGenerating ? (
+                <Tooltip content="Stop AI Generation" side="top">
+                  <button
+                    onClick={handleStopGenerating}
+                    className="px-4 py-2.5 rounded-xl bg-rose-600 hover:bg-rose-700 text-white font-bold text-xs flex items-center gap-1.5 transition-all shadow-md active:scale-95 cursor-pointer"
+                    aria-label="Stop generating"
+                  >
+                    <Square className="w-3.5 h-3.5 fill-current" />
+                    <span>Stop</span>
+                  </button>
+                </Tooltip>
+              ) : (
+                <Tooltip content="Send Message (Enter)" side="top">
+                  <button 
+                    onClick={() => handleSendMessage()}
+                    disabled={!inputValue.trim()}
+                    className={cn(
+                      "p-3 rounded-xl transition-all shadow-lg flex items-center justify-center disabled:opacity-40 disabled:scale-100 active:scale-90 cursor-pointer text-white",
+                      inputValue.trim() ? getGradientClass(accentColor) : "bg-slate-200 dark:bg-white/10 text-slate-400 dark:text-zinc-500"
+                    )}
+                    aria-label="Send message"
+                  >
+                    <ArrowUp className="w-4 h-4 stroke-[2.5]" />
+                  </button>
+                </Tooltip>
+              )}
             </div>
+
+            <div className="flex items-center justify-between px-1 text-[10px] text-slate-400 dark:text-zinc-500 font-medium">
+              <span>Press <kbd className="px-1 py-0.5 rounded bg-slate-200 dark:bg-zinc-800 text-slate-700 dark:text-zinc-300 font-mono">Enter</kbd> to send, <kbd className="px-1 py-0.5 rounded bg-slate-200 dark:bg-zinc-800 text-slate-700 dark:text-zinc-300 font-mono">Shift + Enter</kbd> for new line</span>
+              <span className="hidden sm:inline">EducAI Workspace</span>
+            </div>
+
           </div>
         </div>
 
@@ -797,30 +949,95 @@ The arithmetic mean acts as the **physical balance point** of the dataset. If yo
 
       <style jsx global>{`
         .custom-scrollbar::-webkit-scrollbar {
-          width: 4px;
+          width: 5px;
         }
         .custom-scrollbar::-webkit-scrollbar-track {
           background: transparent;
         }
         .custom-scrollbar::-webkit-scrollbar-thumb {
-          background: rgba(255, 255, 255, 0.05);
+          background: rgba(150, 150, 150, 0.2);
           border-radius: 10px;
         }
         .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-          background: rgba(255, 255, 255, 0.1);
-        }
-        
-        .markdown-body p {
-          margin-bottom: 0.5rem;
-        }
-        .markdown-body p:last-child {
-          margin-bottom: 0;
-        }
-        .markdown-body strong {
-          color: white;
-          font-weight: 800;
+          background: rgba(150, 150, 150, 0.4);
         }
       `}</style>
     </div>
   );
+}
+
+function generateFallbackResponse(prompt: string): string {
+  const p = prompt.toLowerCase();
+
+  if (p.includes('monad')) {
+    return `A **Monad** in C++ is a functional design pattern that structures computations by wrapping values in a safe container (like \`std::optional\` or \`std::expected\`), enabling chained operations without explicit null/error branching.
+
+### C++23 Example
+\`\`\`cpp
+#include <iostream>
+#include <optional>
+
+std::optional<int> double_even(int x) {
+    if (x % 2 == 0) return x * 2;
+    return std::nullopt;
+}
+
+int main() {
+    std::optional<int> val = 4;
+    auto result = val.and_then(double_even); // Returns 8
+    
+    if (result) std::cout << "Result: " << *result << std::endl;
+}
+\`\`\`
+
+### Monadic Chaining Benefits
+* Eliminates deeply nested \`if (ptr != nullptr)\` checks.
+* Makes error propagation declarative and predictable.`;
+  }
+
+  if (p.includes('sql') || p.includes('nosql')) {
+    return `### SQL vs NoSQL Comparison
+
+| Feature | SQL Databases | NoSQL Databases |
+| :--- | :--- | :--- |
+| **Schema** | Rigid, predefined schema | Flexible, dynamic JSON/Document/Key-Value |
+| **Transactions** | Strict ACID guarantees | BASE model (Eventual consistency) |
+| **Scaling** | Vertical scaling | Horizontal distributed scaling |
+| **Examples** | PostgreSQL, MySQL, SQLite | MongoDB, Cassandra, Redis |`;
+  }
+
+  if (p.includes('german')) {
+    return `Guten Tag! Let's practice **German A2 Present Perfect Tense (Perfekt)**!
+
+* **Auxiliary Verb**: Use **haben** for standard transitive verbs, or **sein** for motion/change of state (*gehen, fahren, einschlafen*).
+* **Partizip II**: Placed at the very end of the sentence.
+
+Example: *"Ich habe Deutsch gelernt."* (I learned German.)`;
+  }
+
+  if (p.includes('quadratic')) {
+    return `### Derivation of the Quadratic Formula
+
+Starting with the general quadratic equation:
+$$ax^2 + bx + c = 0$$
+
+1. **Divide by $a$**:
+   $$x^2 + \\frac{b}{a}x + \\frac{c}{a} = 0$$
+
+2. **Complete the Square**:
+   $$\\left(x + \\frac{b}{2a}\\right)^2 = \\frac{b^2 - 4ac}{4a^2}$$
+
+3. **Take Square Root**:
+   $$x + \\frac{b}{2a} = \\pm \\frac{\\sqrt{b^2 - 4ac}}{2a}$$
+
+4. **Final Formula**:
+   $$x = \\frac{-b \\pm \\sqrt{b^2 - 4ac}}{2a}$$`;
+  }
+
+  return `Here is a structured academic response regarding **"${prompt}"**:
+
+### Core Concept Breakdown
+1. **Primary Principle**: Understanding this topic requires isolating core variables and establishing clear foundational definitions.
+2. **Key Execution Step**: Analyze the underlying logic flow, construct verifiable test conditions, and verify step-by-step outcomes.
+3. **Synthesis**: Apply this rule systematically across related problem domains for maximum mastery.`;
 }

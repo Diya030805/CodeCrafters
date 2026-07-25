@@ -2,7 +2,6 @@
 
 import * as React from 'react';
 import { useRouter } from 'next/navigation';
-import { useAuth } from '@clerk/nextjs';
 import { Navbar } from '@/components/landing/navbar';
 import { Hero } from '@/components/landing/hero';
 import { Footer } from '@/components/landing/footer';
@@ -44,8 +43,6 @@ export default function Home() {
     return () => observer.disconnect();
   }, [loading]);
 
-  const { userId, isLoaded } = useAuth();
-
   const handleNavigate = (section: string) => {
     const element = document.getElementById(section);
     if (element) {
@@ -54,11 +51,7 @@ export default function Home() {
   };
 
   const handleGetStarted = () => {
-    if (isLoaded && userId) {
-      router.push('/dashboard');
-    } else {
-      router.push('/sign-up');
-    }
+    router.push('/dashboard');
   };
 
   const handleBrandClick = () => {

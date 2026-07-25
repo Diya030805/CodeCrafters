@@ -33,7 +33,6 @@ import {
 } from 'lucide-react';
 import { useAccent } from '@/components/accent-provider';
 import { cn } from '@/lib/utils';
-import { useUser } from '@clerk/nextjs';
 
 interface Task {
   id: number;
@@ -44,7 +43,6 @@ interface Task {
 
 export function DashboardOverview() {
   const { meta } = useAccent();
-  const { user, isLoaded } = useUser();
   const [hoveredIndex, setHoveredIndex] = React.useState<number | null>(null);
   const [activeQuickAction, setActiveQuickAction] = React.useState<string | null>(null);
 
@@ -209,7 +207,7 @@ export function DashboardOverview() {
             className="text-2xl sm:text-3xl font-black text-white tracking-tight"
           >
             Welcome Back, <span className="text-white relative font-extrabold">
-              {!isLoaded ? "Scholar" : (user?.firstName || "Diya")}
+              Diya
             </span>
           </motion.h1>
           <p className="text-slate-400 text-xs sm:text-sm font-medium tracking-tight">
