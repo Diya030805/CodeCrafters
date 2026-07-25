@@ -154,7 +154,7 @@ export function GamificationView() {
         <div className="flex items-center gap-6 relative z-10 w-full md:w-auto">
           <div className="relative">
             <svg className="w-24 h-24 transform -rotate-90">
-              <circle cx="48" cy="48" r="44" stroke="currentColor" strokeWidth="6" fill="transparent" className="text-slate-100 dark:text-white/5" />
+              <circle cx="48" cy="48" r="44" stroke="currentColor" strokeWidth="6" fill="transparent" className="text-slate-200 dark:text-white/10" />
               <circle 
                 cx="48" cy="48" r="44" stroke="currentColor" strokeWidth="6" fill="transparent" 
                 strokeDasharray="276" strokeDashoffset={276 - (276 * xpPercentage) / 100}
@@ -218,7 +218,7 @@ export function GamificationView() {
                   initial={{ opacity: 0, y: 15 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.4, delay: i * 0.05 }}
-                  className={cn("p-5 relative overflow-hidden transition-all duration-300 group", glassStyles.card, challenge.isCompleted ? "border-emerald-500/30 bg-emerald-500/5" : "")}
+                  className={cn("p-5 relative overflow-hidden transition-all duration-300 group frosted-card", challenge.isCompleted ? "border-emerald-500/30 bg-emerald-500/5" : "")}
                 >
                   <div className="flex items-start justify-between mb-3">
                     <h3 className="text-sm font-bold text-slate-900 dark:text-white pr-8">
@@ -273,7 +273,7 @@ export function GamificationView() {
             
             <div className="space-y-3">
               {WEEKLY_MISSIONS.map((mission, i) => (
-                <div key={mission.id} className={cn("p-4 flex items-center gap-5 transition-all hover:-translate-y-0.5", glassStyles.card)}>
+                <div key={mission.id} className={cn("p-4 flex items-center gap-5 transition-all hover:-translate-y-0.5 frosted-card")}>
                   <div className="p-3 rounded-2xl bg-slate-100 dark:bg-white/5 text-slate-600 dark:text-slate-300">
                     <mission.icon className="w-6 h-6" />
                   </div>
@@ -324,8 +324,7 @@ export function GamificationView() {
                 <div 
                   key={achievement.id}
                   className={cn(
-                    "p-4 relative overflow-hidden transition-all duration-300", 
-                    glassStyles.card,
+                    "p-4 relative overflow-hidden transition-all duration-300 frosted-card", 
                     !achievement.unlocked && "opacity-70 grayscale-[50%]"
                   )}
                 >

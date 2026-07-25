@@ -1,3 +1,5 @@
+export const dynamic = 'force-dynamic';
+
 import { RecommendationsView } from '@/components/dashboard/recommendations-view';
 
 export const metadata = {

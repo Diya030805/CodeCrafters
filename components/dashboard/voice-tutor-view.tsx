@@ -369,7 +369,7 @@ export function VoiceTutorView() {
           
           {/* AI Status Cards */}
           <div className="grid grid-cols-2 gap-4">
-            <div className={cn("p-4", glassStyles.card)}>
+            <div className={cn("p-4 frosted-card")}>
               <div className="text-[10px] font-bold text-slate-500 uppercase mb-2">Microphone</div>
               <div className="flex items-center gap-2">
                 <div className={cn("w-2 h-2 rounded-full", appState === 'listening' ? "bg-emerald-500 animate-pulse" : "bg-slate-300 dark:bg-slate-600")} />
@@ -379,7 +379,7 @@ export function VoiceTutorView() {
               </div>
             </div>
             
-            <div className={cn("p-4", glassStyles.card)}>
+            <div className={cn("p-4 frosted-card")}>
               <div className="text-[10px] font-bold text-slate-500 uppercase mb-2">Voice AI</div>
               <div className="flex items-center gap-2">
                 <div className={cn("w-2 h-2 rounded-full", appState === 'speaking' || appState === 'thinking' ? "bg-indigo-500" : "bg-emerald-500")} />
@@ -389,7 +389,7 @@ export function VoiceTutorView() {
               </div>
             </div>
 
-            <div className={cn("p-4", glassStyles.card)}>
+            <div className={cn("p-4 frosted-card")}>
               <div className="text-[10px] font-bold text-slate-500 uppercase mb-2">Signal Quality</div>
               <div className="flex items-center gap-2">
                 <Activity className="w-4 h-4 text-emerald-500" />
@@ -397,7 +397,7 @@ export function VoiceTutorView() {
               </div>
             </div>
 
-            <div className={cn("p-4", glassStyles.card)}>
+            <div className={cn("p-4 frosted-card")}>
               <div className="text-[10px] font-bold text-slate-500 uppercase mb-2">Session Time</div>
               <div className="flex items-center gap-2">
                 <Clock className="w-4 h-4 text-amber-500" />

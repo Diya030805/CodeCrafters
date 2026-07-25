@@ -1,3 +1,5 @@
+export const dynamic = 'force-dynamic';
+
 import { AnalyticsView } from '@/components/dashboard/analytics-view';
 
 export const metadata = {

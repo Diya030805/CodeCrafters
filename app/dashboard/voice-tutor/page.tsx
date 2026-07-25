@@ -1,3 +1,5 @@
+export const dynamic = 'force-dynamic';
+
 import { VoiceTutorView } from '@/components/dashboard/voice-tutor-view';
 
 export const metadata = {

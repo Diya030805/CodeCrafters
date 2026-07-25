@@ -374,11 +374,11 @@ export function NotesView() {
           
           {/* Note Metadata */}
           <div className="grid grid-cols-2 gap-2">
-            <div className="p-3 rounded-xl bg-slate-50 dark:bg-white/[0.02] border border-black/5 dark:border-white/5">
+            <div className="p-3 frosted-card">
               <div className="text-[10px] text-slate-500 uppercase font-bold mb-1">Word Count</div>
               <div className="text-sm font-bold text-slate-700 dark:text-slate-300">428</div>
             </div>
-            <div className="p-3 rounded-xl bg-slate-50 dark:bg-white/[0.02] border border-black/5 dark:border-white/5">
+            <div className="p-3 frosted-card">
               <div className="text-[10px] text-slate-500 uppercase font-bold mb-1">Read Time</div>
               <div className="text-sm font-bold text-slate-700 dark:text-slate-300">3 mins</div>
             </div>
@@ -410,13 +410,13 @@ export function NotesView() {
             <div className="space-y-3">
               
               <div className="grid grid-cols-2 gap-2">
-                <div className="p-2.5 rounded-xl bg-slate-50 dark:bg-white/[0.02] border border-black/5 dark:border-white/5">
+                <div className="p-2.5 frosted-card">
                   <div className="text-[10px] text-slate-500 uppercase font-bold mb-1">Study Difficulty</div>
                   <div className="text-xs font-bold text-amber-600 dark:text-amber-400 flex items-center gap-1">
                     <TrendingUp className="w-3 h-3" /> Intermediate
                   </div>
                 </div>
-                <div className="p-2.5 rounded-xl bg-slate-50 dark:bg-white/[0.02] border border-black/5 dark:border-white/5">
+                <div className="p-2.5 frosted-card">
                   <div className="text-[10px] text-slate-500 uppercase font-bold mb-1">Status</div>
                   <div className="text-xs font-bold text-emerald-600 dark:text-emerald-400 flex items-center gap-1">
                     <CheckCircle className="w-3 h-3" /> 80% Complete

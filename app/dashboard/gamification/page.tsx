@@ -1,3 +1,5 @@
+export const dynamic = 'force-dynamic';
+
 import { GamificationView } from '@/components/dashboard/gamification-view';
 
 export const metadata = {

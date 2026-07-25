@@ -1,3 +1,5 @@
+export const dynamic = 'force-dynamic';
+
 import { StudyPlannerView } from '@/components/dashboard/study-planner-view';
 
 export const metadata = {

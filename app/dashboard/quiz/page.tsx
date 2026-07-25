@@ -1,3 +1,5 @@
+export const dynamic = 'force-dynamic';
+
 import { QuizGeneratorView } from '@/components/dashboard/quiz-generator-view';
 
 export const metadata = {

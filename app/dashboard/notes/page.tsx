@@ -1,3 +1,5 @@
+export const dynamic = 'force-dynamic';
+
 import { NotesView } from '@/components/dashboard/notes-view';
 
 export const metadata = {
