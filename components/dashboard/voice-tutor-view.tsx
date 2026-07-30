@@ -30,7 +30,6 @@ import {
 } from 'lucide-react';
 import { useAccent } from '@/components/accent-provider';
 import { cn } from '@/lib/utils';
-import { glassStyles } from '@/lib/glass';
 
 // Types
 type AppState = 'idle' | 'listening' | 'thinking' | 'speaking';
@@ -139,7 +138,7 @@ export function VoiceTutorView() {
   };
 
   const renderWaveformVisualizer = (isActive: boolean) => (
-    <div className="flex items-center justify-center gap-1.5 h-16 w-48">
+    <div className="flex h-16 w-48 items-center justify-center gap-1.5">
       {Array.from({ length: 12 }).map((_, i) => (
         <motion.div
           key={i}
@@ -150,13 +149,13 @@ export function VoiceTutorView() {
           transition={{
             duration: 1.5,
             repeat: Infinity,
-            repeatType: "reverse",
-            ease: "easeInOut",
+            repeatType: 'reverse',
+            ease: 'easeInOut',
             delay: isActive ? i * 0.1 : 0
           }}
           className={cn(
-            "w-2 rounded-full",
-            appState === 'speaking' ? "bg-indigo-500" : "bg-emerald-500"
+            'w-2 rounded-full bg-gradient-to-t from-indigo-500 to-emerald-400',
+            appState === 'speaking' ? 'shadow-[0_0_16px_rgba(99,102,241,0.25)]' : 'shadow-[0_0_16px_rgba(16,185,129,0.25)]'
           )}
         />
       ))}
@@ -164,374 +163,355 @@ export function VoiceTutorView() {
   );
 
   return (
-    <div className="space-y-8 pb-16">
-      
-      {/* Header */}
-      <div className={cn("p-6 md:p-8 relative overflow-hidden", glassStyles.container)}>
-        <div className="absolute top-0 right-0 -mt-16 -mr-16 w-64 h-64 bg-indigo-500/10 rounded-full blur-3xl pointer-events-none" />
-        <div className="flex flex-col md:flex-row items-center justify-between gap-6 relative z-10">
-          <div className="flex items-center gap-4">
-            <div className="w-12 h-12 rounded-2xl bg-indigo-500/10 flex items-center justify-center text-indigo-500">
-              <Mic className="w-6 h-6" />
-            </div>
-            <div>
-              <h1 className="text-2xl font-bold text-slate-900 dark:text-white">Voice AI Tutor</h1>
-              <p className="text-sm text-slate-500 dark:text-slate-400">Interactive conversational learning</p>
-            </div>
-          </div>
-          <div className="flex gap-3">
-            <button 
-              onClick={() => setShowSettings(!showSettings)}
-              className="p-3 rounded-xl bg-slate-100 dark:bg-white/5 hover:bg-slate-200 dark:hover:bg-white/10 text-slate-600 dark:text-slate-300 transition-colors border border-black/5 dark:border-white/10"
-            >
-              <Settings className="w-5 h-5" />
-            </button>
-            <button 
-              onClick={handleClear}
-              className="p-3 rounded-xl bg-rose-500/10 hover:bg-rose-500/20 text-rose-500 transition-colors border border-rose-500/20"
-            >
-              <Trash2 className="w-5 h-5" />
-            </button>
-          </div>
-        </div>
-      </div>
-
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
-        
-        {/* Main Conversation Workspace */}
-        <div className="lg:col-span-8 flex flex-col gap-8">
-          
-          {/* Active Voice Interface */}
-          <div className={cn("p-8 lg:p-12 flex flex-col items-center justify-center relative min-h-[400px]", glassStyles.container)}>
-            {/* Status Indicator */}
-            <div className="absolute top-6 left-6 flex items-center gap-2">
-              <div className="relative flex h-3 w-3">
-                {appState !== 'idle' && (
-                  <span className={cn(
-                    "animate-ping absolute inline-flex h-full w-full rounded-full opacity-75",
-                    appState === 'speaking' ? "bg-indigo-400" :
-                    appState === 'thinking' ? "bg-amber-400" : "bg-emerald-400"
-                  )}></span>
-                )}
-                <span className={cn(
-                  "relative inline-flex rounded-full h-3 w-3",
-                  appState === 'speaking' ? "bg-indigo-500" :
-                  appState === 'thinking' ? "bg-amber-500" :
-                  appState === 'listening' ? "bg-emerald-500" : "bg-slate-400"
-                )}></span>
+    <div className="min-h-screen bg-[#09090B] text-zinc-100">
+      <div className="mx-auto flex max-w-7xl flex-col gap-6 px-4 py-4 sm:px-6 lg:px-8 lg:py-6">
+        <header className="relative overflow-hidden rounded-[30px] border border-zinc-800/80 bg-zinc-900/60 p-6 shadow-[0_30px_80px_rgba(0,0,0,0.35)] backdrop-blur-2xl sm:p-8">
+          <div className="absolute right-0 top-0 -mr-14 -mt-14 h-56 w-56 rounded-full bg-indigo-500/10 blur-3xl" />
+          <div className="absolute bottom-0 left-0 h-40 w-40 rounded-full bg-emerald-500/10 blur-3xl" />
+          <div className="relative z-10 flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
+            <div className="flex items-center gap-4">
+              <div className="flex h-12 w-12 items-center justify-center rounded-2xl border border-indigo-500/20 bg-indigo-500/10 text-indigo-400">
+                <Mic className="h-6 w-6" />
               </div>
-              <span className="text-xs font-bold uppercase tracking-wider text-slate-500">
-                {appState === 'idle' ? 'Ready' : 
-                 appState === 'listening' ? 'Listening...' :
-                 appState === 'thinking' ? 'Analyzing...' : 'AI Speaking...'}
-              </span>
+              <div>
+                <h1 className="text-2xl font-semibold tracking-tight text-white">Voice AI Tutor</h1>
+                <p className="text-sm text-zinc-400">Interactive conversational learning with a premium studio feel</p>
+              </div>
             </div>
+            <div className="flex items-center gap-3">
+              <button
+                onClick={() => setShowSettings(!showSettings)}
+                className="rounded-2xl border border-zinc-800 bg-zinc-800/70 p-3 text-zinc-300 transition-all duration-300 hover:border-zinc-700 hover:bg-zinc-700/70 hover:text-white"
+              >
+                <Settings className="h-5 w-5" />
+              </button>
+              <button
+                onClick={handleClear}
+                className="rounded-2xl border border-rose-500/20 bg-rose-500/10 p-3 text-rose-400 transition-all duration-300 hover:bg-rose-500/20"
+              >
+                <Trash2 className="h-5 w-5" />
+              </button>
+            </div>
+          </div>
+        </header>
 
-            {/* Avatars and Waveform */}
-            <div className="flex flex-col items-center gap-8 mb-12">
-              <div className="flex items-center gap-12">
-                
-                {/* User Avatar */}
-                <div className="flex flex-col items-center gap-3">
-                  <div className={cn(
-                    "w-20 h-20 rounded-full flex items-center justify-center border-4 transition-all duration-300 relative",
-                    appState === 'listening' ? "border-emerald-500 shadow-[0_0_30px_rgba(16,185,129,0.3)]" : "border-transparent bg-slate-100 dark:bg-white/5"
-                  )}>
-                    {appState === 'listening' && (
-                      <motion.div 
-                        animate={{ scale: [1, 1.2, 1], opacity: [0.5, 0, 0.5] }}
-                        transition={{ duration: 1.5, repeat: Infinity }}
-                        className="absolute inset-0 rounded-full border-2 border-emerald-500"
-                      />
-                    )}
-                    <div className="w-full h-full rounded-full bg-gradient-to-br from-slate-200 to-slate-300 dark:from-slate-700 dark:to-slate-800 flex items-center justify-center text-slate-500 font-bold text-xl">
-                      U
-                    </div>
-                  </div>
-                  <span className="text-xs font-bold text-slate-500 uppercase tracking-widest">You</span>
-                </div>
-
-                {/* Waveform */}
-                <div className="hidden sm:block">
-                  {renderWaveformVisualizer(appState === 'listening' || appState === 'speaking')}
-                </div>
-
-                {/* AI Avatar */}
-                <div className="flex flex-col items-center gap-3">
-                  <div className={cn(
-                    "w-20 h-20 rounded-full flex items-center justify-center border-4 transition-all duration-300 relative",
-                    appState === 'speaking' ? "border-indigo-500 shadow-[0_0_30px_rgba(99,102,241,0.3)]" : 
-                    appState === 'thinking' ? "border-amber-500 shadow-[0_0_30px_rgba(245,158,11,0.3)]" : "border-transparent bg-slate-100 dark:bg-white/5"
-                  )}>
-                    {appState === 'speaking' && (
-                      <motion.div 
-                        animate={{ scale: [1, 1.2, 1], opacity: [0.5, 0, 0.5] }}
-                        transition={{ duration: 1.5, repeat: Infinity }}
-                        className="absolute inset-0 rounded-full border-2 border-indigo-500"
-                      />
-                    )}
-                    <div className="w-full h-full rounded-full bg-indigo-500/10 flex items-center justify-center text-indigo-500">
-                      {appState === 'thinking' ? (
-                        <BrainCircuit className="w-8 h-8 animate-pulse" />
-                      ) : (
-                        <BrainCircuit className="w-8 h-8" />
+        <div className="grid gap-6 lg:grid-cols-[1.4fr_0.7fr]">
+          <div className="flex flex-col gap-6">
+            <section className="relative overflow-hidden rounded-[30px] border border-zinc-800/80 bg-zinc-900/70 p-6 shadow-[0_20px_70px_rgba(0,0,0,0.3)] backdrop-blur-2xl sm:p-8 lg:p-10">
+              <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(129,140,248,0.14),transparent_45%)]" />
+              <div className="relative z-10 flex flex-col items-center justify-center gap-8">
+                <div className="flex w-full items-center justify-between rounded-full border border-zinc-800/80 bg-zinc-950/70 px-4 py-2.5 text-xs font-semibold uppercase tracking-[0.24em] text-zinc-400">
+                  <div className="flex items-center gap-2">
+                    <div className="relative flex h-2.5 w-2.5">
+                      {appState !== 'idle' && (
+                        <span className={cn(
+                          'absolute inline-flex h-full w-full rounded-full opacity-75 animate-ping',
+                          appState === 'speaking' ? 'bg-indigo-400' : appState === 'thinking' ? 'bg-amber-400' : 'bg-emerald-400'
+                        )} />
                       )}
+                      <span className={cn(
+                        'relative inline-flex h-2.5 w-2.5 rounded-full',
+                        appState === 'speaking' ? 'bg-indigo-500' : appState === 'thinking' ? 'bg-amber-500' : appState === 'listening' ? 'bg-emerald-500' : 'bg-zinc-500'
+                      )} />
                     </div>
+                    <span>
+                      {appState === 'idle' ? 'Ready' : appState === 'listening' ? 'Listening' : appState === 'thinking' ? 'Analyzing' : 'AI Speaking'}
+                    </span>
                   </div>
-                  <span className="text-xs font-bold text-slate-500 uppercase tracking-widest">AI Tutor</span>
+                  <span className="text-zinc-500">Live practice mode</span>
                 </div>
-              </div>
-            </div>
 
-            {/* Main Mic Control */}
-            <div className="flex items-center gap-6">
-              <button
-                onClick={() => setIsMuted(!isMuted)}
-                className="p-4 rounded-full bg-slate-100 dark:bg-white/5 hover:bg-slate-200 dark:hover:bg-white/10 text-slate-600 dark:text-slate-300 transition-colors border border-black/5 dark:border-white/10"
-              >
-                {isMuted ? <VolumeX className="w-5 h-5" /> : <Volume2 className="w-5 h-5" />}
-              </button>
+                <div className="flex flex-col items-center gap-8 sm:flex-row sm:gap-10">
+                  <div className="flex flex-col items-center gap-3">
+                    <div className={cn(
+                      'relative flex h-20 w-20 items-center justify-center rounded-full border-2 transition-all duration-300',
+                      appState === 'listening' ? 'border-emerald-500 shadow-[0_0_30px_rgba(16,185,129,0.25)]' : 'border-transparent bg-zinc-800/70'
+                    )}>
+                      {appState === 'listening' && (
+                        <motion.div
+                          animate={{ scale: [1, 1.2, 1], opacity: [0.5, 0, 0.5] }}
+                          transition={{ duration: 1.5, repeat: Infinity }}
+                          className="absolute inset-0 rounded-full border border-emerald-500"
+                        />
+                      )}
+                      <div className="flex h-full w-full items-center justify-center rounded-full bg-gradient-to-br from-zinc-700 to-zinc-800 text-lg font-semibold text-zinc-200">
+                        U
+                      </div>
+                    </div>
+                    <span className="text-[11px] font-semibold uppercase tracking-[0.24em] text-zinc-500">You</span>
+                  </div>
 
-              <button
-                onClick={appState === 'listening' ? handleStopListening : handleStartListening}
-                className={cn(
-                  "relative group flex items-center justify-center w-24 h-24 rounded-full transition-all duration-300 shadow-xl",
-                  appState === 'listening' 
-                    ? "bg-rose-500 text-white shadow-rose-500/30 hover:bg-rose-600 hover:shadow-rose-500/50" 
-                    : "bg-emerald-500 text-white shadow-emerald-500/30 hover:bg-emerald-600 hover:shadow-emerald-500/50 hover:-translate-y-1"
-                )}
-              >
-                {appState === 'listening' && (
-                  <motion.div
-                    animate={{ scale: [1, 1.4, 1], opacity: [0.3, 0, 0.3] }}
-                    transition={{ duration: 1.5, repeat: Infinity }}
-                    className="absolute inset-0 rounded-full bg-rose-500"
-                  />
-                )}
-                <Mic className={cn("w-10 h-10 relative z-10", appState === 'listening' && "animate-pulse")} />
-              </button>
+                  <div className="hidden sm:block">
+                    {renderWaveformVisualizer(appState === 'listening' || appState === 'speaking')}
+                  </div>
 
-              <button
-                className="p-4 rounded-full bg-slate-100 dark:bg-white/5 hover:bg-slate-200 dark:hover:bg-white/10 text-slate-600 dark:text-slate-300 transition-colors border border-black/5 dark:border-white/10"
-              >
-                <RotateCcw className="w-5 h-5" />
-              </button>
-            </div>
-            
-            <div className="mt-6 text-sm font-bold text-slate-500">
-              {appState === 'listening' ? 'Tap mic to stop' : 'Tap mic to speak'}
-            </div>
-          </div>
-
-          {/* Transcript Panel */}
-          <div className={cn("p-6 flex-grow flex flex-col min-h-[300px]", glassStyles.container)}>
-            <div className="flex items-center justify-between mb-6 pb-4 border-b border-slate-100 dark:border-white/5">
-              <h3 className="text-sm font-bold uppercase tracking-wider text-slate-500 flex items-center gap-2">
-                <FileText className="w-4 h-4 text-indigo-500" />
-                Live Transcript
-              </h3>
-            </div>
-            
-            <div className="flex-grow overflow-y-auto space-y-6">
-              {messages.length === 0 ? (
-                <div className="h-full flex flex-col items-center justify-center text-slate-400">
-                  <MessageSquare className="w-8 h-8 mb-3 opacity-20" />
-                  <p className="text-sm">No conversation yet. Start speaking!</p>
+                  <div className="flex flex-col items-center gap-3">
+                    <div className={cn(
+                      'relative flex h-20 w-20 items-center justify-center rounded-full border-2 transition-all duration-300',
+                      appState === 'speaking' ? 'border-indigo-500 shadow-[0_0_30px_rgba(99,102,241,0.25)]' : appState === 'thinking' ? 'border-amber-500 shadow-[0_0_30px_rgba(245,158,11,0.25)]' : 'border-transparent bg-zinc-800/70'
+                    )}>
+                      {appState === 'speaking' && (
+                        <motion.div
+                          animate={{ scale: [1, 1.2, 1], opacity: [0.5, 0, 0.5] }}
+                          transition={{ duration: 1.5, repeat: Infinity }}
+                          className="absolute inset-0 rounded-full border border-indigo-500"
+                        />
+                      )}
+                      <div className="flex h-full w-full items-center justify-center rounded-full bg-indigo-500/10 text-indigo-400">
+                        <BrainCircuit className={cn('h-8 w-8', appState === 'thinking' && 'animate-pulse')} />
+                      </div>
+                    </div>
+                    <span className="text-[11px] font-semibold uppercase tracking-[0.24em] text-zinc-500">AI Tutor</span>
+                  </div>
                 </div>
-              ) : (
-                messages.map((msg) => (
-                  <motion.div
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    key={msg.id}
+
+                <div className="flex items-center gap-4 sm:gap-6">
+                  <button
+                    onClick={() => setIsMuted(!isMuted)}
+                    className="rounded-full border border-zinc-800 bg-zinc-800/70 p-4 text-zinc-300 transition-all duration-300 hover:border-zinc-700 hover:bg-zinc-700/70 hover:text-white"
+                  >
+                    {isMuted ? <VolumeX className="h-5 w-5" /> : <Volume2 className="h-5 w-5" />}
+                  </button>
+
+                  <motion.button
+                    whileTap={{ scale: 0.96 }}
+                    onClick={appState === 'listening' ? handleStopListening : handleStartListening}
                     className={cn(
-                      "max-w-[85%] rounded-2xl p-4",
-                      msg.sender === 'user' 
-                        ? "bg-slate-100 dark:bg-white/5 ml-auto rounded-tr-sm" 
-                        : "bg-indigo-50 dark:bg-indigo-500/10 text-indigo-900 dark:text-indigo-100 border border-indigo-100 dark:border-indigo-500/20 mr-auto rounded-tl-sm"
+                      'group relative flex h-24 w-24 items-center justify-center rounded-full transition-all duration-300',
+                      appState === 'listening'
+                        ? 'bg-rose-500 text-white shadow-[0_0_35px_rgba(244,63,94,0.28)] hover:bg-rose-600'
+                        : 'bg-gradient-to-br from-emerald-500 to-emerald-600 text-white shadow-[0_0_35px_rgba(16,185,129,0.28)] hover:-translate-y-0.5'
                     )}
                   >
-                    <div className="text-[10px] font-bold uppercase tracking-wider opacity-50 mb-1.5 flex items-center gap-2">
-                      {msg.sender === 'user' ? 'You' : 'AI Tutor'}
-                      <span className="font-normal normal-case">{msg.timestamp}</span>
-                    </div>
-                    <p className="text-sm leading-relaxed">{msg.text}</p>
-                  </motion.div>
-                ))
-              )}
-            </div>
-          </div>
+                    {appState === 'listening' && (
+                      <motion.div
+                        animate={{ scale: [1, 1.35, 1], opacity: [0.35, 0, 0.35] }}
+                        transition={{ duration: 1.5, repeat: Infinity }}
+                        className="absolute inset-0 rounded-full bg-rose-500"
+                      />
+                    )}
+                    <Mic className={cn('relative z-10 h-10 w-10', appState === 'listening' && 'animate-pulse')} />
+                  </motion.button>
 
-        </div>
-
-        {/* Side Panel: Status & Settings */}
-        <div className="lg:col-span-4 space-y-8">
-          
-          {/* AI Status Cards */}
-          <div className="grid grid-cols-2 gap-4">
-            <div className={cn("p-4 frosted-card")}>
-              <div className="text-[10px] font-bold text-slate-500 uppercase mb-2">Microphone</div>
-              <div className="flex items-center gap-2">
-                <div className={cn("w-2 h-2 rounded-full", appState === 'listening' ? "bg-emerald-500 animate-pulse" : "bg-slate-300 dark:bg-slate-600")} />
-                <span className="text-sm font-bold text-slate-900 dark:text-white">
-                  {appState === 'listening' ? 'Active' : 'Standby'}
-                </span>
-              </div>
-            </div>
-            
-            <div className={cn("p-4 frosted-card")}>
-              <div className="text-[10px] font-bold text-slate-500 uppercase mb-2">Voice AI</div>
-              <div className="flex items-center gap-2">
-                <div className={cn("w-2 h-2 rounded-full", appState === 'speaking' || appState === 'thinking' ? "bg-indigo-500" : "bg-emerald-500")} />
-                <span className="text-sm font-bold text-slate-900 dark:text-white">
-                  {appState === 'idle' ? 'Connected' : appState === 'listening' ? 'Listening' : 'Processing'}
-                </span>
-              </div>
-            </div>
-
-            <div className={cn("p-4 frosted-card")}>
-              <div className="text-[10px] font-bold text-slate-500 uppercase mb-2">Signal Quality</div>
-              <div className="flex items-center gap-2">
-                <Activity className="w-4 h-4 text-emerald-500" />
-                <span className="text-sm font-bold text-slate-900 dark:text-white">Excellent</span>
-              </div>
-            </div>
-
-            <div className={cn("p-4 frosted-card")}>
-              <div className="text-[10px] font-bold text-slate-500 uppercase mb-2">Session Time</div>
-              <div className="flex items-center gap-2">
-                <Clock className="w-4 h-4 text-amber-500" />
-                <span className="text-sm font-bold text-slate-900 dark:text-white">
-                  {formatDuration(sessionDuration)}
-                </span>
-              </div>
-            </div>
-          </div>
-
-          {/* Quick Actions */}
-          <div className={cn("p-6 space-y-4", glassStyles.container)}>
-            <div className="flex items-center gap-2 text-sm font-bold uppercase tracking-wider text-slate-500 pb-2 border-b border-slate-100 dark:border-white/5">
-              <Zap className="w-4 h-4 text-amber-500" />
-              Quick Actions
-            </div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-              {QUICK_ACTIONS.map(action => (
-                <button
-                  key={action.id}
-                  className="p-3 rounded-xl flex flex-col items-center justify-center gap-2 text-xs font-bold transition-all bg-slate-50 dark:bg-white/[0.02] border border-black/5 dark:border-white/5 hover:border-indigo-500/30 hover:bg-indigo-50 dark:hover:bg-indigo-500/5 group text-center"
-                >
-                  <action.icon className="w-5 h-5 text-slate-400 group-hover:text-indigo-500 transition-colors" />
-                  <span className="text-slate-600 dark:text-slate-300">{action.label}</span>
-                </button>
-              ))}
-            </div>
-          </div>
-
-          {/* Recent Sessions */}
-          <div className={cn("p-6 space-y-4", glassStyles.container)}>
-            <div className="flex items-center gap-2 text-sm font-bold uppercase tracking-wider text-slate-500 pb-2 border-b border-slate-100 dark:border-white/5">
-              <History className="w-4 h-4 text-slate-400" />
-              Recent Sessions
-            </div>
-            <div className="space-y-3">
-              {RECENT_SESSIONS.map(session => (
-                <div key={session.id} className="flex items-center justify-between p-3 rounded-xl bg-slate-50 dark:bg-white/[0.02] border border-black/5 dark:border-white/5 hover:border-slate-300 dark:hover:border-white/20 transition-colors cursor-pointer group">
-                  <div className="flex items-center gap-3">
-                    <div className="p-2 rounded-lg bg-indigo-500/10 text-indigo-500">
-                      <Mic className="w-4 h-4" />
-                    </div>
-                    <div>
-                      <h4 className="text-xs font-bold text-slate-900 dark:text-white group-hover:text-indigo-500 transition-colors">
-                        {session.title}
-                      </h4>
-                      <p className="text-[10px] text-slate-500 mt-0.5">{session.date}</p>
-                    </div>
-                  </div>
-                  <span className="text-[10px] font-bold text-slate-400">{session.duration}</span>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Settings Overlay (conditionally rendered) */}
-          <AnimatePresence>
-            {showSettings && (
-              <motion.div
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: 10 }}
-                className={cn("absolute right-0 top-20 w-80 p-6 z-50 shadow-2xl", glassStyles.container)}
-              >
-                <div className="flex items-center justify-between mb-6">
-                  <h3 className="text-sm font-bold text-slate-900 dark:text-white flex items-center gap-2">
-                    <Settings className="w-4 h-4 text-indigo-500" />
-                    Voice Settings
-                  </h3>
-                  <button onClick={() => setShowSettings(false)} className="text-slate-400 hover:text-slate-600">
-                    <Trash2 className="w-4 h-4 opacity-0" /> {/* Spacer */}
+                  <button className="rounded-full border border-zinc-800 bg-zinc-800/70 p-4 text-zinc-300 transition-all duration-300 hover:border-zinc-700 hover:bg-zinc-700/70 hover:text-white">
+                    <RotateCcw className="h-5 w-5" />
                   </button>
                 </div>
 
-                <div className="space-y-5">
-                  <div className="space-y-2">
-                    <label className="text-[10px] font-bold text-slate-500 uppercase">AI Voice Style</label>
-                    <select 
-                      value={voiceStyle}
-                      onChange={(e) => setVoiceStyle(e.target.value)}
-                      className="w-full p-2.5 rounded-xl bg-slate-100 dark:bg-white/5 border border-black/5 dark:border-white/10 text-xs font-semibold focus:outline-none focus:ring-2 focus:ring-indigo-500/50"
-                    >
-                      <option>Friendly & Encouraging</option>
-                      <option>Professional & Direct</option>
-                      <option>Academic</option>
-                    </select>
-                  </div>
-
-                  <div className="space-y-2">
-                    <label className="text-[10px] font-bold text-slate-500 uppercase">Language</label>
-                    <select 
-                      value={language}
-                      onChange={(e) => setLanguage(e.target.value)}
-                      className="w-full p-2.5 rounded-xl bg-slate-100 dark:bg-white/5 border border-black/5 dark:border-white/10 text-xs font-semibold focus:outline-none focus:ring-2 focus:ring-indigo-500/50"
-                    >
-                      <option>English (US)</option>
-                      <option>English (UK)</option>
-                      <option>Spanish</option>
-                      <option>French</option>
-                    </select>
-                  </div>
-
-                  <div className="space-y-3">
-                    <div className="flex justify-between">
-                      <label className="text-[10px] font-bold text-slate-500 uppercase">Speaking Speed</label>
-                      <span className="text-[10px] font-bold text-indigo-500">{speakingSpeed}x</span>
-                    </div>
-                    <input 
-                      type="range" min="0.5" max="2" step="0.1" 
-                      value={speakingSpeed}
-                      onChange={(e) => setSpeakingSpeed(parseFloat(e.target.value))}
-                      className="w-full accent-indigo-500" 
-                    />
-                  </div>
-
-                  <div className="space-y-3">
-                    <div className="flex justify-between">
-                      <label className="text-[10px] font-bold text-slate-500 uppercase">Volume</label>
-                      <span className="text-[10px] font-bold text-indigo-500">{volume}%</span>
-                    </div>
-                    <input 
-                      type="range" min="0" max="100" 
-                      value={volume}
-                      onChange={(e) => setVolume(parseInt(e.target.value))}
-                      className="w-full accent-indigo-500" 
-                    />
-                  </div>
+                <div className="text-sm font-medium text-zinc-400">
+                  {appState === 'listening' ? 'Tap the mic to stop speaking' : 'Tap the mic to start a conversation'}
                 </div>
-              </motion.div>
-            )}
-          </AnimatePresence>
+              </div>
+            </section>
 
+            <section className="flex min-h-[320px] flex-col rounded-[30px] border border-zinc-800/80 bg-zinc-900/70 p-6 shadow-[0_20px_70px_rgba(0,0,0,0.25)] backdrop-blur-2xl">
+              <div className="mb-6 flex items-center justify-between border-b border-zinc-800/80 pb-4">
+                <div className="flex items-center gap-2 text-sm font-semibold uppercase tracking-[0.24em] text-zinc-400">
+                  <FileText className="h-4 w-4 text-indigo-400" />
+                  Live Transcript
+                </div>
+              </div>
+
+              <div className="flex-1 space-y-4 overflow-y-auto">
+                {messages.length === 0 ? (
+                  <div className="flex h-full flex-col items-center justify-center rounded-[24px] border border-dashed border-zinc-800 bg-zinc-950/50 px-6 py-10 text-center text-zinc-400">
+                    <div className="mb-4 flex h-14 w-14 items-center justify-center rounded-2xl border border-zinc-800 bg-zinc-900/80 text-zinc-300">
+                      <MessageSquare className="h-7 w-7" />
+                    </div>
+                    <h3 className="mb-2 text-lg font-semibold text-zinc-200">No conversation yet</h3>
+                    <p className="max-w-sm text-sm leading-6 text-zinc-500">Start speaking and your live transcript will appear here with polished, readable responses.</p>
+                  </div>
+                ) : (
+                  messages.map((msg) => (
+                    <motion.div
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      key={msg.id}
+                      className={cn(
+                        'max-w-[88%] rounded-2xl border p-4 shadow-sm',
+                        msg.sender === 'user'
+                          ? 'ml-auto rounded-tr-md border-zinc-800 bg-zinc-800/70 text-zinc-100'
+                          : 'mr-auto rounded-tl-md border-indigo-500/20 bg-indigo-500/10 text-zinc-100'
+                      )}
+                    >
+                      <div className="mb-2 flex items-center gap-2 text-[10px] font-semibold uppercase tracking-[0.24em] text-zinc-500">
+                        {msg.sender === 'user' ? 'You' : 'AI Tutor'}
+                        <span className="font-normal normal-case text-zinc-400">{msg.timestamp}</span>
+                      </div>
+                      <p className="text-sm leading-7 text-zinc-300">{msg.text}</p>
+                    </motion.div>
+                  ))
+                )}
+              </div>
+            </section>
+          </div>
+
+          <aside className="flex flex-col gap-6">
+            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2">
+              <div className="rounded-[24px] border border-zinc-800/80 bg-zinc-900/60 p-4 shadow-[0_12px_40px_rgba(0,0,0,0.2)] backdrop-blur-xl">
+                <div className="mb-2 text-[10px] font-semibold uppercase tracking-[0.24em] text-zinc-500">Microphone</div>
+                <div className="flex items-center gap-2">
+                  <div className={cn('h-2.5 w-2.5 rounded-full', appState === 'listening' ? 'animate-pulse bg-emerald-500' : 'bg-zinc-600')} />
+                  <span className="text-sm font-semibold text-zinc-100">{appState === 'listening' ? 'Active' : 'Standby'}</span>
+                </div>
+              </div>
+
+              <div className="rounded-[24px] border border-zinc-800/80 bg-zinc-900/60 p-4 shadow-[0_12px_40px_rgba(0,0,0,0.2)] backdrop-blur-xl">
+                <div className="mb-2 text-[10px] font-semibold uppercase tracking-[0.24em] text-zinc-500">Voice AI</div>
+                <div className="flex items-center gap-2">
+                  <div className={cn('h-2.5 w-2.5 rounded-full', appState === 'speaking' || appState === 'thinking' ? 'bg-indigo-500' : 'bg-emerald-500')} />
+                  <span className="text-sm font-semibold text-zinc-100">{appState === 'idle' ? 'Connected' : appState === 'listening' ? 'Listening' : 'Processing'}</span>
+                </div>
+              </div>
+
+              <div className="rounded-[24px] border border-zinc-800/80 bg-zinc-900/60 p-4 shadow-[0_12px_40px_rgba(0,0,0,0.2)] backdrop-blur-xl">
+                <div className="mb-2 text-[10px] font-semibold uppercase tracking-[0.24em] text-zinc-500">Signal Quality</div>
+                <div className="flex items-center gap-2">
+                  <Activity className="h-4 w-4 text-emerald-500" />
+                  <span className="text-sm font-semibold text-zinc-100">Excellent</span>
+                </div>
+              </div>
+
+              <div className="rounded-[24px] border border-zinc-800/80 bg-zinc-900/60 p-4 shadow-[0_12px_40px_rgba(0,0,0,0.2)] backdrop-blur-xl">
+                <div className="mb-2 text-[10px] font-semibold uppercase tracking-[0.24em] text-zinc-500">Session Time</div>
+                <div className="flex items-center gap-2">
+                  <Clock className="h-4 w-4 text-amber-400" />
+                  <span className="text-sm font-semibold text-zinc-100">{formatDuration(sessionDuration)}</span>
+                </div>
+              </div>
+            </div>
+
+            <section className="rounded-[30px] border border-zinc-800/80 bg-zinc-900/60 p-6 shadow-[0_20px_70px_rgba(0,0,0,0.25)] backdrop-blur-2xl">
+              <div className="mb-4 flex items-center gap-2 border-b border-zinc-800/80 pb-4 text-sm font-semibold uppercase tracking-[0.24em] text-zinc-400">
+                <Zap className="h-4 w-4 text-amber-400" />
+                Quick Actions
+              </div>
+              <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2">
+                {QUICK_ACTIONS.map((action) => {
+                  const Icon = action.icon;
+                  return (
+                    <button
+                      key={action.id}
+                      className="group flex flex-col items-center justify-center gap-2 rounded-2xl border border-zinc-800/80 bg-zinc-950/50 p-4 text-center transition-all duration-300 hover:-translate-y-0.5 hover:border-indigo-500/30 hover:bg-zinc-800/80"
+                    >
+                      <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-zinc-800/70 text-zinc-300 transition-colors duration-300 group-hover:bg-indigo-500/10 group-hover:text-indigo-400">
+                        <Icon className="h-5 w-5" />
+                      </div>
+                      <span className="text-sm font-medium text-zinc-300">{action.label}</span>
+                    </button>
+                  );
+                })}
+              </div>
+            </section>
+
+            <section className="rounded-[30px] border border-zinc-800/80 bg-zinc-900/60 p-6 shadow-[0_20px_70px_rgba(0,0,0,0.25)] backdrop-blur-2xl">
+              <div className="mb-4 flex items-center gap-2 border-b border-zinc-800/80 pb-4 text-sm font-semibold uppercase tracking-[0.24em] text-zinc-400">
+                <History className="h-4 w-4 text-zinc-400" />
+                Recent Sessions
+              </div>
+              <div className="space-y-3">
+                {RECENT_SESSIONS.map((session) => (
+                  <div
+                    key={session.id}
+                    className="flex items-center justify-between rounded-2xl border border-zinc-800/80 bg-zinc-950/50 p-3 transition-all duration-300 hover:-translate-y-0.5 hover:border-zinc-700 hover:bg-zinc-800/70"
+                  >
+                    <div className="flex items-center gap-3">
+                      <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-indigo-500/10 text-indigo-400">
+                        <Mic className="h-4 w-4" />
+                      </div>
+                      <div>
+                        <h4 className="text-sm font-semibold text-zinc-100">{session.title}</h4>
+                        <p className="text-xs text-zinc-500">{session.date}</p>
+                      </div>
+                    </div>
+                    <span className="text-xs font-semibold text-zinc-400">{session.duration}</span>
+                  </div>
+                ))}
+              </div>
+            </section>
+          </aside>
         </div>
 
+        <AnimatePresence>
+          {showSettings && (
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: 10 }}
+              className="relative z-20 rounded-[28px] border border-zinc-800/80 bg-zinc-900/80 p-6 shadow-[0_25px_80px_rgba(0,0,0,0.35)] backdrop-blur-2xl sm:w-[360px] sm:self-end"
+            >
+              <div className="mb-6 flex items-center justify-between">
+                <div className="flex items-center gap-2 text-sm font-semibold text-zinc-100">
+                  <Settings className="h-4 w-4 text-indigo-400" />
+                  Voice Settings
+                </div>
+                <button onClick={() => setShowSettings(false)} className="text-zinc-500 transition-colors hover:text-zinc-300">
+                  <Trash2 className="h-4 w-4 opacity-0" />
+                </button>
+              </div>
+
+              <div className="space-y-5">
+                <div className="space-y-2">
+                  <label className="text-[10px] font-semibold uppercase tracking-[0.24em] text-zinc-500">AI Voice Style</label>
+                  <select
+                    value={voiceStyle}
+                    onChange={(e) => setVoiceStyle(e.target.value)}
+                    className="w-full rounded-2xl border border-zinc-800 bg-zinc-950/70 p-3 text-sm font-medium text-zinc-200 outline-none ring-0 focus:border-indigo-500/40"
+                  >
+                    <option>Friendly & Encouraging</option>
+                    <option>Professional & Direct</option>
+                    <option>Academic</option>
+                  </select>
+                </div>
+
+                <div className="space-y-2">
+                  <label className="text-[10px] font-semibold uppercase tracking-[0.24em] text-zinc-500">Language</label>
+                  <select
+                    value={language}
+                    onChange={(e) => setLanguage(e.target.value)}
+                    className="w-full rounded-2xl border border-zinc-800 bg-zinc-950/70 p-3 text-sm font-medium text-zinc-200 outline-none ring-0 focus:border-indigo-500/40"
+                  >
+                    <option>English (US)</option>
+                    <option>English (UK)</option>
+                    <option>Spanish</option>
+                    <option>French</option>
+                  </select>
+                </div>
+
+                <div className="space-y-3">
+                  <div className="flex items-center justify-between">
+                    <label className="text-[10px] font-semibold uppercase tracking-[0.24em] text-zinc-500">Speaking Speed</label>
+                    <span className="text-sm font-semibold text-indigo-400">{speakingSpeed}x</span>
+                  </div>
+                  <input
+                    type="range"
+                    min="0.5"
+                    max="2"
+                    step="0.1"
+                    value={speakingSpeed}
+                    onChange={(e) => setSpeakingSpeed(parseFloat(e.target.value))}
+                    className="w-full accent-indigo-500"
+                  />
+                </div>
+
+                <div className="space-y-3">
+                  <div className="flex items-center justify-between">
+                    <label className="text-[10px] font-semibold uppercase tracking-[0.24em] text-zinc-500">Volume</label>
+                    <span className="text-sm font-semibold text-indigo-400">{volume}%</span>
+                  </div>
+                  <input
+                    type="range"
+                    min="0"
+                    max="100"
+                    value={volume}
+                    onChange={(e) => setVolume(parseInt(e.target.value))}
+                    className="w-full accent-indigo-500"
+                  />
+                </div>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
     </div>
   );
