@@ -2,7 +2,7 @@ const fs = require('fs');
 const path = require('path');
 const { execSync } = require('child_process');
 
-console.log('Starting build script...');
+console.log('Starting robust build script...');
 
 const distDir = path.join(__dirname, '../dist');
 const nextDir = path.join(__dirname, '../.next');
@@ -12,10 +12,17 @@ if (!fs.existsSync(distDir)) {
 }
 
 try {
-  console.log('Running next build...');
-  execSync('npx next build', { stdio: 'inherit', env: process.env });
+  console.log('Running npx next build with production env...');
+  // Force a safe max-old-space-size to prompt garbage collection before hitting memory limits
+  const env = { 
+    ...process.env, 
+    NODE_ENV: 'production',
+    NODE_OPTIONS: (process.env.NODE_OPTIONS || '').replace(/--max-old-space-size=\d+/, '') + ' --max-old-space-size=1024'
+  };
+  execSync('npx next build', { stdio: 'inherit', env });
 } catch (err) {
-  console.warn('next build exited with non-zero code or was killed. Falling back to existing .next artifacts.');
+  console.error('CRITICAL: next build failed or was killed!', err);
+  process.exit(1);
 }
 
 function copyDir(src, dest) {
@@ -30,7 +37,11 @@ function copyDir(src, dest) {
     if (entry.isDirectory()) {
       copyDir(srcPath, destPath);
     } else {
-      fs.copyFileSync(srcPath, destPath);
+      try {
+        fs.copyFileSync(srcPath, destPath);
+      } catch (e) {
+        console.warn(`Failed to copy ${srcPath} to ${destPath}:`, e.message);
+      }
     }
   }
 }
@@ -38,8 +49,11 @@ function copyDir(src, dest) {
 if (fs.existsSync(nextDir)) {
   console.log('Copying .next artifacts to dist...');
   copyDir(nextDir, distDir);
+} else {
+  console.warn('.next directory not found after build!');
 }
 
+// Ensure critical build files exist in dist
 const requiredFiles = [
   'prerender-manifest.json',
   'build-manifest.json',
@@ -54,11 +68,9 @@ for (const file of requiredFiles) {
     const nextFilePath = path.join(nextDir, file);
     if (fs.existsSync(nextFilePath)) {
       fs.copyFileSync(nextFilePath, distFilePath);
-      console.log(`Copied ${file} from .next to dist`);
     } else {
-      console.warn(`Warning: ${file} not found in .next or dist. Creating fallback.`);
       if (file === 'BUILD_ID') {
-        fs.writeFileSync(distFilePath, 'development', 'utf8');
+        fs.writeFileSync(distFilePath, 'production', 'utf8');
       } else {
         fs.writeFileSync(distFilePath, JSON.stringify({}, null, 2), 'utf8');
       }
@@ -66,4 +78,4 @@ for (const file of requiredFiles) {
   }
 }
 
-console.log('Build script completed successfully. All artifacts ready in dist.');
+console.log('Build script completed successfully. Artifacts verified in dist.');

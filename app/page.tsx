@@ -1,5 +1,6 @@
 'use client';
 
+
 export const dynamic = 'force-dynamic';
 
 import * as React from 'react';
@@ -21,6 +22,10 @@ export default function Home() {
   const router = useRouter();
   const [activeSection, setActiveSection] = React.useState<string>('');
   const [loading, setLoading] = React.useState(true);
+
+  React.useEffect(() => {
+    router.prefetch('/dashboard');
+  }, [router]);
 
   React.useEffect(() => {
     if (loading) return;

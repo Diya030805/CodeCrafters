@@ -1,46 +1,28 @@
 'use client';
 
+
 export const dynamic = 'force-dynamic';
 
 import * as React from 'react';
-import { Navbar } from '@/components/landing/navbar';
-import { Sidebar } from '@/components/dashboard/sidebar';
-import { KnowledgeBaseView } from '@/components/dashboard/knowledge-base-view';
 import { motion } from 'motion/react';
+import nextDynamic from 'next/dynamic';
+
+const KnowledgeBaseView = nextDynamic(
+  () => import('@/components/dashboard/knowledge-base-view').then((mod) => mod.KnowledgeBaseView),
+  { ssr: false, loading: () => <div className="h-96 rounded-2xl bg-slate-100/50 dark:bg-white/[0.02] animate-pulse" /> }
+);
 
 export default function KnowledgeBasePage() {
   return (
-    <main className="min-h-screen bg-slate-50 text-slate-800 dark:bg-[#0B0C0E] dark:text-white relative overflow-x-hidden transition-colors duration-300">
-      {/* Soft Ambient Radial Background Glows */}
-      <div className="absolute top-[20%] left-[10%] w-[500px] h-[500px] bg-emerald-600/5 dark:bg-emerald-600/10 blur-[130px] rounded-full pointer-events-none z-0" />
-      <div className="absolute top-[60%] right-[10%] w-[600px] h-[600px] bg-amber-600/5 dark:bg-amber-600/10 blur-[140px] rounded-full pointer-events-none z-0" />
-
-      <div className="relative z-10">
-        <Navbar view="dashboard" />
-        
-        <motion.div
-          key="knowledge-base-workspace"
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: 30 }}
-          transition={{ type: "spring", stiffness: 400, damping: 28 }}
-          className="pt-28 pb-12 relative z-10"
-        >
-          <div className="w-full px-4 max-w-[1600px] mx-auto">
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
-              {/* Sidebar */}
-              <div className="lg:col-span-3 sticky top-28">
-                <Sidebar />
-              </div>
-
-              {/* Main Workspace */}
-              <div className="lg:col-span-9">
-                <KnowledgeBaseView />
-              </div>
-            </div>
-          </div>
-        </motion.div>
-      </div>
-    </main>
+    <motion.div
+      key="knowledge-base-workspace"
+      initial={{ opacity: 0, y: 15 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: 15 }}
+      transition={{ duration: 0.3 }}
+      className="w-full h-full"
+    >
+      <KnowledgeBaseView />
+    </motion.div>
   );
 }

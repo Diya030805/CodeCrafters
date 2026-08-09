@@ -33,6 +33,8 @@ import {
 } from 'lucide-react';
 import { useAccent } from '@/components/accent-provider';
 import { cn } from '@/lib/utils';
+import { StreakCounter } from '@/components/dashboard/streak-counter';
+import { DailyWisdom } from '@/components/dashboard/daily-wisdom';
 
 interface Task {
   id: number;
@@ -187,6 +189,30 @@ export function DashboardOverview() {
       transition: { type: "spring" as const, stiffness: 350, damping: 26 } 
     }
   };
+
+  const [mounted, setMounted] = React.useState(false);
+  React.useEffect(() => {
+    let active = true;
+    requestAnimationFrame(() => {
+      if (active) setMounted(true);
+    });
+    return () => {
+      active = false;
+    };
+  }, []);
+
+  if (!mounted) {
+    return (
+      <div className="space-y-10 p-4 sm:p-6 md:p-8 max-w-7xl mx-auto animate-pulse">
+        <div className="h-20 rounded-2xl bg-white/[0.02]" />
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="h-40 rounded-3xl bg-white/[0.02]" />
+          <div className="h-40 rounded-3xl bg-white/[0.02]" />
+          <div className="h-40 rounded-3xl bg-white/[0.02]" />
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="space-y-10 p-4 sm:p-6 md:p-8 max-w-7xl mx-auto transition-all duration-300 ease-in-out text-slate-100 selection:bg-amber-500/20">
@@ -368,6 +394,12 @@ export function DashboardOverview() {
           )}
         </AnimatePresence>
       </motion.div>
+
+      {/* DAILY LEARNING STREAK COUNTER COMPONENT */}
+      <StreakCounter />
+
+      {/* DAILY WISDOM & PRODUCTIVITY TIP WIDGET */}
+      <DailyWisdom />
 
       {/* ASYMMETRIC GRID ABOVE THE FOLD: Two components of staggered size */}
       <motion.div 

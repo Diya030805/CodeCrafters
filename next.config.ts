@@ -2,7 +2,7 @@ import type {NextConfig} from 'next';
 
 const nextConfig: NextConfig = {
   reactStrictMode: true,
-  distDir: 'dist',
+  devIndicators: false,
   productionBrowserSourceMaps: false,
   generateEtags: false,
   poweredByHeader: false,
@@ -28,10 +28,13 @@ const nextConfig: NextConfig = {
   experimental: {
     cpus: 1,
     workerThreads: false,
+    webpackBuildWorker: false,
   },
-  transpilePackages: ['motion'],
+  transpilePackages: [],
   webpack: (config, {dev}) => {
     if (!dev) {
+      config.cache = false;
+      config.parallelism = 1;
       config.optimization.minimize = false;
     }
     // HMR is disabled in AI Studio via DISABLE_HMR env var.

@@ -1,12 +1,28 @@
+'use client';
+
+
 export const dynamic = 'force-dynamic';
 
-import { GamificationView } from '@/components/dashboard/gamification-view';
+import * as React from 'react';
+import { motion } from 'motion/react';
+import nextDynamic from 'next/dynamic';
 
-export const metadata = {
-  title: 'Gamification Center | EducAI',
-  description: 'Motivating learning through rewards, achievements, and progress.',
-};
+const GamificationView = nextDynamic(
+  () => import('@/components/dashboard/gamification-view').then((mod) => mod.GamificationView),
+  { ssr: false, loading: () => <div className="h-96 rounded-2xl bg-slate-100/50 dark:bg-white/[0.02] animate-pulse" /> }
+);
 
 export default function GamificationPage() {
-  return <GamificationView />;
+  return (
+    <motion.div
+      key="gamification-workspace"
+      initial={{ opacity: 0, y: 15 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: 15 }}
+      transition={{ duration: 0.3 }}
+      className="w-full h-full"
+    >
+      <GamificationView />
+    </motion.div>
+  );
 }

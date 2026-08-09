@@ -1,12 +1,28 @@
+'use client';
+
+
 export const dynamic = 'force-dynamic';
 
-import { StudyPlannerView } from '@/components/dashboard/study-planner-view';
+import * as React from 'react';
+import { motion } from 'motion/react';
+import nextDynamic from 'next/dynamic';
 
-export const metadata = {
-  title: 'Smart Study Planner | EducAI',
-  description: 'AI-powered Study Planner to organize learning goals, schedule tasks, track deadlines, and optimize study habits.',
-};
+const StudyPlannerView = nextDynamic(
+  () => import('@/components/dashboard/study-planner-view').then((mod) => mod.StudyPlannerView),
+  { ssr: false, loading: () => <div className="h-96 rounded-2xl bg-slate-100/50 dark:bg-white/[0.02] animate-pulse" /> }
+);
 
 export default function PlannerPage() {
-  return <StudyPlannerView />;
+  return (
+    <motion.div
+      key="planner-workspace"
+      initial={{ opacity: 0, y: 15 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: 15 }}
+      transition={{ duration: 0.3 }}
+      className="w-full h-full"
+    >
+      <StudyPlannerView />
+    </motion.div>
+  );
 }

@@ -521,22 +521,8 @@ export function StudyPlannerView() {
   const weekDays = getWeekDays();
 
   return (
-    <main className="min-h-screen bg-slate-50 text-slate-800 dark:bg-[#0B0C0E] dark:text-white relative overflow-x-hidden transition-colors duration-300">
-      {/* Background radial glow */}
-      <div className="absolute top-[10%] left-[15%] w-[500px] h-[500px] bg-amber-500/5 dark:bg-amber-500/10 blur-[130px] rounded-full pointer-events-none z-0" />
-      <div className="absolute top-[50%] right-[10%] w-[600px] h-[600px] bg-blue-600/5 dark:bg-blue-600/10 blur-[140px] rounded-full pointer-events-none z-0" />
-
-      <div className="relative z-10">
-        <Navbar view="dashboard" />
-
-        <div className="pt-28 pb-16 px-4 max-w-[1600px] mx-auto grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
-          {/* SIDEBAR - 3 COLUMNS */}
-          <div className="lg:col-span-3">
-            <Sidebar />
-          </div>
-
-          {/* MAIN STUDY PLANNER WORKSPACE - 9 COLUMNS */}
-          <div className="lg:col-span-9 space-y-6">
+    <>
+      <div className="space-y-6 w-full">
             
             {/* HEADER BANNER */}
             <div className={cn("p-6 sm:p-8 rounded-3xl relative overflow-hidden", glassStyles.container)}>
@@ -1332,8 +1318,6 @@ export function StudyPlannerView() {
             )}
 
           </div>
-        </div>
-      </div>
 
       {/* REQUIREMENT 3: CREATE STUDY PLAN MODAL WITH AI AUTO-GENERATION */}
       <AnimatePresence>
@@ -1812,6 +1796,6 @@ export function StudyPlannerView() {
           </motion.div>
         )}
       </AnimatePresence>
-    </main>
+    </>
   );
 }
