@@ -1,27 +1,10 @@
-<div align="center">
-
 # 🎓 CodeCrafters
 
 ### AI-powered learning & productivity platform for students
 
-<br>
-
-<img src="https://img.shields.io/badge/Next.js-15-black?style=flat-square&logo=next.js">
-<img src="https://img.shields.io/badge/React-19-61DAFB?style=flat-square&logo=react">
-<img src="https://img.shields.io/badge/TypeScript-5.9-3178C6?style=flat-square&logo=typescript">
-<img src="https://img.shields.io/badge/Tailwind_CSS-4-06B6D4?style=flat-square&logo=tailwindcss">
-<img src="https://img.shields.io/badge/Supabase-PostgreSQL-3FCF8E?style=flat-square&logo=supabase">
-<img src="https://img.shields.io/badge/Gemini_AI-Powered-8E75B2?style=flat-square&logo=google">
-
-<br><br>
-
 **AI Tutor • Smart Flashcards • Quiz • Study Planner • Notes • Analytics**
 
-<br>
-
-[🚀 Live Demo](YOUR_LIVE_URL) · [📂 GitHub](YOUR_GITHUB_URL)
-
-</div>
+[🚀 Live Demo](YOUR_LIVE_URL) · [📂 GitHub](https://github.com/Diya030805/CodeCrafters)
 
 ---
 
@@ -30,8 +13,8 @@
 **CodeCrafters** is an AI-powered learning and productivity platform built to help students
 learn smarter, stay organized, and track their academic progress from one unified workspace.
 
-It combines AI-powered learning tools with productivity features such as **AI Tutor,
-Flashcards, Quizzes, Study Planning, Notes, Focus Sessions, and Learning Analytics**.
+It combines AI-powered learning tools with productivity features such as **AI Tutor,**
+**Flashcards, Quizzes, Study Planning, Notes, Focus Sessions, and Learning Analytics**.
 
 ---
 
@@ -122,5 +105,12 @@ An AI-powered quiz experience for testing knowledge and reinforcing learning.
 ### 1. Clone the repository
 
 ```bash
-git clone YOUR_GITHUB_URL
+git clone https://github.com/Diya030805/CodeCrafters.git
 cd CodeCrafters
+
+2. Install dependencies
+
+npm install
+
+3. Launch the development server
+npm run dev
