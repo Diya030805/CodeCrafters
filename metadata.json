@@ -1,5 +1,5 @@
 {
-  "name": "EducAI",
+  "name": "BrainBoost AI",
   "description": "Elite AI-powered study planner and educational dashboard with award-winning UI/UX.",
   "requestFramePermissions": [],
   "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]

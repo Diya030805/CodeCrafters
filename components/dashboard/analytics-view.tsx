@@ -152,7 +152,7 @@ export function AnalyticsView() {
     setTimeout(() => {
       const element = document.createElement('a');
       const file = new Blob([
-        `EducAI Analytics Report - ${timeRange.toUpperCase()}\n` +
+        `BrainBoost AI Analytics Report - ${timeRange.toUpperCase()}\n` +
         `Generated on: ${new Date().toLocaleDateString()}\n` +
         `Total Study Hours: 142.5 hrs\n` +
         `Learning Streak: 18 Days\n` +
@@ -160,7 +160,7 @@ export function AnalyticsView() {
         `Focus Score: 94/100\n`
       ], { type: 'text/plain' });
       element.href = URL.createObjectURL(file);
-      element.download = `EducAI_Analytics_Report_${timeRange}.txt`;
+      element.download = `BrainBoost_AI_Analytics_Report_${timeRange}.txt`;
       document.body.appendChild(element);
       element.click();
       document.body.removeChild(element);

@@ -723,7 +723,7 @@ export function StudyPlannerView() {
                     <div>
                       <h3 className="text-xl font-black text-slate-900 dark:text-white">No Active Study Plan Exists</h3>
                       <p className="text-xs text-slate-500 dark:text-zinc-400 mt-1 max-w-md mx-auto">
-                        Let EducAI build a milestone-driven, personalized study schedule tailored to your learning goals and daily time availability.
+                        Let BrainBoost AI build a milestone-driven, personalized study schedule tailored to your learning goals and daily time availability.
                       </p>
                     </div>
                     <button

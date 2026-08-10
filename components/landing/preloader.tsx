@@ -53,7 +53,7 @@ export function Preloader({ onComplete }: PreloaderProps) {
 
   if (!mounted) return null;
 
-  const brandText = "EducAi";
+  const brandText = "BrainBoost AI";
   const letters = brandText.split("");
 
   // Framer Motion spring and stagger configurations
@@ -162,7 +162,7 @@ export function Preloader({ onComplete }: PreloaderProps) {
 
           {/* Minimal Bottom Brand Credits */}
           <div className="absolute bottom-10 text-center font-mono text-[9px] tracking-[0.25em] text-slate-600 dark:text-zinc-600 uppercase">
-            Designed for Excellence • EducAi Core v1.4
+            Designed for Excellence • BrainBoost AI Core v1.4
           </div>
         </motion.div>
       )}

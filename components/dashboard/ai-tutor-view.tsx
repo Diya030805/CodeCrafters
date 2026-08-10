@@ -939,7 +939,7 @@ export function AITutorView() {
 
             <div className="flex items-center justify-between px-1 text-[10px] text-slate-400 dark:text-zinc-500 font-medium">
               <span>Press <kbd className="px-1 py-0.5 rounded bg-slate-200 dark:bg-zinc-800 text-slate-700 dark:text-zinc-300 font-mono">Enter</kbd> to send, <kbd className="px-1 py-0.5 rounded bg-slate-200 dark:bg-zinc-800 text-slate-700 dark:text-zinc-300 font-mono">Shift + Enter</kbd> for new line</span>
-              <span className="hidden sm:inline">EducAI Workspace</span>
+              <span className="hidden sm:inline">BrainBoost AI Workspace</span>
             </div>
 
           </div>

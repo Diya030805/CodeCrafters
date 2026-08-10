@@ -53,10 +53,10 @@ export function Hero({ onStartFreeTrial }: HeroProps) {
             </div>
             <h1 className="text-6xl lg:text-7xl font-heading font-bold tracking-tighter mb-6 leading-[0.9] text-slate-900 dark:text-white">
               Learn Smarter <br/>
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600 dark:from-blue-400 dark:to-indigo-400 font-serif italic">With EducAI.</span>
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600 dark:from-blue-400 dark:to-indigo-400 font-serif italic">With BrainBoost AI.</span>
             </h1>
             <p className="text-lg text-slate-600 dark:text-slate-400 mb-10 max-w-lg leading-relaxed">
-              Personalized study pathways designed to maximize retention and minimize friction using EducAI&apos;s neural feedback.
+              Personalized study pathways designed to maximize retention and minimize friction using BrainBoost AI&apos;s neural feedback.
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 mb-12">

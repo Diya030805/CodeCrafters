@@ -403,7 +403,7 @@ function FeatureCard({ feat, index, isMobile = false }: FeatureCardProps) {
       {/* Interactive CTA Section */}
       <div className="mt-8 flex items-center justify-between">
         <span className="text-[10px] font-bold text-slate-400 dark:text-zinc-500 tracking-wider uppercase">
-          EducAi Core
+          BrainBoost AI Core
         </span>
         <motion.div 
           className="flex items-center gap-1.5 text-xs font-black tracking-wider uppercase text-slate-700 dark:text-zinc-200"

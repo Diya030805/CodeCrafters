@@ -47,7 +47,7 @@ export function Navbar({ view = 'landing', onGetStarted, onBrandClick, activeSec
             <Sparkles className="w-5 h-5 text-white" />
           </div>
           <span className="text-xl font-heading font-bold tracking-tight text-slate-900 dark:text-white">
-            EducAI<span className="text-amber-500">.</span>
+            BrainBoost AI<span className="text-amber-500">.</span>
           </span>
         </Link>
 

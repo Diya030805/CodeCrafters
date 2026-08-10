@@ -18,7 +18,7 @@ const spaceGrotesk = Space_Grotesk({
 });
 
 export const metadata: Metadata = {
-  title: 'EducAI | Elite AI Learning SaaS',
+  title: 'BrainBoost AI | Elite AI Learning SaaS',
   description: 'Next-generation AI-powered study planner and educational dashboard.',
 };
 

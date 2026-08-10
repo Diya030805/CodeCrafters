@@ -314,7 +314,7 @@ export function QuickNote() {
                   </div>
                   <div>
                     <h3 className="font-bold text-sm leading-tight text-slate-900 dark:text-white flex items-center gap-1.5">
-                      EducAI Snippet Workspace
+                      BrainBoost AI Snippet Workspace
                       <Sparkles className="w-3.5 h-3.5 text-amber-500" />
                     </h3>
                     <p className="text-[11px] text-slate-500 dark:text-slate-400">Jot ideas down instantly with real-time AI formatting</p>

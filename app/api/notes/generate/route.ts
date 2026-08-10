@@ -24,7 +24,7 @@ export async function POST(req: NextRequest) {
       }
     });
 
-    let systemInstruction = "You are EducAI's Quick Note helper. You are designed to assist students in expanding, structuring, or summarizing their rough study notes. Always return clean, well-formatted, and concise output in Markdown. Do not include conversational preambles like 'Here is your note'. Start directly with the response.";
+    let systemInstruction = "You are BrainBoost AI's Quick Note helper. You are designed to assist students in expanding, structuring, or summarizing their rough study notes. Always return clean, well-formatted, and concise output in Markdown. Do not include conversational preambles like 'Here is your note'. Start directly with the response.";
     let userPrompt = "";
 
     switch (action) {

@@ -9,7 +9,7 @@ export default function NotFound() {
       </div>
       <h1 className="text-3xl font-black mb-2">Page Not Found</h1>
       <p className="text-slate-400 text-sm max-w-md mb-8">
-        The requested page could not be located in the EducAI application workspace.
+        The requested page could not be located in the BrainBoost AI application workspace.
       </p>
       <Link
         href="/dashboard"
