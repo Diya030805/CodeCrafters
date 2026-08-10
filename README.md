@@ -102,9 +102,3 @@ An AI-powered quiz experience for testing knowledge and reinforcing learning.
 
 
 
-2. Install dependencies
-
-npm install
-
-3. Launch the development server
-npm run dev
