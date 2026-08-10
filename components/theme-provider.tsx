@@ -1,49 +1,51 @@
 'use client';
 
 import * as React from 'react';
-import { cn } from '@/lib/utils';
 
 interface ThemeContextType {
-  darkMode: boolean;
-  setDarkMode: (darkMode: boolean) => void;
+  theme: 'light' | 'dark';
+  setTheme: (theme: 'light' | 'dark') => void;
+  toggleTheme: () => void;
   soundEnabled: boolean;
   setSoundEnabled: (soundEnabled: boolean) => void;
 }
 
 const ThemeContext = React.createContext<ThemeContextType>({
-  darkMode: true,
-  setDarkMode: () => {},
+  theme: 'dark',
+  setTheme: () => {},
+  toggleTheme: () => {},
   soundEnabled: true,
   setSoundEnabled: () => {},
 });
 
 export function ThemeProvider({
   children,
-  ...props
 }: {
   children: React.ReactNode;
-  [key: string]: any;
 }) {
-  const [darkMode, setDarkMode] = React.useState(true);
+  const [theme, setThemeState] = React.useState<'light' | 'dark'>('dark');
   const [soundEnabled, setSoundEnabled] = React.useState(true);
+
+  const applyTheme = React.useCallback((nextTheme: 'light' | 'dark') => {
+    setThemeState(nextTheme);
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('theme', nextTheme);
+      document.documentElement.classList.remove(nextTheme === 'dark' ? 'light' : 'dark');
+      document.documentElement.classList.add(nextTheme);
+      document.documentElement.style.colorScheme = nextTheme;
+    }
+  }, []);
 
   React.useEffect(() => {
     if (typeof window !== 'undefined') {
-      // Initialize theme preference from localStorage on mount
-      const stored = localStorage.getItem('theme-dark');
-      if (stored !== null) {
-        const isDark = stored === 'true';
-        requestAnimationFrame(() => {
-          setDarkMode(isDark);
-        });
-      } else {
-        // Default to dark mode if no setting is saved yet
-        requestAnimationFrame(() => {
-          setDarkMode(true);
-        });
-      }
-      
-      // Initialize sound preference from localStorage on mount
+      const stored = localStorage.getItem('theme');
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      const nextTheme = stored === 'light' || stored === 'dark' ? stored : (prefersDark ? 'dark' : 'light');
+
+      requestAnimationFrame(() => {
+        applyTheme(nextTheme);
+      });
+
       const storedSound = localStorage.getItem('theme-sound');
       if (storedSound !== null) {
         const isSound = storedSound === 'true';
@@ -52,19 +54,11 @@ export function ThemeProvider({
         });
       }
     }
-  }, []);
+  }, [applyTheme]);
 
-  const handleDarkModeChange = React.useCallback((isDark: boolean) => {
-    setDarkMode(isDark);
-    if (typeof window !== 'undefined') {
-      localStorage.setItem('theme-dark', String(isDark));
-      if (isDark) {
-        document.documentElement.classList.add('dark');
-      } else {
-        document.documentElement.classList.remove('dark');
-      }
-    }
-  }, []);
+  const toggleTheme = React.useCallback(() => {
+    applyTheme(theme === 'dark' ? 'light' : 'dark');
+  }, [theme, applyTheme]);
 
   const handleSoundChange = React.useCallback((enabled: boolean) => {
     setSoundEnabled(enabled);
@@ -75,22 +69,21 @@ export function ThemeProvider({
 
   React.useEffect(() => {
     if (typeof window !== 'undefined') {
-      if (darkMode) {
-        document.documentElement.classList.add('dark');
-      } else {
-        document.documentElement.classList.remove('dark');
-      }
+      document.documentElement.classList.remove(theme === 'dark' ? 'light' : 'dark');
+      document.documentElement.classList.add(theme);
+      document.documentElement.style.colorScheme = theme;
     }
-  }, [darkMode]);
+  }, [theme]);
 
   return (
-    <ThemeContext.Provider value={{ 
-      darkMode, 
-      setDarkMode: handleDarkModeChange,
+    <ThemeContext.Provider value={{
+      theme,
+      setTheme: applyTheme,
+      toggleTheme,
       soundEnabled,
-      setSoundEnabled: handleSoundChange
+      setSoundEnabled: handleSoundChange,
     }}>
-      <div className={cn("min-h-screen transition-colors duration-300", darkMode ? "dark" : "")}>
+      <div className="min-h-screen transition-colors duration-300">
         {children}
       </div>
     </ThemeContext.Provider>
@@ -100,11 +93,11 @@ export function ThemeProvider({
 export function useTheme() {
   const context = React.useContext(ThemeContext);
   return {
-    theme: context.darkMode ? 'dark' : 'light',
-    setTheme: (theme: string) => context.setDarkMode(theme === 'dark'),
-    darkMode: context.darkMode,
-    setDarkMode: context.setDarkMode,
-    soundEnabled: context.soundEnabled,
+    theme: context.theme,
+    setTheme: context.setTheme,
+    toggleTheme: context.toggleTheme,
+    darkMode: context.theme === 'dark',
+    setDarkMode: (isDark: boolean) => context.setTheme(isDark ? 'dark' : 'light'),
     setSoundEnabled: context.setSoundEnabled,
   };
 }

@@ -10,20 +10,20 @@ export function UserMenu() {
   const initials = "DG";
 
   return (
-    <div className="flex items-center gap-3 px-3 py-2.5 rounded-2xl bg-slate-200/20 dark:bg-white/[0.02] border border-slate-300/20 dark:border-white/[0.04] transition-all hover:bg-slate-200/40 dark:hover:bg-white/[0.04]">
+    <div className="flex items-center gap-3 px-3 py-2.5 rounded-2xl bg-[color:var(--card-bg)] border border-[color:var(--border)] text-[color:var(--text-primary)] transition-all hover:bg-[color:var(--bg-secondary)]">
       <div className="flex-shrink-0">
-        <div 
-          className="w-8 h-8 rounded-full border border-slate-300 dark:border-white/10 flex items-center justify-center font-bold text-xs overflow-hidden bg-slate-100 dark:bg-zinc-900"
+        <div
+          className="w-8 h-8 rounded-full border border-[color:var(--border)] flex items-center justify-center font-bold text-xs overflow-hidden"
           style={{ backgroundColor: `${meta.hex}20`, color: meta.hex }}
         >
           {initials}
         </div>
       </div>
       <div className="flex-1 min-w-0 flex flex-col text-left">
-        <span className="text-xs font-bold text-slate-800 dark:text-slate-200 truncate leading-tight">
+        <span className="text-xs font-bold text-[color:var(--text-primary)] truncate leading-tight">
           {fullName}
         </span>
-        <span className="text-[10px] font-medium text-slate-400 dark:text-slate-500 truncate mt-0.5">
+        <span className="text-[10px] font-medium text-[color:var(--text-secondary)] truncate mt-0.5">
           {email}
         </span>
       </div>

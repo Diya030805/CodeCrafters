@@ -25,23 +25,23 @@ export function FocusTimer() {
       if (!AudioContext) return;
       const ctx = new AudioContext();
       const now = ctx.currentTime;
-      
+
       const playTone = (freq: number, start: number, duration: number) => {
         const osc = ctx.createOscillator();
         const gain = ctx.createGain();
         osc.type = 'sine';
         osc.frequency.setValueAtTime(freq, start);
-        
+
         gain.gain.setValueAtTime(0, start);
         gain.gain.linearRampToValueAtTime(0.1, start + 0.05);
         gain.gain.exponentialRampToValueAtTime(0.001, start + duration);
-        
+
         osc.connect(gain);
         gain.connect(ctx.destination);
         osc.start(start);
         osc.stop(start + duration);
       };
-      
+
       playTone(261.63, now, 0.3);       // C4
       playTone(329.63, now + 0.08, 0.3); // E4
       playTone(392.00, now + 0.16, 0.3); // G4
@@ -58,23 +58,23 @@ export function FocusTimer() {
       if (!AudioContext) return;
       const ctx = new AudioContext();
       const now = ctx.currentTime;
-      
+
       const playTone = (freq: number, start: number, duration: number) => {
         const osc = ctx.createOscillator();
         const gain = ctx.createGain();
         osc.type = 'sine';
         osc.frequency.setValueAtTime(freq, start);
-        
+
         gain.gain.setValueAtTime(0, start);
         gain.gain.linearRampToValueAtTime(0.12, start + 0.08);
         gain.gain.exponentialRampToValueAtTime(0.001, start + duration);
-        
+
         osc.connect(gain);
         gain.connect(ctx.destination);
         osc.start(start);
         osc.stop(start + duration);
       };
-      
+
       playTone(783.99, now, 0.5);       // G5
       playTone(659.25, now + 0.15, 0.5); // E5
       playTone(523.25, now + 0.30, 0.8); // C5
@@ -113,21 +113,21 @@ export function FocusTimer() {
   return (
     <div className={cn("p-6 flex flex-col items-center gap-10", glassStyles.container)}>
       <div className="text-center">
-        <h3 className="text-[10px] font-black tracking-[0.2em] text-slate-500 uppercase mb-1">Deep Focus</h3>
-        <p className="text-slate-900 dark:text-white font-bold text-lg">Active Session</p>
+        <h3 className="text-[10px] font-black tracking-[0.2em] text-[color:var(--text-secondary)] uppercase mb-1">Deep Focus</h3>
+        <p className="text-[color:var(--text-primary)] font-bold text-lg">Active Session</p>
       </div>
 
       {/* Circular Timer */}
       <div className="relative w-56 h-56 flex items-center justify-center">
         {/* Floating micro-glow particle */}
-        <div 
-          className="absolute top-2 left-2 w-3 h-3 rounded-full animate-[pulse_1.5s_ease-in-out_infinite] pointer-events-none blur-[1px]" 
+        <div
+          className="absolute top-2 left-2 w-3 h-3 rounded-full animate-[pulse_1.5s_ease-in-out_infinite] pointer-events-none blur-[1px]"
           style={{ backgroundColor: meta.hex }}
         />
         {/* Floating spinning vector star */}
-        <div 
+        <div
           className="absolute bottom-4 right-4 w-5 h-5 animate-[spin_6s_linear_infinite] pointer-events-none"
-          style={{ 
+          style={{
             color: meta.hex,
             filter: `drop-shadow(0 0 6px ${meta.hex})`
           }}
@@ -166,7 +166,7 @@ export function FocusTimer() {
           <span className={cn("text-5xl font-black tracking-tighter tabular-nums transition-all duration-300", activeAccentClasses.text)}>
             {formatTime(timeLeft)}
           </span>
-          <span className="text-[10px] font-bold text-slate-500 tracking-widest uppercase mt-1">Remaining</span>
+          <span className="text-[10px] font-bold text-[color:var(--text-secondary)] tracking-widest uppercase mt-1">Remaining</span>
         </div>
       </div>
 
@@ -181,8 +181,7 @@ export function FocusTimer() {
             }
           }}
           className={cn(
-            "h-14 rounded-2xl flex items-center justify-center gap-3 transition-all duration-300 active:scale-[0.97] font-bold text-sm cursor-pointer",
-            activeAccentClasses.button
+            "h-14 rounded-2xl flex items-center justify-center gap-3 transition-all duration-300 active:scale-[0.97] font-bold text-sm cursor-pointer bg-[color:var(--accent)] text-white shadow-[0_20px_90px_rgba(59,130,246,0.25)]",
           )}
         >
           {isActive ? (
@@ -198,12 +197,12 @@ export function FocusTimer() {
           )}
         </button>
         <Tooltip content="Reset Timer Session" side="top">
-          <button 
+          <button
             onClick={() => {
               setIsActive(false);
               setTimeLeft(totalTime);
             }}
-            className={cn("w-14 h-14 rounded-2xl flex items-center justify-center transition-all cursor-pointer hover:bg-slate-200 dark:hover:bg-white/10", glassStyles.card)}
+            className={cn("w-14 h-14 rounded-2xl flex items-center justify-center transition-all cursor-pointer hover:bg-[color:var(--bg-secondary)]", glassStyles.card)}
             aria-label="Reset Timer"
           >
             <RotateCcw className="w-5 h-5" />
@@ -214,12 +213,12 @@ export function FocusTimer() {
       {/* Focus Metadata */}
       <div className="w-full grid grid-cols-2 gap-4">
         <div className={cn("text-center", glassStyles.card)}>
-          <span className="block text-[10px] font-bold text-slate-500 uppercase mb-1">DAILY STREAK</span>
-          <span className="text-slate-900 dark:text-white font-black text-xl">14</span>
+          <span className="block text-[10px] font-bold text-[color:var(--text-secondary)] uppercase mb-1">DAILY STREAK</span>
+          <span className="text-[color:var(--text-primary)] font-black text-xl">14</span>
         </div>
         <div className={cn("text-center", glassStyles.card)}>
-          <span className="block text-[10px] font-bold text-slate-500 uppercase mb-1">RANK</span>
-          <span className="text-amber-500 font-black text-xl">Top 3%</span>
+          <span className="block text-[10px] font-bold text-[color:var(--text-secondary)] uppercase mb-1">RANK</span>
+          <span className="text-[color:var(--accent)] font-black text-xl">Top 3%</span>
         </div>
       </div>
     </div>

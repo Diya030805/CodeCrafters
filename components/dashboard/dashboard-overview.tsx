@@ -2,13 +2,13 @@
 
 import * as React from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { 
-  CheckCircle2, 
-  Calendar, 
-  Clock, 
-  Activity, 
-  Sparkles, 
-  ArrowUpRight, 
+import {
+  CheckCircle2,
+  Calendar,
+  Clock,
+  Activity,
+  Sparkles,
+  ArrowUpRight,
   TrendingUp,
   Info,
   Flame,
@@ -183,10 +183,10 @@ export function DashboardOverview() {
 
   const itemVariants = {
     hidden: { opacity: 0, y: 16 },
-    show: { 
-      opacity: 1, 
-      y: 0, 
-      transition: { type: "spring" as const, stiffness: 350, damping: 26 } 
+    show: {
+      opacity: 1,
+      y: 0,
+      transition: { type: "spring" as const, stiffness: 350, damping: 26 }
     }
   };
 
@@ -215,34 +215,34 @@ export function DashboardOverview() {
   }
 
   return (
-    <div className="space-y-10 p-4 sm:p-6 md:p-8 max-w-7xl mx-auto transition-all duration-300 ease-in-out text-slate-100 selection:bg-amber-500/20">
-      
+    <div className="space-y-10 p-4 sm:p-6 md:p-8 max-w-7xl mx-auto transition-all duration-300 ease-in-out text-[color:var(--text-primary)] selection:bg-[color:var(--accent)]/20">
+
       {/* HEADER BAR: Clean typographic layout with current time, user profile card & notifications */}
-      <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6 pb-6 border-b border-white/[0.03]">
+      <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6 pb-6 border-b border-[color:var(--border)]">
         <div className="space-y-1.5">
           <div className="flex items-center gap-2">
-            <span className="text-[10px] font-bold uppercase tracking-[0.2em] px-2 py-0.5 rounded bg-white/[0.04] text-slate-400 border border-white/[0.03]">
+            <span className="text-[10px] font-bold uppercase tracking-[0.2em] px-2 py-0.5 rounded bg-[color:var(--bg-secondary)] text-[color:var(--text-secondary)] border border-[color:var(--border)]">
               Workspace Active
             </span>
             <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse" />
           </div>
-          <motion.h1 
+          <motion.h1
             initial={{ opacity: 0, y: -4 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.4, ease: "easeOut" }}
-            className="text-2xl sm:text-3xl font-black text-white tracking-tight"
+            className="text-2xl sm:text-3xl font-black text-[color:var(--text-primary)] tracking-tight"
           >
-            Welcome Back, <span className="text-white relative font-extrabold">
+            Welcome Back, <span className="text-[color:var(--text-primary)] relative font-extrabold">
               Diya
             </span>
           </motion.h1>
-          <p className="text-slate-400 text-xs sm:text-sm font-medium tracking-tight">
+          <p className="text-[color:var(--text-secondary)] text-xs sm:text-sm font-medium tracking-tight">
             Here is your adaptive coaching overview. Aria has mapped out 2 critical learning directives for today.
           </p>
         </div>
 
         {/* Status Hub / Calculation Engine */}
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0, scale: 0.97 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.4, delay: 0.1 }}
@@ -260,14 +260,15 @@ export function DashboardOverview() {
       </div>
 
       {/* COACH CHAT BANNER: Premium, original, interactive prompt box representing the AI coach */}
-      <motion.div 
+      <motion.div
         variants={itemVariants}
         initial="hidden"
         animate="show"
-        className="relative overflow-hidden rounded-3xl backdrop-blur-xl bg-gradient-to-r from-zinc-900/90 via-zinc-900/60 to-zinc-950/90 border border-white/[0.05] p-6 sm:p-8 shadow-2xl group"
+        className="relative overflow-hidden rounded-3xl backdrop-blur-xl bg-[color:var(--card-bg)] border border-[color:var(--border)] p-6 sm:p-8 shadow-2xl group"
+        style={{ backgroundImage: `linear-gradient(135deg, ${meta.hex}15, transparent 42%)` }}
       >
-        <div className="absolute top-0 right-0 h-48 w-48 rounded-full bg-amber-500/[0.02] blur-3xl pointer-events-none group-hover:bg-amber-500/[0.04] transition-all duration-700" style={{ backgroundColor: `${meta.hex}05` }} />
-        <div className="absolute bottom-0 left-12 h-32 w-32 rounded-full bg-indigo-500/[0.01] blur-2xl pointer-events-none" />
+        <div className="absolute top-0 right-0 h-48 w-48 rounded-full bg-[color:var(--accent)]/10 blur-3xl pointer-events-none transition-all duration-700" />
+        <div className="absolute bottom-0 left-12 h-32 w-32 rounded-full bg-[color:var(--accent)]/05 blur-2xl pointer-events-none" />
 
         <div className="flex flex-col md:flex-row items-start gap-5 relative z-10">
           {/* Aria AI Avatar */}
@@ -310,9 +311,9 @@ export function DashboardOverview() {
                     whileTap={{ scale: 0.98 }}
                     className={cn(
                       "flex items-center gap-2 px-3 py-2 rounded-xl text-xs font-bold tracking-tight transition-all border duration-200 cursor-pointer",
-                      isActive 
-                        ? "bg-white text-black border-white" 
-                        : "bg-white/[0.02] text-slate-300 border-white/[0.04] hover:bg-white/[0.06] hover:text-white hover:border-white/[0.1]"
+                      isActive
+                        ? "bg-[color:var(--accent)] text-white border-[color:var(--accent)]"
+                        : "bg-[color:var(--bg-secondary)] text-[color:var(--text-secondary)] border-[color:var(--border)] hover:bg-[color:var(--bg-primary)] hover:text-[color:var(--text-primary)]"
                     )}
                   >
                     <Icon className={cn("w-3.5 h-3.5", isActive ? "text-black" : "text-slate-400")} />
@@ -365,9 +366,9 @@ export function DashboardOverview() {
                     <span className="text-[10px] font-bold text-slate-500">Standby mode</span>
                   </div>
                   <div className="flex gap-2">
-                    <input 
-                      type="text" 
-                      placeholder="Ask Aria to synthesize a topic or design a study track..." 
+                    <input
+                      type="text"
+                      placeholder="Ask Aria to synthesize a topic or design a study track..."
                       className="flex-1 px-4 py-2 text-xs rounded-xl bg-white/[0.02] border border-white/[0.05] focus:outline-none focus:border-amber-500/50 text-white placeholder-slate-500"
                     />
                     <button className="px-4 py-2 rounded-xl text-xs font-black bg-white text-black hover:bg-slate-200 cursor-pointer">Send</button>
@@ -402,18 +403,18 @@ export function DashboardOverview() {
       <DailyWisdom />
 
       {/* ASYMMETRIC GRID ABOVE THE FOLD: Two components of staggered size */}
-      <motion.div 
+      <motion.div
         variants={containerVariants}
         initial="hidden"
         animate="show"
         className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch"
       >
-        
+
         {/* LEFT COLUMN (8 cols): Hero "Continue Learning" */}
         <motion.div
           variants={itemVariants}
-          whileHover={{ 
-            y: -3, 
+          whileHover={{
+            y: -3,
             borderColor: `${meta.hex}25`,
             boxShadow: `0 20px 45px -15px rgba(0,0,0,0.6), 0 0 50px -10px ${meta.hex}08`
           }}
@@ -452,7 +453,7 @@ export function DashboardOverview() {
                 <span className="text-white font-extrabold">74% Complete</span>
               </div>
               <div className="bg-white/[0.02] h-2 rounded-full overflow-hidden border border-white/[0.04] p-[1px]">
-                <motion.div 
+                <motion.div
                   className="h-full rounded-full relative"
                   style={{ backgroundColor: meta.hex }}
                   initial={{ width: 0 }}
@@ -495,8 +496,8 @@ export function DashboardOverview() {
         {/* RIGHT COLUMN (4 cols): AI Recommendation Card (Second priority) */}
         <motion.div
           variants={itemVariants}
-          whileHover={{ 
-            y: -3, 
+          whileHover={{
+            y: -3,
             borderColor: `${meta.hex}40`,
             boxShadow: `0 20px 45px -15px rgba(0,0,0,0.6), 0 0 50px -10px ${meta.hex}10`
           }}
@@ -527,7 +528,7 @@ export function DashboardOverview() {
               <span>Duration: 5 Min Drill</span>
               <span className="text-emerald-400 font-black">+14.2% Stabilization</span>
             </div>
-            
+
             <motion.button
               whileHover={{ scale: 1.01 }}
               whileTap={{ scale: 0.99 }}
@@ -543,13 +544,13 @@ export function DashboardOverview() {
       </motion.div>
 
       {/* STATISTICS GRID: Exactly four highly-crafted stats cards with deep reactive states */}
-      <motion.div 
+      <motion.div
         variants={containerVariants}
         initial="hidden"
         animate="show"
         className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"
       >
-        
+
         {/* STAT 1: Study Hours */}
         <motion.div
           variants={itemVariants}
@@ -606,8 +607,8 @@ export function DashboardOverview() {
             </div>
             <div className={cn(
               "text-[10px] font-extrabold uppercase tracking-widest px-2.5 py-0.5 rounded-full border",
-              isStreakLoggedToday 
-                ? "text-emerald-400 bg-emerald-400/10 border-emerald-400/20" 
+              isStreakLoggedToday
+                ? "text-emerald-400 bg-emerald-400/10 border-emerald-400/20"
                 : "text-amber-400 bg-amber-400/10 border-amber-400/20"
             )}>
               {isStreakLoggedToday ? "Secured 🔥" : "Log pending"}
@@ -723,7 +724,7 @@ export function DashboardOverview() {
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
-          
+
           {/* Analytics Line Visualizer (7 Columns) */}
           <motion.div
             initial={{ opacity: 0, scale: 0.99 }}
@@ -746,8 +747,8 @@ export function DashboardOverview() {
             {/* Simulated premium line chart / bar visualizer */}
             <div className="flex-1 min-h-[220px] flex items-end justify-between gap-3.5 relative pb-2 pt-6">
               {histogramData.map((val, i) => (
-                <div 
-                  key={i} 
+                <div
+                  key={i}
                   className="flex-1 relative group cursor-crosshair h-full flex items-end"
                   onMouseEnter={() => setHoveredIndex(i)}
                   onMouseLeave={() => setHoveredIndex(null)}
@@ -757,13 +758,13 @@ export function DashboardOverview() {
                     animate={{ height: `${val}%` }}
                     transition={{ duration: 0.8, delay: 0.15 + (i * 0.03), ease: [0.25, 1, 0.5, 1] }}
                     className="w-full rounded-t-md relative overflow-hidden transition-all duration-300 group-hover:brightness-125"
-                    style={{ 
+                    style={{
                       background: `linear-gradient(to top, ${meta.hex}20, ${meta.hex})`
                     }}
                   >
                     <div className="absolute inset-0 bg-white/5 opacity-0 group-hover:opacity-100 transition-opacity" />
                   </motion.div>
-                  
+
                   {/* Tooltip Overlay */}
                   <AnimatePresence>
                     {hoveredIndex === i && (
@@ -781,7 +782,7 @@ export function DashboardOverview() {
                   </AnimatePresence>
                 </div>
               ))}
-              
+
               {/* Structural Background Lines */}
               <div className="absolute inset-0 flex flex-col justify-between pointer-events-none opacity-[0.02]">
                 {[...Array(5)].map((_, i) => (
@@ -801,7 +802,7 @@ export function DashboardOverview() {
 
           {/* COMBINED INTERACTIVE CHECKLIST & CALENDAR AGENDA (5 Columns) */}
           <div className="lg:col-span-5 flex flex-col gap-6">
-            
+
             {/* Interactive Daily Task Checklist - HANDCRAFTED INTERACTION */}
             <motion.div
               initial={{ opacity: 0, scale: 0.99 }}
@@ -822,20 +823,20 @@ export function DashboardOverview() {
 
               <div className="space-y-2 max-h-[190px] overflow-y-auto pr-1">
                 {tasks.map((task) => (
-                  <div 
+                  <div
                     key={task.id}
                     onClick={() => toggleTask(task.id)}
                     className={cn(
                       "p-3 rounded-xl bg-white/[0.01] border transition-all flex items-start gap-3 cursor-pointer select-none",
-                      task.completed 
-                        ? "border-white/[0.02] opacity-60" 
+                      task.completed
+                        ? "border-white/[0.02] opacity-60"
                         : "border-white/[0.04] hover:border-white/[0.08] hover:bg-white/[0.02]"
                     )}
                   >
                     <div className={cn(
                       "w-4 h-4 rounded mt-0.5 flex items-center justify-center transition-all border shrink-0",
-                      task.completed 
-                        ? "bg-amber-500 border-amber-500 text-white" 
+                      task.completed
+                        ? "bg-amber-500 border-amber-500 text-white"
                         : "border-white/[0.15]"
                     )}
                     style={task.completed ? { backgroundColor: meta.hex, borderColor: meta.hex } : {}}

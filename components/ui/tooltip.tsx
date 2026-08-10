@@ -123,7 +123,7 @@ export function Tooltip({
             transition={{ duration: 0.15, ease: 'easeOut' }}
             className={cn(
               'absolute z-50 px-2.5 py-1.5 rounded-lg text-[11px] font-semibold tracking-wide whitespace-nowrap pointer-events-none shadow-lg',
-              'bg-slate-900/95 dark:bg-zinc-900/95 text-slate-100 dark:text-zinc-100 border border-slate-800 dark:border-zinc-800/80 backdrop-blur-md',
+              'bg-[color:var(--card-bg)]/95 text-[color:var(--text-primary)] border border-[color:var(--border)] backdrop-blur-md',
               getPositionClasses(),
               getAlignClasses(),
               className

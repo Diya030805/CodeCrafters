@@ -16,14 +16,14 @@ interface DashboardLayoutProps {
 
 export default function DashboardLayout({ children }: DashboardLayoutProps) {
   return (
-    <main className="min-h-screen bg-slate-50 text-slate-800 dark:bg-[#0B0C0E] dark:text-white relative overflow-x-hidden transition-colors duration-300">
+    <main className="min-h-screen bg-[color:var(--bg-primary)] text-[color:var(--text-primary)] relative overflow-x-hidden transition-colors duration-300">
       {/* Soft Ambient Radial Background Glows */}
-      <div className="absolute top-[20%] left-[10%] w-[500px] h-[500px] bg-blue-600/5 dark:bg-blue-600/10 blur-[130px] rounded-full pointer-events-none z-0" />
-      <div className="absolute top-[60%] right-[10%] w-[600px] h-[600px] bg-amber-600/5 dark:bg-amber-600/10 blur-[140px] rounded-full pointer-events-none z-0" />
+      <div className="absolute top-[20%] left-[10%] w-[500px] h-[500px] rounded-full pointer-events-none z-0" style={{ backgroundColor: 'rgba(59,130,246,0.08)', filter: 'blur(130px)' }} />
+      <div className="absolute top-[60%] right-[10%] w-[600px] h-[600px] rounded-full pointer-events-none z-0" style={{ backgroundColor: 'rgba(245,158,11,0.08)', filter: 'blur(140px)' }} />
 
       <div className="relative z-10">
         <Navbar view="dashboard" />
-        
+
         <div className="pt-28 pb-12 relative z-10">
           <div className="w-full px-4 max-w-[1600px] mx-auto">
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">

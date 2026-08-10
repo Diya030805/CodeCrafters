@@ -101,10 +101,10 @@ export function StreakCounter() {
       initial={{ opacity: 0, y: 12 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.4, ease: 'easeOut' }}
-      className="relative overflow-hidden rounded-[24px] border border-white/[0.06] bg-gradient-to-br from-[#05091a] via-[#070b18] to-[#020205] p-6 shadow-[0_20px_80px_rgba(15,23,42,0.45)]"
+      className="relative overflow-hidden rounded-[24px] border border-[color:var(--border)] bg-[color:var(--card-bg)] p-6 shadow-[0_20px_80px_rgba(0,0,0,0.18)]"
+      style={{ backgroundImage: `radial-gradient(circle at top left, ${meta.hex}12, transparent 32%), radial-gradient(circle at bottom right, ${meta.hex}0A, transparent 28%)` }}
     >
-      <div className="absolute inset-0 pointer-events-none bg-[radial-gradient(circle_at_top_left,_rgba(59,130,246,0.14),_transparent_32%),radial-gradient(circle_at_bottom_right,_rgba(168,85,247,0.12),_transparent_28%)]" />
-      <div className="absolute inset-0 bg-white/5 backdrop-blur-2xl" />
+      <div className="absolute inset-0 bg-[color:var(--card-bg)]/80 backdrop-blur-2xl" />
 
       <div className="relative z-10 space-y-8">
         <div className="grid gap-6 xl:grid-cols-[1.5fr_1fr] items-start">
@@ -133,15 +133,15 @@ export function StreakCounter() {
                 className={cn(
                   'w-full rounded-[18px] py-3.5 text-sm font-semibold transition-all duration-300',
                   isLoggedToday
-                    ? 'bg-slate-800 text-slate-300 border border-slate-700 cursor-default'
-                    : 'bg-gradient-to-r from-[#1d4ed8] to-[#8b5cf6] text-white shadow-[0_12px_40px_rgba(59,130,246,0.35)]'
+                    ? 'bg-[color:var(--bg-secondary)] text-[color:var(--text-secondary)] border border-[color:var(--border)] cursor-default'
+                    : 'bg-[color:var(--accent)] text-white shadow-[0_12px_40px_rgba(59,130,246,0.35)]'
                 )}
               >
                 {isLoggedToday ? 'Today’s Streak Claimed' : "Claim Today's Streak"}
               </motion.button>
               <button
                 onClick={resetStreak}
-                className="rounded-[18px] border border-white/[0.08] bg-white/5 px-4 py-2 text-sm font-medium text-slate-300 transition hover:bg-white/[0.08]"
+                className="rounded-[18px] border border-[color:var(--border)] bg-[color:var(--bg-secondary)]/85 px-4 py-2 text-sm font-medium text-[color:var(--text-secondary)] transition hover:bg-[color:var(--bg-secondary)]"
               >
                 Reset streak
               </button>

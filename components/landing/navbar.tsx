@@ -44,10 +44,10 @@ export function Navbar({ view = 'landing', onGetStarted, onBrandClick, activeSec
           className="flex items-center gap-2 group outline-none"
         >
           <div className="w-8 h-8 rounded-lg bg-amber-600 flex items-center justify-center shadow-[0_0_15px_rgba(217,119,6,0.4)] group-hover:scale-110 transition-transform duration-200">
-            <Sparkles className="w-5 h-5 text-white" />
+            <Sparkles className="w-5 h-5 text-[color:var(--bg-primary)]" />
           </div>
-          <span className="text-xl font-heading font-bold tracking-tight text-slate-900 dark:text-white">
-            BrainBoost AI<span className="text-amber-500">.</span>
+          <span className="text-xl font-heading font-bold tracking-tight text-[color:var(--text-primary)]">
+            BrainBoost AI<span className="text-[color:var(--accent)]">.</span>
           </span>
         </Link>
 
@@ -66,8 +66,8 @@ export function Navbar({ view = 'landing', onGetStarted, onBrandClick, activeSec
                 className={cn(
                   "text-sm font-medium transition-all duration-200 cursor-pointer",
                   activeSection === item.id
-                    ? "text-amber-600 dark:text-amber-400"
-                    : "text-slate-600 dark:text-zinc-300 hover:text-slate-900 dark:hover:text-white"
+                    ? "text-[color:var(--accent)]"
+                    : "text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)]"
                 )}
               >
                 {item.name}
@@ -80,14 +80,11 @@ export function Navbar({ view = 'landing', onGetStarted, onBrandClick, activeSec
           <Tooltip content={darkMode ? 'Switch to Light Mode' : 'Switch to Dark Mode'} side="bottom">
             <button
               onClick={() => setDarkMode(!darkMode)}
-              className="relative flex items-center justify-center w-10 h-10 rounded-full border border-black/[0.08] dark:border-white/[0.08] bg-white/50 dark:bg-zinc-900/50 hover:bg-slate-100 dark:hover:bg-zinc-800 text-slate-700 dark:text-zinc-300 transition-all duration-300 cursor-pointer shadow-sm active:scale-95 outline-none"
+              className="relative flex items-center justify-center w-10 h-10 rounded-full border border-[color:var(--border)] bg-[color:var(--bg-secondary)]/80 text-[color:var(--text-primary)] hover:bg-[color:var(--bg-secondary)]/95 transition-all duration-300 cursor-pointer shadow-sm active:scale-95 outline-none"
               aria-label="Toggle theme"
             >
-              {/* Sun Icon: visible in light mode (scale-100), spin-fades to 0 in dark mode */}
-              <Sun className="w-5 h-5 rotate-0 scale-100 transition-all duration-300 dark:-rotate-90 dark:scale-0 absolute" />
-
-              {/* Moon Icon: invisible in light mode (scale-0), spin-fades to 100 in dark mode */}
-              <Moon className="w-5 h-5 rotate-90 scale-0 transition-all duration-300 dark:rotate-0 dark:scale-100 absolute" />
+              <Sun className={cn("w-5 h-5 transition-all duration-300 absolute", darkMode ? "opacity-0 scale-75" : "opacity-100 scale-100")} />
+              <Moon className={cn("w-5 h-5 transition-all duration-300 absolute", darkMode ? "opacity-100 scale-100" : "opacity-0 scale-75")} />
             </button>
           </Tooltip>
 
@@ -103,7 +100,7 @@ export function Navbar({ view = 'landing', onGetStarted, onBrandClick, activeSec
                     router.push('/dashboard');
                   }
                 }}
-                className="rounded-full px-5 h-10 bg-amber-600 hover:bg-amber-700 text-white font-bold transition-all duration-300 active:scale-[0.97] cursor-pointer"
+                className="rounded-full px-5 h-10 bg-[color:var(--accent)] hover:bg-[color:var(--accent)]/90 text-white font-bold transition-all duration-300 active:scale-[0.97] cursor-pointer"
               >
                 Get Started
               </Button>
@@ -115,7 +112,7 @@ export function Navbar({ view = 'landing', onGetStarted, onBrandClick, activeSec
             <Tooltip content={isOpen ? 'Close Menu' : 'Open Navigation Menu'} side="bottom" className="md:hidden">
               <button
                 onClick={() => setIsOpen(!isOpen)}
-                className="md:hidden flex items-center justify-center w-10 h-10 rounded-full border border-black/[0.08] dark:border-white/[0.08] bg-white/50 dark:bg-zinc-900/50 hover:bg-slate-100 dark:hover:bg-zinc-800 text-slate-700 dark:text-zinc-300 transition-all duration-300 cursor-pointer shadow-sm active:scale-95 outline-none"
+                className="md:hidden flex items-center justify-center w-10 h-10 rounded-full border border-[color:var(--border)] bg-[color:var(--bg-secondary)]/45 hover:bg-[color:var(--bg-secondary)]/65 text-[color:var(--text-secondary)] transition-all duration-300 cursor-pointer shadow-sm active:scale-95 outline-none"
                 aria-label="Toggle navigation menu"
               >
                 {isOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
@@ -133,7 +130,7 @@ export function Navbar({ view = 'landing', onGetStarted, onBrandClick, activeSec
             animate={{ opacity: 1, height: 'auto', y: 0 }}
             exit={{ opacity: 0, height: 0, y: -10 }}
             transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
-            className="absolute top-14 left-0 right-0 overflow-hidden rounded-2xl border border-black/10 dark:border-white/10 bg-slate-900/95 dark:bg-zinc-950/95 backdrop-blur-xl shadow-2xl md:hidden z-50 flex flex-col gap-4 p-5 text-white"
+            className="absolute top-14 left-0 right-0 overflow-hidden rounded-2xl border border-[color:var(--border)] bg-[color:var(--card-bg)]/95 backdrop-blur-xl shadow-2xl md:hidden z-50 flex flex-col gap-4 p-5 text-[color:var(--text-primary)]"
           >
             <div className="flex flex-col gap-1">
               {[
@@ -152,15 +149,15 @@ export function Navbar({ view = 'landing', onGetStarted, onBrandClick, activeSec
                     onNavigate?.(item.id);
                   }}
                   className={cn(
-                    "text-left text-sm font-medium py-2.5 px-3 rounded-lg transition-all duration-200 cursor-pointer hover:bg-white/[0.05] flex items-center justify-between",
+                    "text-left text-sm font-medium py-2.5 px-3 rounded-lg transition-all duration-200 cursor-pointer hover:bg-[color:var(--bg-secondary)] flex items-center justify-between",
                     activeSection === item.id
-                      ? "text-amber-400 bg-white/[0.06] font-bold"
-                      : "text-zinc-300 hover:text-white"
+                      ? "text-[color:var(--accent)] bg-[color:var(--bg-secondary)]/75 font-bold"
+                      : "text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)]"
                   )}
                 >
                   <span>{item.name}</span>
                   {activeSection === item.id && (
-                    <span className="w-1.5 h-1.5 rounded-full bg-amber-400" />
+                    <span className="w-1.5 h-1.5 rounded-full bg-[color:var(--accent)]" />
                   )}
                 </motion.button>
               ))}
@@ -170,7 +167,7 @@ export function Navbar({ view = 'landing', onGetStarted, onBrandClick, activeSec
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.2 }}
-              className="pt-2 border-t border-white/[0.06]"
+              className="pt-2 border-t border-[color:var(--border)]"
             >
               <Button
                 onClick={(e) => {
@@ -182,7 +179,7 @@ export function Navbar({ view = 'landing', onGetStarted, onBrandClick, activeSec
                     router.push('/dashboard');
                   }
                 }}
-                className="w-full rounded-full h-10 bg-amber-600 hover:bg-amber-700 text-white font-bold transition-all duration-300 active:scale-[0.98] cursor-pointer"
+                className="w-full rounded-full h-10 bg-[color:var(--accent)] hover:bg-[color:var(--accent)]/90 text-white font-bold transition-all duration-300 active:scale-[0.98] cursor-pointer"
               >
                 Get Started
               </Button>

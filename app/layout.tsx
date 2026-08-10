@@ -35,12 +35,12 @@ export default function RootLayout({
             __html: `
               (function() {
                 try {
-                  var stored = localStorage.getItem('theme-dark');
-                  if (stored === 'false') {
-                    document.documentElement.classList.remove('dark');
-                  } else {
-                    document.documentElement.classList.add('dark');
-                  }
+                  var stored = localStorage.getItem('theme');
+                  var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+                  var theme = stored === 'light' || stored === 'dark' ? stored : (prefersDark ? 'dark' : 'light');
+                  document.documentElement.classList.remove('light', 'dark');
+                  document.documentElement.classList.add(theme);
+                  document.documentElement.style.colorScheme = theme;
                 } catch (e) {}
               })();
             `
@@ -49,24 +49,19 @@ export default function RootLayout({
       </head>
       <body
         className={cn(
-          'min-h-screen bg-background font-sans antialiased',
+          'min-h-screen font-sans antialiased transition-colors duration-300',
           inter.variable,
           spaceGrotesk.variable
         )}
       >
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="dark"
-          enableSystem
-          disableTransitionOnChange
-        >
+        <ThemeProvider>
           {/* Noise & Grid Overlay */}
           <div className="fixed inset-0 z-[-1] pointer-events-none overflow-hidden">
-            <div className="absolute inset-0 bg-noise opacity-[0.02] dark:opacity-[0.04]" />
-            <div className="absolute inset-0 bg-grid-dots text-gray-400 dark:text-white opacity-[0.05] dark:opacity-[0.03]" />
+            <div className="absolute inset-0 bg-noise opacity-[0.02]" />
+            <div className="absolute inset-0 bg-grid-dots text-[color:var(--text-secondary)] opacity-[0.05]" />
             {/* Ambient Glows */}
-            <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] rounded-full bg-blue-600/10 blur-[120px] animate-pulse" />
-            <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] rounded-full bg-indigo-600/10 blur-[120px] animate-pulse" />
+            <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] rounded-full bg-[color:var(--accent)]/10 blur-[120px] animate-pulse" />
+            <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] rounded-full bg-[color:var(--accent)]/10 blur-[120px] animate-pulse" />
           </div>
           <AccentProvider>
             {children}
@@ -76,4 +71,3 @@ export default function RootLayout({
     </html>
   );
 }
-

@@ -2,12 +2,12 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { 
-  LayoutDashboard, 
+import {
+  LayoutDashboard,
   CalendarDays,
-  BookOpen, 
-  Globe, 
-  BarChart3, 
+  BookOpen,
+  Globe,
+  BarChart3,
   Settings2,
   Search,
   ArrowRight,
@@ -64,15 +64,15 @@ export function Sidebar() {
   const activeAccentClasses = darkMode ? meta.dark : meta.light;
 
   return (
-    <aside className={cn("p-6 flex flex-col gap-8 h-full min-h-[calc(100vh-120px)] transition-all duration-300", glassStyles.container)}>
+    <aside className={cn("p-6 flex flex-col gap-8 h-full min-h-[calc(100vh-120px)] transition-all duration-300 bg-[color:var(--card-bg)] border-[color:var(--border)] text-[color:var(--text-primary)]", glassStyles.container)}>
       {/* User Profile Menu */}
       <UserMenu />
 
       {/* Search Pill */}
       <div className="relative">
-        <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
-        <input 
-          type="text" 
+        <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-[color:var(--text-secondary)]" />
+        <input
+          type="text"
           placeholder="Search curriculum..."
           className={cn(
             "w-full pl-11 pr-4 py-3 text-sm outline-none transition-all duration-300",
@@ -100,7 +100,7 @@ export function Sidebar() {
                     initial={{ opacity: 0, x: -10 }}
                     animate={{ opacity: 1, x: 0 }}
                     exit={{ opacity: 0, x: -10 }}
-                    className="absolute left-[calc(100%+16px)] top-1/2 -translate-y-1/2 z-50 px-3 py-1.5 rounded-lg bg-slate-900/90 dark:bg-black/90 backdrop-blur-md border border-white/[0.1] text-white text-[10px] font-bold whitespace-nowrap shadow-xl"
+                    className="absolute left-[calc(100%+16px)] top-1/2 -translate-y-1/2 z-50 px-3 py-1.5 rounded-lg bg-[color:var(--card-bg)]/95 backdrop-blur-md border border-[color:var(--border)] text-[color:var(--text-primary)] text-[10px] font-bold whitespace-nowrap shadow-xl"
                   >
                     {item.label}
                   </motion.div>
@@ -111,17 +111,17 @@ export function Sidebar() {
                 prefetch={false}
                 className={cn(
                   "flex items-center justify-between px-5 py-3.5 rounded-2xl text-sm font-semibold transition-all duration-300 group",
-                  isActive 
-                    ? cn(activeAccentClasses.button, "shadow-lg") 
-                    : "text-slate-500 dark:text-slate-400 hover:bg-slate-200/50 dark:hover:bg-white/[0.05] hover:text-slate-900 dark:hover:text-white"
+                  isActive
+                    ? cn(activeAccentClasses.button, "shadow-lg")
+                    : "text-[color:var(--text-secondary)] hover:bg-[color:var(--bg-secondary)] hover:text-[color:var(--text-primary)]"
                 )}
               >
                 <div className="flex items-center gap-3">
                   <item.icon className={cn(
-                    "w-5 h-5 transition-all duration-300", 
-                    isActive 
-                       ? "text-white" 
-                      : cn("text-slate-500 dark:text-slate-400", activeAccentClasses.text.split(' ').map(c => `group-hover:${c}`).join(' '))
+                    "w-5 h-5 transition-all duration-300",
+                    isActive
+                       ? "text-white"
+                      : cn("text-[color:var(--text-secondary)]", activeAccentClasses.text.split(' ').map(c => `group-hover:${c}`).join(' '))
                   )} />
                   <span className={cn(
                     "transition-all duration-300",
@@ -145,8 +145,8 @@ export function Sidebar() {
       </nav>
 
       {/* Theme Accent Selector */}
-      <div className="mt-auto pt-8 border-t border-slate-200 dark:border-white/[0.05]">
-        <h3 className="text-[10px] font-bold tracking-widest text-slate-500 uppercase mb-5 px-2">
+      <div className="mt-auto pt-8 border-t border-[color:var(--border)]">
+        <h3 className="text-[10px] font-bold tracking-widest text-[color:var(--text-secondary)] uppercase mb-5 px-2">
           THEME ACCENT
         </h3>
         <div className="flex items-center gap-3 px-2">
@@ -157,8 +157,8 @@ export function Sidebar() {
                 className={cn(
                   "w-7 h-7 rounded-full transition-all duration-300 relative flex items-center justify-center cursor-pointer hover:scale-110 active:scale-90",
                   accent.color,
-                  accentColor === accent.id 
-                    ? `scale-110 ring-2 ring-offset-2 ring-offset-slate-100 dark:ring-offset-[#0B0C0E] ${accent.ring} shadow-md`
+                  accentColor === accent.id
+                    ? `scale-110 ring-2 ring-offset-2 ring-offset-[color:var(--bg-primary)] ${accent.ring} shadow-md`
                     : "opacity-80 hover:opacity-100"
                 )}
               >
@@ -170,25 +170,25 @@ export function Sidebar() {
       </div>
 
       {/* Sound Effects Selector */}
-      <div className="mt-6 pt-6 border-t border-slate-200 dark:border-white/[0.05]">
+      <div className="mt-6 pt-6 border-t border-[color:var(--border)]">
         <div className="flex items-center justify-between px-2">
           <div className="flex items-center gap-2">
             {soundEnabled ? (
               <Volume2 className={cn("w-4 h-4 transition-colors", activeAccentClasses.text)} />
             ) : (
-              <VolumeX className="w-4 h-4 text-slate-400 dark:text-slate-500 transition-colors" />
+              <VolumeX className="w-4 h-4 text-[color:var(--text-secondary)] transition-colors" />
             )}
-            <span className="text-[10px] font-bold tracking-widest text-slate-500 uppercase">
+            <span className="text-[10px] font-bold tracking-widest text-[color:var(--text-secondary)] uppercase">
               TIMER SOUNDS
             </span>
           </div>
-          
+
           <Tooltip content={soundEnabled ? 'Mute Study Timer Audio' : 'Enable Study Timer Audio'} side="top">
             <button
               onClick={() => setSoundEnabled(!soundEnabled)}
               className={cn(
-                "relative inline-flex h-6 w-11 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-slate-100 dark:focus:ring-offset-[#0B0C0E]",
-                soundEnabled ? meta.ring : "bg-slate-200 dark:bg-white/[0.1]"
+                "relative inline-flex h-6 w-11 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-[color:var(--bg-primary)]",
+                soundEnabled ? meta.ring : "bg-[color:var(--bg-secondary)]"
               )}
               style={soundEnabled ? { backgroundColor: meta.hex } : {}}
               aria-label="Toggle Sound Effects"
@@ -205,24 +205,24 @@ export function Sidebar() {
       </div>
 
       {/* AI Engine Status */}
-      <div className="mt-6 pt-6 border-t border-slate-200 dark:border-white/[0.05]">
-        <div className="flex items-center gap-3 px-2 py-2 rounded-xl bg-slate-200/30 dark:bg-white/[0.02] border border-slate-300/30 dark:border-white/[0.03]">
+      <div className="mt-6 pt-6 border-t border-[color:var(--border)]">
+        <div className="flex items-center gap-3 px-2 py-2 rounded-xl bg-[color:var(--bg-secondary)]/30 border border-[color:var(--border)]">
           <div className="relative flex items-center justify-center">
             {/* Core Dot */}
             <div className="w-2 h-2 rounded-full bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.5)] z-10" />
-            
+
             {/* Pulse Waves */}
             {[0, 1, 2].map((i) => (
               <motion.div
                 key={i}
                 initial={{ scale: 1, opacity: 0.5 }}
-                animate={{ 
-                  scale: [1, 2.5], 
-                  opacity: [0.5, 0] 
+                animate={{
+                  scale: [1, 2.5],
+                  opacity: [0.5, 0]
                 }}
-                transition={{ 
-                  duration: 2, 
-                  repeat: Infinity, 
+                transition={{
+                  duration: 2,
+                  repeat: Infinity,
                   delay: i * 0.6,
                   ease: "easeOut"
                 }}
@@ -231,10 +231,10 @@ export function Sidebar() {
             ))}
           </div>
           <div className="flex flex-col">
-            <span className="text-[9px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-[0.15em] leading-none">
+            <span className="text-[9px] font-black text-[color:var(--text-secondary)] uppercase tracking-[0.15em] leading-none">
               AI Engine
             </span>
-            <span className="text-[10px] font-black text-emerald-500 uppercase tracking-widest mt-1">
+            <span className="text-[10px] font-black text-[color:var(--accent)] uppercase tracking-widest mt-1">
               ONLINE
             </span>
           </div>
