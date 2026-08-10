@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import {
   LayoutDashboard,
   CalendarDays,
@@ -55,6 +55,7 @@ const themeAccents = [
 
 export function Sidebar() {
   const pathname = usePathname();
+  const router = useRouter();
   const [hoveredItem, setHoveredItem] = useState<string | null>(null);
   const { darkMode, soundEnabled, setSoundEnabled } = useTheme();
   const { accentColor, setAccentColor, meta } = useAccent();
@@ -86,7 +87,10 @@ export function Sidebar() {
           return (
             <motion.div
               key={item.href}
-              onMouseEnter={() => setHoveredItem(item.label)}
+              onMouseEnter={() => {
+                setHoveredItem(item.label);
+                router.prefetch(item.href);
+              }}
               onMouseLeave={() => setHoveredItem(null)}
               className="relative"
               whileTap={{ scale: 0.97 }}
@@ -106,7 +110,6 @@ export function Sidebar() {
               </AnimatePresence>
               <Link
                 href={item.href}
-                prefetch={false}
                 className={cn(
                   "flex min-w-0 items-center justify-between px-5 py-3.5 rounded-2xl text-sm font-semibold transition-all duration-300 group",
                   isActive

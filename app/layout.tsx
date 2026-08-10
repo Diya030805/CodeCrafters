@@ -5,6 +5,7 @@ import { Inter, Space_Grotesk } from 'next/font/google';
 import './globals.css';
 import { ThemeProvider } from '@/components/theme-provider';
 import { AccentProvider } from '@/components/accent-provider';
+import { ScrollToTop } from '@/components/ScrollToTop';
 import { cn } from '@/lib/utils';
 
 const inter = Inter({
@@ -64,6 +65,7 @@ export default function RootLayout({
             <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] rounded-full bg-[color:var(--accent)]/10 blur-[120px] animate-pulse" />
           </div>
           <AccentProvider>
+            <ScrollToTop />
             {children}
           </AccentProvider>
         </ThemeProvider>
