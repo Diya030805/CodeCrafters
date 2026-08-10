@@ -10,17 +10,44 @@ import nextDynamic from 'next/dynamic';
 // Dynamically import the main dashboard views with ssr: false to prevent hydration issues
 const DashboardOverview = nextDynamic(
   () => import('@/components/dashboard/dashboard-overview').then((mod) => mod.DashboardOverview),
-  { ssr: false, loading: () => <div className="h-96 rounded-2xl bg-slate-100/50 dark:bg-white/[0.02] animate-pulse" /> }
+  {
+    ssr: false,
+    loading: () => (
+      <div className="space-y-6 p-6 rounded-[32px] border border-white/[0.05] bg-slate-950/80 shadow-2xl shadow-slate-950/20 backdrop-blur-xl animate-pulse">
+        <div className="h-7 w-1/3 rounded-full bg-white/10" />
+        <div className="grid gap-4 lg:grid-cols-2">
+          <div className="h-48 rounded-[24px] bg-white/5" />
+          <div className="h-48 rounded-[24px] bg-white/5" />
+        </div>
+      </div>
+    ),
+  }
 );
 
 const TaskPlanner = nextDynamic(
   () => import('@/components/dashboard/task-planner').then((mod) => mod.TaskPlanner),
-  { ssr: false }
+  {
+    ssr: false,
+    loading: () => (
+      <div className="space-y-4 p-6 rounded-[32px] border border-white/[0.05] bg-slate-950/80 shadow-2xl shadow-slate-950/20 backdrop-blur-xl animate-pulse">
+        <div className="h-6 w-1/4 rounded-full bg-white/10" />
+        <div className="h-40 rounded-[24px] bg-white/5" />
+      </div>
+    ),
+  }
 );
 
 const FocusTimer = nextDynamic(
   () => import('@/components/dashboard/focus-timer').then((mod) => mod.FocusTimer),
-  { ssr: false }
+  {
+    ssr: false,
+    loading: () => (
+      <div className="space-y-4 p-6 rounded-[32px] border border-white/[0.05] bg-slate-950/80 shadow-2xl shadow-slate-950/20 backdrop-blur-xl animate-pulse">
+        <div className="h-6 w-1/3 rounded-full bg-white/10" />
+        <div className="h-64 rounded-[24px] bg-white/5" />
+      </div>
+    ),
+  }
 );
 
 const containerVariants: any = {
@@ -57,7 +84,7 @@ export default function DashboardPage() {
       transition={{ duration: 0.4 }}
       className="relative z-10 w-full"
     >
-      <motion.div 
+      <motion.div
         variants={containerVariants}
         initial="hidden"
         animate="visible"
