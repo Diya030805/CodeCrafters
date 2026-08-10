@@ -100,5 +100,10 @@ An AI-powered quiz experience for testing knowledge and reinforcing learning.
 
 ---
 
+## ⚡ Getting Started
 
+### 1. Clone the repository
 
+```bash
+git clone https://github.com/Diya030805/CodeCrafters.git
+cd CodeCrafters
