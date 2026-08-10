@@ -110,7 +110,7 @@ export function Sidebar() {
                 href={item.href}
                 prefetch={false}
                 className={cn(
-                  "flex items-center justify-between px-5 py-3.5 rounded-2xl text-sm font-semibold transition-all duration-300 group",
+                  "flex min-w-0 items-center justify-between px-5 py-3.5 rounded-2xl text-sm font-semibold transition-all duration-300 group",
                   isActive
                     ? cn(activeAccentClasses.button, "shadow-lg")
                     : "text-[color:var(--text-secondary)] hover:bg-[color:var(--bg-secondary)] hover:text-[color:var(--text-primary)]"

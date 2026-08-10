@@ -18,8 +18,8 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
   return (
     <main className="min-h-screen bg-[color:var(--bg-primary)] text-[color:var(--text-primary)] relative overflow-x-hidden transition-colors duration-300">
       {/* Soft Ambient Radial Background Glows */}
-      <div className="absolute top-[20%] left-[10%] w-[500px] h-[500px] rounded-full pointer-events-none z-0" style={{ backgroundColor: 'rgba(59,130,246,0.08)', filter: 'blur(130px)' }} />
-      <div className="absolute top-[60%] right-[10%] w-[600px] h-[600px] rounded-full pointer-events-none z-0" style={{ backgroundColor: 'rgba(245,158,11,0.08)', filter: 'blur(140px)' }} />
+      <div className="absolute top-[22%] left-[8%] w-[360px] h-[360px] rounded-full pointer-events-none z-0 opacity-70" style={{ backgroundColor: 'rgba(59,130,246,0.08)', filter: 'blur(110px)' }} />
+      <div className="absolute top-[58%] right-[8%] w-[420px] h-[420px] rounded-full pointer-events-none z-0 opacity-70" style={{ backgroundColor: 'rgba(245,158,11,0.07)', filter: 'blur(120px)' }} />
 
       <div className="relative z-10">
         <Navbar view="dashboard" />

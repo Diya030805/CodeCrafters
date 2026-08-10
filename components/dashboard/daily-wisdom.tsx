@@ -86,18 +86,18 @@ export function DailyWisdom() {
       initial={{ opacity: 0, y: 15 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.4, delay: 0.1 }}
-      className="relative overflow-hidden rounded-3xl backdrop-blur-xl bg-[#121316]/70 border border-white/[0.06] p-6 sm:p-8 shadow-2xl group"
+      className="relative overflow-hidden rounded-3xl backdrop-blur-xl bg-[color:var(--card-bg)]/80 border border-[color:var(--border)] p-6 sm:p-8 shadow-2xl group"
       style={{ borderColor: `${meta.hex}25` }}
     >
       {/* Background radial glow */}
-      <div 
-        className="absolute -left-10 -bottom-10 h-48 w-48 rounded-full blur-3xl pointer-events-none opacity-30 group-hover:opacity-60 transition-opacity" 
-        style={{ backgroundColor: `${meta.hex}20` }} 
+      <div
+        className="absolute -left-10 -bottom-10 h-48 w-48 rounded-full blur-3xl pointer-events-none opacity-30 group-hover:opacity-60 transition-opacity"
+        style={{ backgroundColor: `${meta.hex}20` }}
       />
 
       <div className="flex items-start justify-between gap-4 relative z-10 mb-4">
         <div className="flex items-center gap-3">
-          <div 
+          <div
             className="w-12 h-12 rounded-2xl flex items-center justify-center shadow-lg shrink-0 relative overflow-hidden"
             style={{ background: `linear-gradient(135deg, ${meta.hex}, #ffffff22)` }}
           >
@@ -150,7 +150,7 @@ export function DailyWisdom() {
           </div>
 
           {/* Actionable Strategy Box */}
-          <div className="p-4 rounded-2xl bg-white/[0.02] border border-white/[0.05] flex items-start gap-3 mt-4">
+          <div className="p-4 rounded-2xl bg-[color:var(--bg-secondary)] border border-[color:var(--border)] flex items-start gap-3 mt-4">
             <div className="p-2 rounded-xl bg-white/[0.04] text-amber-400 mt-0.5 shrink-0" style={{ color: meta.hex, backgroundColor: `${meta.hex}15` }}>
               <Sparkles className="w-4 h-4" />
             </div>

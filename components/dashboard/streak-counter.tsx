@@ -101,11 +101,8 @@ export function StreakCounter() {
       initial={{ opacity: 0, y: 12 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.4, ease: 'easeOut' }}
-      className="relative overflow-hidden rounded-[24px] border border-[color:var(--border)] bg-[color:var(--card-bg)] p-6 shadow-[0_20px_80px_rgba(0,0,0,0.18)]"
-      style={{ backgroundImage: `radial-gradient(circle at top left, ${meta.hex}12, transparent 32%), radial-gradient(circle at bottom right, ${meta.hex}0A, transparent 28%)` }}
+      className="relative overflow-hidden rounded-[24px] border border-[color:var(--border)] bg-[color:var(--card-bg)] p-6 shadow-xl"
     >
-      <div className="absolute inset-0 bg-[color:var(--card-bg)]/80 backdrop-blur-2xl" />
-
       <div className="relative z-10 space-y-8">
         <div className="grid gap-6 xl:grid-cols-[1.5fr_1fr] items-start">
           <div className="space-y-4">
@@ -119,11 +116,11 @@ export function StreakCounter() {
             </p>
           </div>
 
-          <div className="rounded-[22px] border border-white/[0.08] bg-white/5 p-4 shadow-[0_20px_60px_rgba(15,23,42,0.3)]">
+          <div className="rounded-[22px] border border-[color:var(--border)] bg-[color:var(--bg-secondary)]/95 p-4 shadow-lg">
             <div className="flex flex-col gap-3">
-              <div className="rounded-[18px] bg-slate-900/70 p-4 border border-white/[0.05]">
-                <div className="text-xs font-bold uppercase tracking-[0.3em] text-slate-400">Claim Today's Streak</div>
-                <p className="mt-2 text-sm text-slate-300">Lock in your streak with one click and keep the momentum going.</p>
+              <div className="rounded-[18px] bg-[color:var(--card-bg)] p-4 border border-[color:var(--border)]">
+                <div className="text-xs font-bold uppercase tracking-[0.3em] text-[color:var(--text-secondary)]">Claim Today's Streak</div>
+                <p className="mt-2 text-sm leading-6 text-[color:var(--text-secondary)]">Lock in your streak with one click and keep the momentum going.</p>
               </div>
               <motion.button
                 whileHover={{ scale: 1.02, boxShadow: `0 0 30px ${meta.hex}35` }}
@@ -134,7 +131,7 @@ export function StreakCounter() {
                   'w-full rounded-[18px] py-3.5 text-sm font-semibold transition-all duration-300',
                   isLoggedToday
                     ? 'bg-[color:var(--bg-secondary)] text-[color:var(--text-secondary)] border border-[color:var(--border)] cursor-default'
-                    : 'bg-[color:var(--accent)] text-white shadow-[0_12px_40px_rgba(59,130,246,0.35)]'
+                    : 'bg-[color:var(--accent)] text-white shadow-[0_12px_40px_rgba(59,130,246,0.18)]'
                 )}
               >
                 {isLoggedToday ? 'Today’s Streak Claimed' : "Claim Today's Streak"}
@@ -162,7 +159,7 @@ export function StreakCounter() {
           </div>
         </div>
 
-        <div className="rounded-[22px] border border-white/[0.08] bg-white/5 p-5 shadow-[0_18px_45px_rgba(15,23,42,0.18)]">
+        <div className="rounded-[22px] border border-[color:var(--border)] bg-[color:var(--bg-secondary)]/95 p-5 shadow-lg">
           <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
             <div>
               <p className="text-xs font-semibold uppercase tracking-[0.3em] text-slate-400">Weekly Tracker</p>
@@ -173,15 +170,15 @@ export function StreakCounter() {
             </div>
           </div>
 
-          <div className="mt-5 grid grid-cols-7 gap-3">
+          <div className="mt-5 grid grid-cols-4 gap-3 sm:grid-cols-7">
             {weeklyStatus.map((item, index) => (
               <div
                 key={item.day}
                 className={cn(
-                  'flex flex-col items-center justify-center rounded-full border px-3 py-3 text-center transition-all',
+                  'flex flex-col items-center justify-center rounded-3xl border px-3 py-3 text-center transition-all min-h-[88px]',
                   item.completed
-                    ? 'bg-gradient-to-br from-[#2563eb] to-[#7c3aed] border-transparent text-white shadow-[0_10px_30px_rgba(59,130,246,0.25)]'
-                    : 'bg-white/5 border-white/[0.06] text-slate-400'
+                    ? 'bg-[color:var(--accent)] border-transparent text-white shadow-[0_10px_30px_rgba(59,130,246,0.18)]'
+                    : 'bg-[color:var(--bg-secondary)] border-[color:var(--border)] text-[color:var(--text-secondary)]'
                 )}
               >
                 <span className="text-[10px] font-semibold uppercase tracking-[0.25em]">{item.day}</span>

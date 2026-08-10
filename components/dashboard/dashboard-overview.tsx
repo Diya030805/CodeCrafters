@@ -204,11 +204,11 @@ export function DashboardOverview() {
   if (!mounted) {
     return (
       <div className="space-y-10 p-4 sm:p-6 md:p-8 max-w-7xl mx-auto animate-pulse">
-        <div className="h-20 rounded-2xl bg-white/[0.02]" />
+        <div className="h-20 rounded-2xl bg-[color:var(--bg-secondary)]" />
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <div className="h-40 rounded-3xl bg-white/[0.02]" />
-          <div className="h-40 rounded-3xl bg-white/[0.02]" />
-          <div className="h-40 rounded-3xl bg-white/[0.02]" />
+          <div className="h-40 rounded-3xl bg-[color:var(--bg-secondary)]" />
+          <div className="h-40 rounded-3xl bg-[color:var(--bg-secondary)]" />
+          <div className="h-40 rounded-3xl bg-[color:var(--bg-secondary)]" />
         </div>
       </div>
     );
@@ -249,12 +249,12 @@ export function DashboardOverview() {
           className="flex items-center gap-4 shrink-0"
         >
           <div className="hidden sm:flex flex-col text-right">
-            <span className="text-[10px] font-bold text-slate-500 uppercase tracking-wider">Aria AI Version</span>
+            <span className="text-[10px] font-bold text-[color:var(--text-secondary)] uppercase tracking-wider">Aria AI Version</span>
             <span className="text-xs font-black text-white">v3.5 Active</span>
           </div>
-          <div className="flex items-center gap-2 px-4 py-2 rounded-2xl bg-white/[0.02] border border-white/[0.05] shadow-xl">
+          <div className="flex items-center gap-2 px-4 py-2 rounded-2xl bg-[color:var(--bg-secondary)] border border-[color:var(--border)] shadow-xl">
             <div className="h-2 w-2 rounded-full bg-amber-500" style={{ backgroundColor: meta.hex }} />
-            <span className="text-xs font-extrabold text-slate-300">Synced</span>
+            <span className="text-xs font-extrabold text-[color:var(--text-secondary)]">Synced</span>
           </div>
         </motion.div>
       </div>
@@ -276,7 +276,7 @@ export function DashboardOverview() {
             <div className="w-12 h-12 rounded-2xl bg-gradient-to-tr from-amber-500 to-amber-300 flex items-center justify-center shadow-lg" style={{ background: `linear-gradient(135deg, ${meta.hex}, #ffffff33)` }}>
               <BrainCircuit className="w-6 h-6 text-white" />
             </div>
-            <div className="absolute -bottom-1 -right-1 w-4 h-4 rounded-full bg-[#121316] flex items-center justify-center">
+            <div className="absolute -bottom-1 -right-1 w-4 h-4 rounded-full bg-[color:var(--card-bg)] flex items-center justify-center">
               <div className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse" />
             </div>
           </div>
@@ -288,7 +288,7 @@ export function DashboardOverview() {
                 <span className="text-xs font-bold text-white tracking-wide">Aria (AI Academic Coach)</span>
                 <span className="text-[9px] font-extrabold uppercase tracking-widest text-amber-500/90" style={{ color: meta.hex }}>Adaptive Prompt</span>
               </div>
-              <p className="text-slate-300 text-sm leading-relaxed font-medium">
+              <p className="text-[color:var(--text-secondary)] text-sm leading-relaxed font-medium">
                 &ldquo;Your recall velocity on <strong className="text-white font-black">Transformers Architecture</strong> has accelerated by <span className="text-emerald-400 font-extrabold">+14.8%</span>. However, your temporal decay model suggests reviewing <strong className="text-white font-black">Multi-Head Attention</strong> within 8 hours to avoid neural forgetting.&rdquo;
               </p>
             </div>
@@ -316,7 +316,7 @@ export function DashboardOverview() {
                         : "bg-[color:var(--bg-secondary)] text-[color:var(--text-secondary)] border-[color:var(--border)] hover:bg-[color:var(--bg-primary)] hover:text-[color:var(--text-primary)]"
                     )}
                   >
-                    <Icon className={cn("w-3.5 h-3.5", isActive ? "text-black" : "text-slate-400")} />
+                    <Icon className={cn("w-3.5 h-3.5", isActive ? "text-black" : "text-[color:var(--text-secondary)]")} />
                     <span>{btn.label}</span>
                   </motion.button>
                 );
@@ -332,61 +332,61 @@ export function DashboardOverview() {
               initial={{ opacity: 0, height: 0 }}
               animate={{ opacity: 1, height: "auto" }}
               exit={{ opacity: 0, height: 0 }}
-              className="mt-6 pt-5 border-t border-white/[0.03] overflow-hidden"
+              className="mt-6 pt-5 border-t border-[color:var(--border)] overflow-hidden"
             >
               {activeQuickAction === "flashcard" && (
-                <div className="p-4 rounded-2xl bg-white/[0.01] border border-white/[0.04] space-y-3">
+                <div className="p-4 rounded-2xl bg-[color:var(--bg-secondary)] border border-[color:var(--border)] space-y-3">
                   <div className="flex items-center justify-between">
                     <p className="text-xs font-black text-white uppercase tracking-wider">Transformer Decay Block Flashcards</p>
                     <span className="text-[10px] font-bold text-amber-500" style={{ color: meta.hex }}>15 critical cards pending</span>
                   </div>
-                  <p className="text-slate-400 text-xs font-medium">This set contains automated feedback prompts designed by Aria specifically for your weak nodes from last week&apos;s quiz.</p>
+                  <p className="text-[color:var(--text-secondary)] text-xs font-medium">This set contains automated feedback prompts designed by Aria specifically for your weak nodes from last week&apos;s quiz.</p>
                   <div className="flex items-center gap-3 pt-1">
-                    <button className="px-4 py-2 rounded-xl text-xs font-black bg-white text-black hover:bg-slate-200 transition-all cursor-pointer">Start Practice Drift</button>
-                    <button className="px-4 py-2 rounded-xl text-xs font-bold text-slate-400 hover:text-white transition-all cursor-pointer">Preview Deck</button>
+                    <button className="px-4 py-2 rounded-xl text-xs font-black bg-[color:var(--accent)] text-white hover:brightness-110 transition-all cursor-pointer">Start Practice Drift</button>
+                    <button className="px-4 py-2 rounded-xl text-xs font-bold text-[color:var(--text-secondary)] hover:text-white transition-all cursor-pointer">Preview Deck</button>
                   </div>
                 </div>
               )}
               {activeQuickAction === "notes" && (
-                <div className="p-4 rounded-2xl bg-white/[0.01] border border-white/[0.04] space-y-3">
+                <div className="p-4 rounded-2xl bg-[color:var(--bg-secondary)] border border-[color:var(--border)] space-y-3">
                   <div className="flex items-center justify-between">
                     <p className="text-xs font-black text-white uppercase tracking-wider">Lecture Upload Portal</p>
                     <span className="text-[10px] text-emerald-400 font-bold">Ready to ingest (PDF, MP3, TXT)</span>
                   </div>
-                  <div className="border border-dashed border-white/[0.08] hover:border-white/[0.15] p-5 rounded-xl flex flex-col items-center justify-center gap-2 cursor-pointer transition-all">
-                    <Zap className="w-5 h-5 text-slate-500 animate-bounce" />
-                    <span className="text-xs font-bold text-slate-400">Drag &amp; drop files here, or click to upload</span>
+                  <div className="border border-dashed border-[color:var(--border)] hover:border-[color:var(--text-secondary)] p-5 rounded-xl flex flex-col items-center justify-center gap-2 cursor-pointer transition-all">
+                    <Zap className="w-5 h-5 text-[color:var(--text-secondary)] animate-bounce" />
+                    <span className="text-xs font-bold text-[color:var(--text-secondary)]">Drag &amp; drop files here, or click to upload</span>
                   </div>
                 </div>
               )}
               {activeQuickAction === "chat" && (
-                <div className="p-4 rounded-2xl bg-white/[0.01] border border-white/[0.04] space-y-3">
+                <div className="p-4 rounded-2xl bg-[color:var(--bg-secondary)] border border-[color:var(--border)] space-y-3">
                   <div className="flex items-center justify-between">
                     <p className="text-xs font-black text-white uppercase tracking-wider">Direct Study Channel with Aria</p>
-                    <span className="text-[10px] font-bold text-slate-500">Standby mode</span>
+                    <span className="text-[10px] font-bold text-[color:var(--text-secondary)]">Standby mode</span>
                   </div>
                   <div className="flex gap-2">
                     <input
                       type="text"
                       placeholder="Ask Aria to synthesize a topic or design a study track..."
-                      className="flex-1 px-4 py-2 text-xs rounded-xl bg-white/[0.02] border border-white/[0.05] focus:outline-none focus:border-amber-500/50 text-white placeholder-slate-500"
+                      className="flex-1 px-4 py-2 text-xs rounded-xl bg-[color:var(--bg-secondary)] border border-[color:var(--border)] focus:outline-none focus:border-amber-500/50 text-white placeholder-[color:var(--text-secondary)]"
                     />
-                    <button className="px-4 py-2 rounded-xl text-xs font-black bg-white text-black hover:bg-slate-200 cursor-pointer">Send</button>
+                    <button className="px-4 py-2 rounded-xl text-xs font-black bg-[color:var(--accent)] text-white hover:brightness-110 cursor-pointer">Send</button>
                   </div>
                 </div>
               )}
               {activeQuickAction === "metrics" && (
-                <div className="p-4 rounded-2xl bg-white/[0.01] border border-white/[0.04] grid grid-cols-1 sm:grid-cols-3 gap-3">
-                  <div className="p-3 rounded-xl bg-white/[0.01] border border-white/[0.02]">
-                    <span className="text-[9px] font-bold text-slate-500 block mb-1">STABILITY index</span>
+                <div className="p-4 rounded-2xl bg-[color:var(--bg-secondary)] border border-[color:var(--border)] grid grid-cols-1 sm:grid-cols-3 gap-3">
+                  <div className="p-3 rounded-xl bg-[color:var(--bg-primary)] border border-[color:var(--border)]">
+                    <span className="text-[9px] font-bold text-[color:var(--text-secondary)] block mb-1">STABILITY index</span>
                     <span className="text-sm font-black text-white">94% Stable</span>
                   </div>
-                  <div className="p-3 rounded-xl bg-white/[0.01] border border-white/[0.02]">
-                    <span className="text-[9px] font-bold text-slate-500 block mb-1">DECAY constant</span>
+                  <div className="p-3 rounded-xl bg-[color:var(--bg-primary)] border border-[color:var(--border)]">
+                    <span className="text-[9px] font-bold text-[color:var(--text-secondary)] block mb-1">DECAY constant</span>
                     <span className="text-sm font-black text-white">0.024/hr</span>
                   </div>
-                  <div className="p-3 rounded-xl bg-white/[0.01] border border-white/[0.02]">
-                    <span className="text-[9px] font-bold text-slate-500 block mb-1">ACTIVE recall cycles</span>
+                  <div className="p-3 rounded-xl bg-[color:var(--bg-primary)] border border-[color:var(--border)]">
+                    <span className="text-[9px] font-bold text-[color:var(--text-secondary)] block mb-1">ACTIVE recall cycles</span>
                     <span className="text-sm font-black text-white">8 Runs This Week</span>
                   </div>
                 </div>
@@ -418,7 +418,7 @@ export function DashboardOverview() {
             borderColor: `${meta.hex}25`,
             boxShadow: `0 20px 45px -15px rgba(0,0,0,0.6), 0 0 50px -10px ${meta.hex}08`
           }}
-          className="lg:col-span-8 relative group backdrop-blur-xl bg-[#121316]/50 border border-white/[0.04] rounded-3xl p-6 sm:p-8 flex flex-col justify-between overflow-hidden shadow-2xl transition-all duration-300"
+          className="lg:col-span-8 relative group backdrop-blur-xl bg-[color:var(--card-bg)]/80 border border-[color:var(--border)] rounded-3xl p-6 sm:p-8 flex flex-col justify-between overflow-hidden shadow-2xl transition-all duration-300"
         >
           {/* Glow backdrop */}
           <div className="absolute right-0 top-0 h-48 w-48 rounded-full bg-orange-500/[0.02] blur-3xl pointer-events-none group-hover:bg-orange-500/[0.03] transition-all" />
@@ -434,14 +434,14 @@ export function DashboardOverview() {
                   Primary Study Track
                 </span>
               </div>
-              <span className="text-[10px] font-bold text-slate-500">Updated 4 hours ago</span>
+              <span className="text-[10px] font-bold text-[color:var(--text-secondary)]">Updated 4 hours ago</span>
             </div>
 
             <div className="space-y-2">
               <h2 className="text-xl sm:text-2xl font-black text-white tracking-tight leading-tight group-hover:text-amber-500 transition-colors">
                 Advanced Generative AI &amp; LLM Orchestration
               </h2>
-              <p className="text-slate-400 text-xs sm:text-sm font-medium leading-relaxed max-w-xl">
+              <p className="text-[color:var(--text-secondary)] text-xs sm:text-sm font-medium leading-relaxed max-w-xl">
                 Deep dive into custom fine-tuning processes, Retrieval-Augmented Generation (RAG) vector stores, and multi-agent workflow routing pipelines.
               </p>
             </div>
@@ -449,10 +449,10 @@ export function DashboardOverview() {
             {/* Course Progress Arc / Visual bar */}
             <div className="space-y-2 pt-2">
               <div className="flex items-center justify-between text-xs font-bold">
-                <span className="text-slate-500 uppercase tracking-wider">Course Progress</span>
+                <span className="text-[color:var(--text-secondary)] uppercase tracking-wider">Course Progress</span>
                 <span className="text-white font-extrabold">74% Complete</span>
               </div>
-              <div className="bg-white/[0.02] h-2 rounded-full overflow-hidden border border-white/[0.04] p-[1px]">
+              <div className="bg-[color:var(--bg-secondary)] h-2 rounded-full overflow-hidden border border-[color:var(--border)] p-[1px]">
                 <motion.div
                   className="h-full rounded-full relative"
                   style={{ backgroundColor: meta.hex }}
@@ -463,20 +463,20 @@ export function DashboardOverview() {
                   <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent animate-[pulse_2.5s_infinite]" />
                 </motion.div>
               </div>
-              <div className="flex items-center justify-between text-[10px] text-slate-500 font-bold">
+              <div className="flex items-center justify-between text-[10px] text-[color:var(--text-secondary)] font-bold">
                 <span>Module 4: Transformers &amp; Attention Blocks</span>
                 <span>3 modules remaining</span>
               </div>
             </div>
           </div>
 
-          <div className="pt-6 mt-6 border-t border-white/[0.03] flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+          <div className="pt-6 mt-6 border-t border-[color:var(--border)] flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
             <div className="flex items-center gap-3">
-              <div className="w-9 h-9 rounded-xl bg-white/[0.02] border border-white/[0.05] flex items-center justify-center shrink-0">
-                <BrainCircuit className="w-4.5 h-4.5 text-slate-400" />
+              <div className="w-9 h-9 rounded-xl bg-[color:var(--bg-secondary)] border border-[color:var(--border)] flex items-center justify-center shrink-0">
+                <BrainCircuit className="w-4.5 h-4.5 text-[color:var(--text-secondary)]" />
               </div>
               <div>
-                <p className="text-[9px] font-bold text-slate-500 uppercase tracking-widest leading-none mb-1">Next Lesson</p>
+                <p className="text-[9px] font-bold text-[color:var(--text-secondary)] uppercase tracking-widest leading-none mb-1">Next Lesson</p>
                 <p className="text-xs font-extrabold text-white">4.4 - Implementing Scaled Dot-Product Attention</p>
               </div>
             </div>
@@ -498,33 +498,32 @@ export function DashboardOverview() {
           variants={itemVariants}
           whileHover={{
             y: -3,
-            borderColor: `${meta.hex}40`,
-            boxShadow: `0 20px 45px -15px rgba(0,0,0,0.6), 0 0 50px -10px ${meta.hex}10`
+            boxShadow: `0 18px 42px -16px rgba(0,0,0,0.55), 0 0 38px -10px ${meta.hex}10`
           }}
-          className="lg:col-span-4 relative group backdrop-blur-xl bg-[#121316]/50 border rounded-3xl p-6 sm:p-8 flex flex-col justify-between overflow-hidden shadow-2xl transition-all duration-300"
+          className="lg:col-span-4 relative group backdrop-blur-xl bg-[color:var(--card-bg)]/85 border border-[color:var(--border)] rounded-3xl p-6 sm:p-8 flex flex-col justify-between overflow-hidden shadow-2xl transition-all duration-300"
           style={{ borderColor: `${meta.hex}15` }}
         >
           {/* Subtle accent corner glow */}
           <div className="absolute -right-8 -top-8 h-32 w-32 rounded-full blur-3xl pointer-events-none group-hover:opacity-100 opacity-70 transition-opacity" style={{ backgroundColor: `${meta.hex}12` }} />
 
           <div className="space-y-5">
-            <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/[0.03] border border-white/[0.05] w-fit">
+            <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-[color:var(--bg-secondary)] border border-[color:var(--border)] w-fit">
               <Sparkles className="w-3 h-3" style={{ color: meta.hex }} />
-              <span className="text-[9px] font-extrabold uppercase tracking-[0.15em] text-slate-300">Aria recommendation</span>
+              <span className="text-[9px] font-extrabold uppercase tracking-[0.15em] text-[color:var(--text-secondary)]">Aria recommendation</span>
             </div>
 
             <div className="space-y-2">
               <h3 className="text-lg font-black text-white tracking-tight">
                 Active Recall Drill
               </h3>
-              <p className="text-slate-400 text-xs leading-relaxed font-medium">
-                We detected a minor accuracy dip in your recent <strong className="text-slate-200 font-bold">Dot-Product Attention</strong> calculations. Aria recommends a quick 5-minute feedback practice to lock in retention before the decay index triggers.
+              <p className="text-[color:var(--text-secondary)] text-xs leading-relaxed font-medium">
+                We detected a minor accuracy dip in your recent <strong className="text-white font-bold">Dot-Product Attention</strong> calculations. Aria recommends a quick 5-minute feedback practice to lock in retention before the decay index triggers.
               </p>
             </div>
           </div>
 
-          <div className="pt-6 mt-6 border-t border-white/[0.03] space-y-3.5">
-            <div className="flex items-center justify-between text-[10px] text-slate-500 font-bold">
+          <div className="pt-6 mt-6 border-t border-[color:var(--border)] space-y-3.5">
+            <div className="flex items-center justify-between text-[10px] text-[color:var(--text-secondary)] font-bold">
               <span>Duration: 5 Min Drill</span>
               <span className="text-emerald-400 font-black">+14.2% Stabilization</span>
             </div>
@@ -532,11 +531,11 @@ export function DashboardOverview() {
             <motion.button
               whileHover={{ scale: 1.01 }}
               whileTap={{ scale: 0.99 }}
-              className="w-full py-3 rounded-xl font-black text-[10px] uppercase tracking-[0.15em] text-white border hover:bg-white/[0.04] flex items-center justify-center gap-2.5 transition-all duration-300 cursor-pointer"
+              className="w-full py-3 rounded-xl font-black text-[10px] uppercase tracking-[0.15em] text-white border hover:bg-[color:var(--bg-secondary)]/20 flex items-center justify-center gap-2.5 transition-all duration-300 cursor-pointer"
               style={{ backgroundColor: `${meta.hex}05`, borderColor: `${meta.hex}20` }}
             >
               <span>Initialize Drill</span>
-              <ArrowRight className="w-3 h-3 text-slate-400 group-hover:translate-x-1 transition-transform" />
+              <ArrowRight className="w-3 h-3 text-[color:var(--text-secondary)] group-hover:translate-x-1 transition-transform" />
             </motion.button>
           </div>
         </motion.div>
@@ -554,39 +553,37 @@ export function DashboardOverview() {
         {/* STAT 1: Study Hours */}
         <motion.div
           variants={itemVariants}
-          whileHover={{ y: -3, borderColor: 'rgba(255,255,255,0.08)' }}
-          className="backdrop-blur-xl bg-[#121316]/50 border border-white/[0.04] rounded-3xl p-6 flex flex-col justify-between shadow-lg transition-all duration-300 group"
+          whileHover={{ y: -3 }}
+          className="backdrop-blur-xl bg-[color:var(--card-bg)]/80 border border-[color:var(--border)] rounded-3xl p-6 flex flex-col justify-between shadow-lg transition-all duration-300 group"
         >
           <div className="flex items-center justify-between">
-            <div className="w-9 h-9 rounded-xl bg-white/[0.02] border border-white/[0.05] flex items-center justify-center">
-              <Clock className="w-4.5 h-4.5 text-slate-400" style={{ color: meta.hex }} />
-            </div>
-            <div className="text-[10px] font-extrabold uppercase tracking-widest text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 px-2.5 py-0.5 rounded-full">
+            <div className="w-9 h-9 rounded-xl bg-[color:var(--bg-secondary)] border border-[color:var(--border)] flex items-center justify-center">
+                <Clock className="w-4.5 h-4.5 text-[color:var(--text-secondary)]" style={{ color: meta.hex }} />
               {progressPercent}% Target
             </div>
           </div>
 
           <div className="space-y-1 mt-5">
-            <p className="text-[9px] font-black text-slate-500 uppercase tracking-widest">Study Hours Today</p>
+            <p className="text-[9px] font-black text-[color:var(--text-secondary)] uppercase tracking-widest">Study Hours Today</p>
             <div className="flex items-baseline gap-1.5">
               <span className="text-2xl font-black text-white tracking-tight">{achievedHours.toFixed(1)}h</span>
-              <span className="text-xs text-slate-500">/ {targetHours.toFixed(1)}h target</span>
+              <span className="text-xs text-[color:var(--text-secondary)]">/ {targetHours.toFixed(1)}h target</span>
             </div>
           </div>
 
-          <div className="flex items-center justify-between pt-4 mt-4 border-t border-white/[0.03]">
-            <span className="text-[8px] font-bold text-slate-500 uppercase tracking-wider">Direct Study Log</span>
+          <div className="flex items-center justify-between pt-4 mt-4 border-t border-[color:var(--border)]">
+            <span className="text-[8px] font-bold text-[color:var(--text-secondary)] uppercase tracking-wider">Direct Study Log</span>
             <div className="flex items-center gap-1">
               <button
                 onClick={addHalfHour}
-                className="px-2 py-1 rounded bg-white/[0.02] hover:bg-white/[0.06] text-[9px] font-black text-white border border-white/[0.05] hover:border-white/[0.1] transition-all cursor-pointer"
+                className="px-2 py-1 rounded bg-[color:var(--bg-secondary)] hover:bg-[color:var(--bg-primary)] text-[9px] font-black text-white border border-[color:var(--border)] transition-all cursor-pointer"
                 title="Log 30 minutes active study segment"
               >
                 +30m
               </button>
               <button
                 onClick={resetGoal}
-                className="p-1 text-slate-600 hover:text-slate-400 transition-colors cursor-pointer"
+                className="p-1 text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)] transition-colors cursor-pointer"
                 title="Reset study log"
               >
                 <RotateCcw className="w-3 h-3" />
@@ -599,10 +596,10 @@ export function DashboardOverview() {
         <motion.div
           variants={itemVariants}
           whileHover={{ y: -3, borderColor: 'rgba(255,255,255,0.08)' }}
-          className="backdrop-blur-xl bg-[#121316]/50 border border-white/[0.04] rounded-3xl p-6 flex flex-col justify-between shadow-lg transition-all duration-300 group"
+          className="backdrop-blur-xl bg-[color:var(--card-bg)]/80 border border-[color:var(--border)] rounded-3xl p-6 flex flex-col justify-between shadow-lg transition-all duration-300 group"
         >
           <div className="flex items-center justify-between">
-            <div className="w-9 h-9 rounded-xl bg-white/[0.02] border border-white/[0.05] flex items-center justify-center">
+            <div className="w-9 h-9 rounded-xl bg-[color:var(--bg-secondary)] border border-[color:var(--border)] flex items-center justify-center">
               <Flame className="w-4.5 h-4.5 text-amber-500" style={{ color: meta.hex }} />
             </div>
             <div className={cn(
@@ -616,15 +613,15 @@ export function DashboardOverview() {
           </div>
 
           <div className="space-y-1 mt-5">
-            <p className="text-[9px] font-black text-slate-500 uppercase tracking-widest">Active Streak</p>
+            <p className="text-[9px] font-black text-[color:var(--text-secondary)] uppercase tracking-widest">Active Streak</p>
             <div className="flex items-baseline gap-1">
               <span className="text-2xl font-black text-white tracking-tight">{streakCount} Days</span>
-              <span className="text-[9px] text-slate-500 font-bold uppercase tracking-widest">unbroken</span>
+              <span className="text-[9px] text-[color:var(--text-secondary)] font-bold uppercase tracking-widest">unbroken</span>
             </div>
           </div>
 
-          <div className="flex items-center justify-between pt-4 mt-4 border-t border-white/[0.03]">
-            <span className="text-[8px] font-bold text-slate-500 uppercase tracking-wider">Daily Milestone</span>
+          <div className="flex items-center justify-between pt-4 mt-4 border-t border-[color:var(--border)]">
+            <span className="text-[8px] font-bold text-[color:var(--text-secondary)] uppercase tracking-wider">Daily Milestone</span>
             <div className="flex items-center gap-1.5">
               <button
                 onClick={claimStreak}
@@ -632,8 +629,8 @@ export function DashboardOverview() {
                 className={cn(
                   "px-2 py-1 rounded text-[9px] font-black uppercase tracking-wider transition-all border",
                   isStreakLoggedToday
-                    ? "text-slate-500 border-white/[0.01] bg-white/[0.01] cursor-default"
-                    : "text-white border-white/[0.05] bg-white/[0.02] hover:bg-white/[0.06] cursor-pointer"
+                    ? "text-[color:var(--text-secondary)] border-[color:var(--border)] bg-[color:var(--bg-secondary)] cursor-default"
+                    : "text-white bg-[color:var(--accent)] border-transparent hover:brightness-110 cursor-pointer"
                 )}
                 style={!isStreakLoggedToday ? { color: meta.hex, borderColor: `${meta.hex}20` } : {}}
               >
@@ -641,7 +638,7 @@ export function DashboardOverview() {
               </button>
               <button
                 onClick={resetStreak}
-                className="p-1 text-slate-700 hover:text-slate-500 transition-colors cursor-pointer"
+                className="p-1 text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)] transition-colors cursor-pointer"
                 title="Reset active streak count"
               >
                 <RotateCcw className="w-3 h-3" />
@@ -654,11 +651,11 @@ export function DashboardOverview() {
         <motion.div
           variants={itemVariants}
           whileHover={{ y: -3, borderColor: 'rgba(255,255,255,0.08)' }}
-          className="backdrop-blur-xl bg-[#121316]/50 border border-white/[0.04] rounded-3xl p-6 flex flex-col justify-between shadow-lg transition-all duration-300 group"
+          className="backdrop-blur-xl bg-[color:var(--card-bg)]/80 border border-[color:var(--border)] rounded-3xl p-6 flex flex-col justify-between shadow-lg transition-all duration-300 group"
         >
           <div className="flex items-center justify-between">
-            <div className="w-9 h-9 rounded-xl bg-white/[0.02] border border-white/[0.05] flex items-center justify-center">
-              <CheckSquare className="w-4.5 h-4.5 text-slate-400" />
+            <div className="w-9 h-9 rounded-xl bg-[color:var(--bg-secondary)] border border-[color:var(--border)] flex items-center justify-center">
+              <CheckSquare className="w-4.5 h-4.5 text-[color:var(--text-secondary)]" />
             </div>
             <div className="text-[10px] font-extrabold uppercase tracking-widest text-indigo-400 bg-indigo-500/10 border border-indigo-500/20 px-2.5 py-0.5 rounded-full">
               Daily Focus
@@ -666,15 +663,15 @@ export function DashboardOverview() {
           </div>
 
           <div className="space-y-1 mt-5">
-            <p className="text-[9px] font-black text-slate-500 uppercase tracking-widest">Tasks Met</p>
+            <p className="text-[9px] font-black text-[color:var(--text-secondary)] uppercase tracking-widest">Tasks Met</p>
             <div className="flex items-baseline gap-1.5">
               <span className="text-2xl font-black text-white tracking-tight">{completedTasksCount} / {totalTasksCount}</span>
-              <span className="text-xs text-slate-500">Completed</span>
+              <span className="text-xs text-[color:var(--text-secondary)]">Completed</span>
             </div>
           </div>
 
-          <div className="pt-4 mt-4 border-t border-white/[0.03] flex items-center justify-between text-[10px]">
-            <span className="text-[8px] font-bold text-slate-500 uppercase tracking-wider">Task Completion</span>
+          <div className="pt-4 mt-4 border-t border-[color:var(--border)] flex items-center justify-between text-[10px]">
+            <span className="text-[8px] font-bold text-[color:var(--text-secondary)] uppercase tracking-wider">Task Completion</span>
             <span className="font-extrabold text-indigo-400">{totalTasksCount > 0 ? Math.round((completedTasksCount / totalTasksCount) * 100) : 0}% Ratio</span>
           </div>
         </motion.div>
@@ -683,11 +680,11 @@ export function DashboardOverview() {
         <motion.div
           variants={itemVariants}
           whileHover={{ y: -3, borderColor: 'rgba(255,255,255,0.08)' }}
-          className="backdrop-blur-xl bg-[#121316]/50 border border-white/[0.04] rounded-3xl p-6 flex flex-col justify-between shadow-lg transition-all duration-300 group"
+          className="backdrop-blur-xl bg-[color:var(--card-bg)]/80 border border-[color:var(--border)] rounded-3xl p-6 flex flex-col justify-between shadow-lg transition-all duration-300 group"
         >
           <div className="flex items-center justify-between">
-            <div className="w-9 h-9 rounded-xl bg-white/[0.02] border border-white/[0.05] flex items-center justify-center">
-              <BrainCircuit className="w-4.5 h-4.5 text-slate-400" />
+            <div className="w-9 h-9 rounded-xl bg-[color:var(--bg-secondary)] border border-[color:var(--border)] flex items-center justify-center">
+              <BrainCircuit className="w-4.5 h-4.5 text-[color:var(--text-secondary)]" />
             </div>
             <div className="text-[10px] font-extrabold uppercase tracking-widest text-amber-400 bg-amber-500/10 border border-amber-500/20 px-2.5 py-0.5 rounded-full" style={{ color: meta.hex, backgroundColor: `${meta.hex}15`, borderColor: `${meta.hex}25` }}>
               Recall curve
@@ -695,7 +692,7 @@ export function DashboardOverview() {
           </div>
 
           <div className="space-y-1 mt-5">
-            <p className="text-[9px] font-black text-slate-500 uppercase tracking-widest">Cognitive Score</p>
+            <p className="text-[9px] font-black text-[color:var(--text-secondary)] uppercase tracking-widest">Cognitive Score</p>
             <div className="flex items-baseline gap-1.5">
               <span className="text-2xl font-black text-white tracking-tight">94.2%</span>
               <span className="text-[10px] text-emerald-400 font-extrabold flex items-center gap-0.5">
@@ -705,22 +702,22 @@ export function DashboardOverview() {
             </div>
           </div>
 
-          <div className="pt-4 mt-4 border-t border-white/[0.03] flex items-center justify-between text-[10px]">
-            <span className="text-[8px] font-bold text-slate-500 uppercase tracking-wider">Stabilized Nodes</span>
-            <span className="font-extrabold text-slate-300">Peak Attention</span>
+          <div className="pt-4 mt-4 border-t border-[color:var(--border)] flex items-center justify-between text-[10px]">
+            <span className="text-[8px] font-bold text-[color:var(--text-secondary)] uppercase tracking-wider">Stabilized Nodes</span>
+            <span className="font-extrabold text-[color:var(--text-secondary)]">Peak Attention</span>
           </div>
         </motion.div>
 
       </motion.div>
 
       {/* SECONDARY VIEWPORT: Spacing separator with clear section labeling */}
-      <div className="pt-10 border-t border-white/[0.03] space-y-8">
+      <div className="pt-10 border-t border-[color:var(--border)] space-y-8">
         <div className="space-y-1.5">
-          <div className="flex items-center gap-2 text-slate-400">
-            <Activity className="w-4.5 h-4.5 text-slate-500" />
+          <div className="flex items-center gap-2 text-[color:var(--text-secondary)]">
+            <Activity className="w-4.5 h-4.5 text-[color:var(--text-secondary)]" />
             <h2 className="text-xs font-black uppercase tracking-[0.2em]">Deep analytics &amp; Task streams</h2>
           </div>
-          <p className="text-xs text-slate-500 font-medium">Secondary performance charts, active daily checklists, and tutor agendas placed cleanly below the primary fold.</p>
+          <p className="text-xs text-[color:var(--text-secondary)] font-medium">Secondary performance charts, active daily checklists, and tutor agendas placed cleanly below the primary fold.</p>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
@@ -731,12 +728,12 @@ export function DashboardOverview() {
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 0.5 }}
-            className="lg:col-span-7 backdrop-blur-xl bg-[#121316]/50 border border-white/[0.04] rounded-3xl p-6 sm:p-8 flex flex-col justify-between shadow-2xl relative"
+            className="lg:col-span-7 backdrop-blur-xl bg-[color:var(--card-bg)]/80 border border-[color:var(--border)] rounded-3xl p-6 sm:p-8 flex flex-col justify-between shadow-2xl relative"
           >
             <div className="flex items-start justify-between mb-8">
               <div className="space-y-1">
                 <h3 className="text-xs font-black text-white uppercase tracking-[0.2em]">Retention Stability Index</h3>
-                <p className="text-[9px] font-bold text-slate-500 uppercase tracking-widest">Ebbinghaus Memory Cycle Retention curves</p>
+                <p className="text-[9px] font-bold text-[color:var(--text-secondary)] uppercase tracking-widest">Ebbinghaus Memory Cycle Retention curves</p>
               </div>
               <div className="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-emerald-500/10 border border-emerald-500/10 shadow-sm">
                 <TrendingUp className="w-3.5 h-3.5 text-emerald-500" />
@@ -762,7 +759,7 @@ export function DashboardOverview() {
                       background: `linear-gradient(to top, ${meta.hex}20, ${meta.hex})`
                     }}
                   >
-                    <div className="absolute inset-0 bg-white/5 opacity-0 group-hover:opacity-100 transition-opacity" />
+                    <div className="absolute inset-0 bg-[color:var(--text-secondary)]/10 opacity-0 group-hover:opacity-100 transition-opacity" />
                   </motion.div>
 
                   {/* Tooltip Overlay */}
@@ -772,11 +769,11 @@ export function DashboardOverview() {
                         initial={{ opacity: 0, y: 8, scale: 0.95 }}
                         animate={{ opacity: 1, y: -4, scale: 1 }}
                         exit={{ opacity: 0, y: 8, scale: 0.95 }}
-                        className="absolute -top-12 left-1/2 -translate-x-1/2 z-30 px-3 py-1.5 rounded-lg bg-white text-black shadow-2xl flex flex-col items-center min-w-[65px]"
+                        className="absolute -top-12 left-1/2 -translate-x-1/2 z-30 px-3 py-1.5 rounded-lg bg-[color:var(--bg-secondary)] text-[color:var(--text-primary)] shadow-2xl flex flex-col items-center min-w-[65px]"
                       >
                         <span className="text-[10px] font-black tracking-tighter leading-none">{val}.0%</span>
-                        <span className="text-[7px] font-bold text-slate-400 uppercase tracking-tighter mt-0.5">STABILITY</span>
-                        <div className="absolute top-[calc(100%-4px)] left-1/2 -translate-x-1/2 border-[5px] border-transparent border-t-white" />
+                        <span className="text-[7px] font-bold text-[color:var(--text-secondary)] uppercase tracking-tighter mt-0.5">STABILITY</span>
+                        <div className="absolute top-[calc(100%-4px)] left-1/2 -translate-x-1/2 border-[5px] border-transparent border-t-[color:var(--border)]" />
                       </motion.div>
                     )}
                   </AnimatePresence>
@@ -786,14 +783,14 @@ export function DashboardOverview() {
               {/* Structural Background Lines */}
               <div className="absolute inset-0 flex flex-col justify-between pointer-events-none opacity-[0.02]">
                 {[...Array(5)].map((_, i) => (
-                  <div key={i} className="w-full h-px bg-white" />
+                  <div key={i} className="w-full h-px bg-[color:var(--border)]" />
                 ))}
               </div>
             </div>
 
-            <div className="flex items-center justify-between mt-6 px-1 border-t border-white/[0.03] pt-4">
+            <div className="flex items-center justify-between mt-6 px-1 border-t border-[color:var(--border)] pt-4">
               {['07/11', '07/12', '07/13', '07/14', '07/15', '07/16', '07/17', '07/18', '07/19', 'TODAY'].map((day, i) => (
-                <span key={i} className="text-[8px] font-bold text-slate-500 uppercase tracking-tighter flex-1 text-center">
+                <span key={i} className="text-[8px] font-bold text-[color:var(--text-secondary)] uppercase tracking-tighter flex-1 text-center">
                   {day}
                 </span>
               ))}
@@ -809,14 +806,14 @@ export function DashboardOverview() {
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true, margin: "-100px" }}
               transition={{ duration: 0.5 }}
-              className="backdrop-blur-xl bg-[#121316]/50 border border-white/[0.04] rounded-3xl p-6 shadow-xl space-y-4"
+              className="backdrop-blur-xl bg-[color:var(--card-bg)]/80 border border-[color:var(--border)] rounded-3xl p-6 shadow-xl space-y-4"
             >
-              <div className="flex items-center justify-between border-b border-white/[0.03] pb-3">
+              <div className="flex items-center justify-between border-b border-[color:var(--border)] pb-3">
                 <div className="flex items-center gap-2">
-                  <CheckCircle2 className="w-4 h-4 text-slate-400" />
+                  <CheckCircle2 className="w-4 h-4 text-[color:var(--text-secondary)]" />
                   <h3 className="text-xs font-black text-white uppercase tracking-wider">Aria Study Directives</h3>
                 </div>
-                <span className="text-[8px] font-black text-slate-500 uppercase tracking-widest bg-white/[0.02] px-2 py-0.5 rounded border border-white/[0.04]">
+                <span className="text-[8px] font-black text-[color:var(--text-secondary)] uppercase tracking-widest bg-[color:var(--bg-secondary)]/70 px-2 py-0.5 rounded border border-[color:var(--border)]">
                   {completedTasksCount}/{totalTasksCount} done
                 </span>
               </div>
@@ -827,17 +824,17 @@ export function DashboardOverview() {
                     key={task.id}
                     onClick={() => toggleTask(task.id)}
                     className={cn(
-                      "p-3 rounded-xl bg-white/[0.01] border transition-all flex items-start gap-3 cursor-pointer select-none",
+                      "p-3 rounded-xl bg-[color:var(--bg-secondary)] border transition-all flex items-start gap-3 cursor-pointer select-none",
                       task.completed
-                        ? "border-white/[0.02] opacity-60"
-                        : "border-white/[0.04] hover:border-white/[0.08] hover:bg-white/[0.02]"
+                        ? "border-[color:var(--border)] opacity-60"
+                        : "border-[color:var(--border)] hover:border-[color:var(--text-secondary)] hover:bg-[color:var(--bg-primary)]"
                     )}
                   >
                     <div className={cn(
                       "w-4 h-4 rounded mt-0.5 flex items-center justify-center transition-all border shrink-0",
                       task.completed
                         ? "bg-amber-500 border-amber-500 text-white"
-                        : "border-white/[0.15]"
+                        : "border-[color:var(--border)]"
                     )}
                     style={task.completed ? { backgroundColor: meta.hex, borderColor: meta.hex } : {}}
                     >
@@ -846,11 +843,11 @@ export function DashboardOverview() {
                     <div className="space-y-0.5 flex-1">
                       <p className={cn(
                         "text-xs font-bold leading-tight",
-                        task.completed ? "line-through text-slate-500" : "text-slate-200"
+                        task.completed ? "line-through text-[color:var(--text-secondary)]" : "text-[color:var(--text-primary)]"
                       )}>
                         {task.text}
                       </p>
-                      <span className="text-[8px] font-extrabold uppercase tracking-widest text-slate-500 block">
+                      <span className="text-[8px] font-extrabold uppercase tracking-widest text-[color:var(--text-secondary)] block">
                         {task.category}
                       </span>
                     </div>
@@ -865,22 +862,22 @@ export function DashboardOverview() {
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true, margin: "-100px" }}
               transition={{ duration: 0.5 }}
-              className="backdrop-blur-xl bg-[#121316]/50 border border-white/[0.04] rounded-3xl p-6 shadow-xl space-y-4"
+              className="backdrop-blur-xl bg-[color:var(--card-bg)]/80 border border-[color:var(--border)] rounded-3xl p-6 shadow-xl space-y-4"
             >
-              <div className="flex items-center justify-between border-b border-white/[0.03] pb-3">
+              <div className="flex items-center justify-between border-b border-[color:var(--border)] pb-3">
                 <div className="flex items-center gap-2">
                   <Calendar className="w-4 h-4 text-amber-500" style={{ color: meta.hex }} />
                   <h3 className="text-xs font-black text-white uppercase tracking-wider">Schedules &amp; Quiz Timers</h3>
                 </div>
-                <span className="text-[8px] font-black text-slate-500 uppercase tracking-widest bg-white/[0.02] px-2 py-0.5 rounded border border-white/[0.04]">3 events</span>
+                <span className="text-[8px] font-black text-[color:var(--text-secondary)] uppercase tracking-widest bg-[color:var(--bg-secondary)]/70 px-2 py-0.5 rounded border border-[color:var(--border)]">3 events</span>
               </div>
 
               <div className="space-y-2.5">
                 {/* Event 1 */}
-                <div className="p-3 rounded-xl bg-white/[0.01] border border-white/[0.02] hover:border-white/[0.05] transition-all flex items-center justify-between gap-4">
+                <div className="p-3 rounded-xl bg-[color:var(--bg-secondary)] border border-[color:var(--border)] hover:border-[color:var(--text-secondary)] transition-all flex items-center justify-between gap-4">
                   <div className="space-y-0.5">
-                    <p className="text-xs font-bold text-slate-200">Neural Networks: Midterm Assessment</p>
-                    <p className="text-[9px] text-slate-500 font-bold flex items-center gap-1">
+                    <p className="text-xs font-bold text-[color:var(--text-primary)]">Neural Networks: Midterm Assessment</p>
+                    <p className="text-[9px] text-[color:var(--text-secondary)] font-bold flex items-center gap-1">
                       <Clock className="w-3 h-3" /> Today, 2:00 PM
                     </p>
                   </div>
@@ -888,10 +885,10 @@ export function DashboardOverview() {
                 </div>
 
                 {/* Event 2 */}
-                <div className="p-3 rounded-xl bg-white/[0.01] border border-white/[0.02] hover:border-white/[0.05] transition-all flex items-center justify-between gap-4">
+                <div className="p-3 rounded-xl bg-[color:var(--bg-secondary)] border border-[color:var(--border)] hover:border-[color:var(--text-secondary)] transition-all flex items-center justify-between gap-4">
                   <div className="space-y-0.5">
-                    <p className="text-xs font-bold text-slate-200">Algorithms Complexity Study Circles</p>
-                    <p className="text-[9px] text-slate-500 font-bold flex items-center gap-1">
+                    <p className="text-xs font-bold text-[color:var(--text-primary)]">Algorithms Complexity Study Circles</p>
+                    <p className="text-[9px] text-[color:var(--text-secondary)] font-bold flex items-center gap-1">
                       <Clock className="w-3 h-3" /> Tomorrow, 10:30 AM
                     </p>
                   </div>
@@ -899,10 +896,10 @@ export function DashboardOverview() {
                 </div>
 
                 {/* Event 3 */}
-                <div className="p-3 rounded-xl bg-white/[0.01] border border-white/[0.02] hover:border-white/[0.05] transition-all flex items-center justify-between gap-4">
+                <div className="p-3 rounded-xl bg-[color:var(--bg-secondary)] border border-[color:var(--border)] hover:border-[color:var(--text-secondary)] transition-all flex items-center justify-between gap-4">
                   <div className="space-y-0.5">
-                    <p className="text-xs font-bold text-slate-200">Aria Tutor Performance Deep-Dive</p>
-                    <p className="text-[9px] text-slate-500 font-bold flex items-center gap-1">
+                    <p className="text-xs font-bold text-[color:var(--text-primary)]">Aria Tutor Performance Deep-Dive</p>
+                    <p className="text-[9px] text-[color:var(--text-secondary)] font-bold flex items-center gap-1">
                       <Clock className="w-3 h-3" /> Wed, 4:00 PM
                     </p>
                   </div>
