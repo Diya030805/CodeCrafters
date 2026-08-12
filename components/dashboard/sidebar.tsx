@@ -53,7 +53,12 @@ const themeAccents = [
   { id: 'crimson', name: 'Pink', color: 'bg-pink-500', ring: 'ring-pink-500' },
 ] as const;
 
-export function Sidebar() {
+interface SidebarProps {
+  isMobile?: boolean;
+  onNavClick?: () => void;
+}
+
+export function Sidebar({ isMobile = false, onNavClick }: SidebarProps) {
   const pathname = usePathname();
   const router = useRouter();
   const [hoveredItem, setHoveredItem] = useState<string | null>(null);
@@ -63,19 +68,33 @@ export function Sidebar() {
   const activeAccentClasses = darkMode ? meta.dark : meta.light;
 
   return (
-    <aside className={cn("p-6 flex flex-col gap-8 h-full min-h-[calc(100vh-120px)] transition-all duration-300 bg-[color:var(--card-bg)] border-[color:var(--border)] text-[color:var(--text-primary)]", glassStyles.container)}>
-      {/* User Profile Menu */}
-      <UserMenu />
+    <aside className={cn(
+      "p-6 flex flex-col gap-8 h-full transition-all duration-300",
+      // Desktop: Apply glassmorphism effect
+      !isMobile && cn(
+        "bg-[color:var(--card-bg)] border-[color:var(--border)] text-[color:var(--text-primary)] min-h-[calc(100vh-120px)]",
+        glassStyles.container
+      ),
+      // Mobile: Completely solid background, no blur, no filter, explicit colors
+      isMobile && "bg-slate-900 text-white min-h-screen !opacity-100 !backdrop-blur-0 !filter-none border-r border-slate-700"
+    )}>
+      {/* User Profile Menu - Hidden on Mobile */}
+      {!isMobile && <UserMenu />}
 
       {/* Search Pill */}
       <div className="relative">
-        <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-[color:var(--text-secondary)]" />
+        <Search className={cn(
+          "absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4",
+          isMobile ? "text-gray-400" : "text-[color:var(--text-secondary)]"
+        )} />
         <input
           type="text"
           placeholder="Search curriculum..."
           className={cn(
             "w-full pl-11 pr-4 py-3 text-sm outline-none transition-all duration-300",
-            glassStyles.input
+            isMobile 
+              ? "bg-slate-800 text-white placeholder-slate-400 border border-slate-700 rounded-lg focus:bg-slate-700 focus:border-slate-600"
+              : glassStyles.input
           )}
         />
       </div>
@@ -88,16 +107,22 @@ export function Sidebar() {
             <motion.div
               key={item.href}
               onMouseEnter={() => {
-                setHoveredItem(item.label);
-                router.prefetch(item.href);
+                if (!isMobile) {
+                  setHoveredItem(item.label);
+                  router.prefetch(item.href);
+                }
               }}
-              onMouseLeave={() => setHoveredItem(null)}
+              onMouseLeave={() => {
+                if (!isMobile) {
+                  setHoveredItem(null);
+                }
+              }}
               className="relative"
               whileTap={{ scale: 0.97 }}
               transition={{ duration: 0.2 }}
             >
               <AnimatePresence>
-                {hoveredItem === item.label && (
+                {hoveredItem === item.label && !isMobile && (
                   <motion.div
                     initial={{ opacity: 0, x: -10 }}
                     animate={{ opacity: 1, x: 0 }}
@@ -110,9 +135,14 @@ export function Sidebar() {
               </AnimatePresence>
               <Link
                 href={item.href}
+                onClick={isMobile ? onNavClick : undefined}
                 className={cn(
                   "flex min-w-0 items-center justify-between px-5 py-3.5 rounded-2xl text-sm font-semibold transition-all duration-300 group",
-                  isActive
+                  isMobile
+                    ? isActive
+                      ? "bg-amber-500 text-white shadow-lg"
+                      : "text-gray-300 hover:bg-slate-800 hover:text-white"
+                    : isActive
                     ? cn(activeAccentClasses.button, "shadow-lg")
                     : "text-[color:var(--text-secondary)] hover:bg-[color:var(--bg-secondary)] hover:text-[color:var(--text-primary)]"
                 )}
@@ -120,13 +150,15 @@ export function Sidebar() {
                 <div className="flex items-center gap-3">
                   <item.icon className={cn(
                     "w-5 h-5 transition-all duration-300",
-                    isActive
-                       ? "text-white"
+                    isMobile
+                      ? "text-white"
+                      : isActive
+                      ? "text-white"
                       : cn("text-[color:var(--text-secondary)]", activeAccentClasses.text.split(' ').map(c => `group-hover:${c}`).join(' '))
                   )} />
                   <span className={cn(
                     "transition-all duration-300",
-                    isActive ? "text-white" : activeAccentClasses.text.split(' ').map(c => `group-hover:${c}`).join(' ')
+                    isMobile ? "text-white" : isActive ? "text-white" : activeAccentClasses.text.split(' ').map(c => `group-hover:${c}`).join(' ')
                   )}>
                     {item.label}
                   </span>
@@ -146,8 +178,11 @@ export function Sidebar() {
       </nav>
 
       {/* Theme Accent Selector */}
-      <div className="mt-auto pt-8 border-t border-[color:var(--border)]">
-        <h3 className="text-[10px] font-bold tracking-widest text-[color:var(--text-secondary)] uppercase mb-5 px-2">
+      <div className={cn("mt-auto pt-8", isMobile ? "border-t border-slate-700" : "border-t border-[color:var(--border)]")}>
+        <h3 className={cn(
+          "text-[10px] font-bold tracking-widest uppercase mb-5 px-2",
+          isMobile ? "text-gray-400" : "text-[color:var(--text-secondary)]"
+        )}>
           THEME ACCENT
         </h3>
         <div className="flex items-center gap-3 px-2">
@@ -159,7 +194,7 @@ export function Sidebar() {
                   "w-7 h-7 rounded-full transition-all duration-300 relative flex items-center justify-center cursor-pointer hover:scale-110 active:scale-90",
                   accent.color,
                   accentColor === accent.id
-                    ? `scale-110 ring-2 ring-offset-2 ring-offset-[color:var(--bg-primary)] ${accent.ring} shadow-md`
+                    ? `scale-110 ring-2 ring-offset-2 ${isMobile ? "ring-offset-slate-900" : "ring-offset-[color:var(--bg-primary)]"} ${accent.ring} shadow-md`
                     : "opacity-80 hover:opacity-100"
                 )}
               >
@@ -171,15 +206,24 @@ export function Sidebar() {
       </div>
 
       {/* Sound Effects Selector */}
-      <div className="mt-6 pt-6 border-t border-[color:var(--border)]">
+      <div className={cn("mt-6 pt-6", isMobile ? "border-t border-slate-700" : "border-t border-[color:var(--border)]")}>
         <div className="flex items-center justify-between px-2">
           <div className="flex items-center gap-2">
             {soundEnabled ? (
-              <Volume2 className={cn("w-4 h-4 transition-colors", activeAccentClasses.text)} />
+              <Volume2 className={cn(
+                "w-4 h-4 transition-colors",
+                isMobile ? "text-gray-300" : activeAccentClasses.text
+              )} />
             ) : (
-              <VolumeX className="w-4 h-4 text-[color:var(--text-secondary)] transition-colors" />
+              <VolumeX className={cn(
+                "w-4 h-4 transition-colors",
+                isMobile ? "text-gray-400" : "text-[color:var(--text-secondary)]"
+              )} />
             )}
-            <span className="text-[10px] font-bold tracking-widest text-[color:var(--text-secondary)] uppercase">
+            <span className={cn(
+              "text-[10px] font-bold tracking-widest uppercase",
+              isMobile ? "text-gray-400" : "text-[color:var(--text-secondary)]"
+            )}>
               TIMER SOUNDS
             </span>
           </div>
@@ -188,10 +232,12 @@ export function Sidebar() {
             <button
               onClick={() => setSoundEnabled(!soundEnabled)}
               className={cn(
-                "relative inline-flex h-6 w-11 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-[color:var(--bg-primary)]",
-                soundEnabled ? meta.ring : "bg-[color:var(--bg-secondary)]"
+                "relative inline-flex h-6 w-11 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-offset-2",
+                isMobile
+                  ? soundEnabled ? "bg-amber-500" : "bg-slate-700"
+                  : cn(soundEnabled ? meta.ring : "bg-[color:var(--bg-secondary)]", "focus:ring-offset-[color:var(--bg-primary)]")
               )}
-              style={soundEnabled ? { backgroundColor: meta.hex } : {}}
+              style={!isMobile && soundEnabled ? { backgroundColor: meta.hex } : {}}
               aria-label="Toggle Sound Effects"
             >
               <span
@@ -206,8 +252,16 @@ export function Sidebar() {
       </div>
 
       {/* AI Engine Status */}
-      <div className="mt-6 pt-6 border-t border-[color:var(--border)]">
-        <div className="flex items-center gap-3 px-2 py-2 rounded-xl bg-[color:var(--bg-secondary)]/30 border border-[color:var(--border)]">
+      <div className={cn(
+        "mt-6 pt-6",
+        isMobile ? "border-t border-slate-700" : "border-t border-[color:var(--border)]"
+      )}>
+        <div className={cn(
+          "flex items-center gap-3 px-2 py-2 rounded-xl border",
+          isMobile
+            ? "bg-slate-800 border-slate-700"
+            : "bg-[color:var(--bg-secondary)]/30 border-[color:var(--border)]"
+        )}>
           <div className="relative flex items-center justify-center">
             {/* Core Dot */}
             <div className="w-2 h-2 rounded-full bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.5)] z-10" />
@@ -232,10 +286,16 @@ export function Sidebar() {
             ))}
           </div>
           <div className="flex flex-col">
-            <span className="text-[9px] font-black text-[color:var(--text-secondary)] uppercase tracking-[0.15em] leading-none">
+            <span className={cn(
+              "text-[9px] font-black uppercase tracking-[0.15em] leading-none",
+              isMobile ? "text-gray-400" : "text-[color:var(--text-secondary)]"
+            )}>
               AI Engine
             </span>
-            <span className="text-[10px] font-black text-[color:var(--accent)] uppercase tracking-widest mt-1">
+            <span className={cn(
+              "text-[10px] font-black uppercase tracking-widest mt-1",
+              isMobile ? "text-amber-400" : "text-[color:var(--accent)]"
+            )}>
               ONLINE
             </span>
           </div>

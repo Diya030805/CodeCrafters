@@ -17,14 +17,17 @@ interface NavbarProps {
   onBrandClick?: () => void;
   activeSection?: string;
   onNavigate?: (section: string) => void;
+  onSidebarToggle?: () => void;
+  sidebarOpen?: boolean;
 }
 
-export function Navbar({ view = 'landing', onGetStarted, onBrandClick, activeSection, onNavigate }: NavbarProps) {
+export function Navbar({ view = 'landing', onGetStarted, onBrandClick, activeSection, onNavigate, onSidebarToggle, sidebarOpen = false }: NavbarProps) {
   const { darkMode, setDarkMode } = useTheme();
   const [mounted, setMounted] = React.useState(false);
   const [isOpen, setIsOpen] = React.useState(false);
   const router = useRouter();
   const isLanding = view === 'landing';
+  const isDashboard = view === 'dashboard';
 
   React.useEffect(() => {
     requestAnimationFrame(() => setMounted(true));
@@ -116,6 +119,19 @@ export function Navbar({ view = 'landing', onGetStarted, onBrandClick, activeSec
                 aria-label="Toggle navigation menu"
               >
                 {isOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+              </button>
+            </Tooltip>
+          )}
+
+          {/* Dashboard Sidebar Menu Toggle Button */}
+          {isDashboard && (
+            <Tooltip content={sidebarOpen ? 'Close Sidebar' : 'Open Sidebar'} side="bottom" className="lg:hidden">
+              <button
+                onClick={() => onSidebarToggle?.()}
+                className="lg:hidden flex items-center justify-center w-10 h-10 rounded-full border border-[color:var(--border)] bg-[color:var(--bg-secondary)]/45 hover:bg-[color:var(--bg-secondary)]/65 text-[color:var(--text-secondary)] transition-all duration-300 cursor-pointer shadow-sm active:scale-95 outline-none"
+                aria-label="Toggle sidebar menu"
+              >
+                {sidebarOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
               </button>
             </Tooltip>
           )}
