@@ -16,7 +16,7 @@
 </p>
 
 <p align="center">
-  <a href="https://code-crafters-q1ka.vercel.app/">🚀 Live Demo</a>
+  <a href="https://code-crafters-git-main-diyaghosh030805-3811s-projects.vercel.app/">🚀 Live Demo</a>
   &nbsp; • &nbsp;
   <a href="https://github.com/Diya030805/CodeCrafters">📂 GitHub Repository</a>
 </p>
