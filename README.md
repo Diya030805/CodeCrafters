@@ -23,13 +23,21 @@
 
 ---
 
+## 🚀 Live URLs
+
+| Service | URL |
+|---|---|
+| **Web App (Vercel)** | [https://YOUR-PROJECT.vercel.app](https://YOUR-PROJECT.vercel.app) |
+
+---
+
 ## 📖 What is CodeCrafters?
 
 **CodeCrafters** is an AI-powered learning and productivity platform designed to help students learn smarter, stay organized, and track their academic progress from one unified workspace.
 
-Instead of switching between multiple tools for studying, planning, note-taking, revision, and productivity, CodeCrafters brings everything together into a single intelligent learning environment.
+Instead of switching between multiple applications for studying, planning, note-taking, revision, and productivity, CodeCrafters brings everything together into a single intelligent learning environment.
 
-The platform combines **AI-powered learning tools** with powerful productivity features such as:
+It combines **AI-powered learning tools** with productivity features such as:
 
 - 🤖 AI Tutor
 - 🧠 Smart Flashcards
@@ -48,7 +56,7 @@ The platform combines **AI-powered learning tools** with powerful productivity f
 
 Students often use multiple applications for different parts of their study routine.
 
-CodeCrafters brings these experiences together into one centralized workspace.
+**CodeCrafters** brings these experiences together into one centralized workspace.
 
 > **Learn → Practice → Plan → Focus → Analyze → Improve**
 
@@ -157,7 +165,7 @@ An interactive voice-based learning experience.
 
 ### 📊 Learning Analytics
 
-Visualize your learning activity and academic progress.
+Visualize learning activity and academic progress.
 
 - Study statistics
 - Progress visualization
@@ -200,7 +208,7 @@ Stay motivated through consistent learning.
 
 ---
 
-## 🏗️ Project Architecture
+## 🏗️ Project Structure
 
 ```text
 CodeCrafters/
