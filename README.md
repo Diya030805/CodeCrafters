@@ -206,7 +206,7 @@ Stay motivated through consistent learning.
 | **Version Control** | Git & GitHub |
 | **Deployment** | Vercel |
 
----
+--- 
 
 ## 🏗️ Project Structure
 
