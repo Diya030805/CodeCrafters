@@ -27,7 +27,7 @@
 
 | Service | URL |
 |---|---|
-| **Web App (Vercel)** | [https://YOUR-PROJECT.vercel.app](https://YOUR-PROJECT.vercel.app) |
+| **Web App (Vercel)** | [https://code-crafters-q1ka.vercel.app/) |
 
 ---
 
