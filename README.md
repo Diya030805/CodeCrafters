@@ -1,6 +1,3 @@
-
-
-````markdown
 # 🎓 CodeCrafters
 
 ### AI-Powered Learning & Productivity Platform for Students
@@ -236,7 +233,7 @@ Dashboard
 Track Progress
       ↓
 Improve Learning Habits
-````
+```
 
 ---
 
@@ -246,37 +243,37 @@ CodeCrafters focuses on providing a modern, interactive, and student-friendly ex
 
 ### Design Highlights
 
-* Modern dashboard interface
-* Responsive design
-* Light and dark themes
-* Interactive components
-* Smooth animations
-* Micro-interactions
-* Visual learning analytics
-* Focused productivity workspace
-* Clean navigation
-* Mobile-friendly experience
+- Modern dashboard interface
+- Responsive design
+- Light and dark themes
+- Interactive components
+- Smooth animations
+- Micro-interactions
+- Visual learning analytics
+- Focused productivity workspace
+- Clean navigation
+- Mobile-friendly experience
 
 ---
 
 # 🛠️ Tech Stack
 
-| Category            | Technologies          |
-| ------------------- | --------------------- |
-| **Framework**       | Next.js 15            |
-| **Frontend**        | React                 |
-| **Language**        | TypeScript            |
-| **Styling**         | Tailwind CSS          |
-| **UI Components**   | shadcn/ui             |
-| **Animations**      | Framer Motion         |
-| **Icons**           | Lucide React          |
-| **Backend**         | Next.js API Routes    |
-| **Database**        | Supabase / PostgreSQL |
-| **Authentication**  | Supabase Auth         |
-| **AI**              | Google Gemini API     |
-| **Charts**          | Recharts              |
-| **Version Control** | Git & GitHub          |
-| **Deployment**      | Vercel                |
+| Category | Technologies |
+|---|---|
+| **Framework** | Next.js 15 |
+| **Frontend** | React |
+| **Language** | TypeScript |
+| **Styling** | Tailwind CSS |
+| **UI Components** | shadcn/ui |
+| **Animations** | Framer Motion |
+| **Icons** | Lucide React |
+| **Backend** | Next.js API Routes |
+| **Database** | Supabase / PostgreSQL |
+| **Authentication** | Supabase Auth |
+| **AI** | Google Gemini API |
+| **Charts** | Recharts |
+| **Version Control** | Git & GitHub |
+| **Deployment** | Vercel |
 
 ---
 
@@ -355,7 +352,7 @@ GEMINI_API_KEY=your_gemini_api_key
 npm run dev
 ```
 
-Open:
+Open the application at:
 
 ```text
 http://localhost:3000
@@ -365,17 +362,17 @@ http://localhost:3000
 
 # 🌐 Live Demo
 
-### 🚀 Web Application
+## 🚀 Web Application
 
 **Live Website:**
 
-[https://code-crafters-git-main-diyaghosh030805-3811s-projects.vercel.app/](https://code-crafters-git-main-diyaghosh030805-3811s-projects.vercel.app/)
+https://code-crafters-git-main-diyaghosh030805-3811s-projects.vercel.app/
 
-### 📂 GitHub Repository
+## 📂 GitHub Repository
 
 **Source Code:**
 
-[https://github.com/Diya030805/CodeCrafters](https://github.com/Diya030805/CodeCrafters)
+https://github.com/Diya030805/CodeCrafters
 
 ---
 
@@ -385,12 +382,16 @@ CodeCrafters uses environment variables for external services and API integratio
 
 Sensitive credentials should **never be committed to the repository**.
 
-Make sure the following are configured in the deployment environment when required:
+Required credentials may include:
 
-* Supabase URL
-* Supabase API key
-* Gemini API key
-* Other required application secrets
+- Supabase URL
+- Supabase API key
+- Gemini API key
+- Other required application secrets
+
+For local development, store these values inside `.env.local`.
+
+For production, configure them securely through the deployment platform.
 
 ---
 
@@ -412,32 +413,33 @@ Vercel
 Production
 ```
 
-Every production deployment should be tested to ensure that:
+Before submitting a production deployment, verify that:
 
-* The application loads correctly
-* Navigation works
-* Dashboard works
-* AI features work
-* Database connectivity works
-* Authentication works
-* Responsive layouts work correctly
+- The application loads correctly
+- Navigation works correctly
+- Dashboard works correctly
+- AI features work correctly
+- Database connectivity works correctly
+- Authentication works correctly
+- Responsive layouts work correctly
+- Production environment variables are configured
 
 ---
 
 # 🧪 Main Modules
 
-| Module               | Purpose                                  |
-| -------------------- | ---------------------------------------- |
-| 🤖 **AI Tutor**      | Understand concepts with AI assistance   |
-| 🧠 **Flashcards**    | Active recall and revision               |
-| 📝 **AI Notes**      | Create and organize study notes          |
-| 📅 **Study Planner** | Organize academic tasks                  |
-| 🎯 **Focus Timer**   | Maintain focused study sessions          |
-| 🧩 **AI Quiz**       | Test knowledge with AI-generated quizzes |
-| 📄 **PDF Analyzer**  | Convert documents into learning material |
-| 🎙️ **Voice Tutor**  | Voice-based conversational learning      |
-| 📊 **Analytics**     | Track learning performance               |
-| 🏆 **Gamification**  | Maintain motivation and consistency      |
+| Module | Purpose |
+|---|---|
+| 🤖 **AI Tutor** | Understand concepts with AI assistance |
+| 🧠 **Flashcards** | Active recall and revision |
+| 📝 **AI Notes** | Create and organize study notes |
+| 📅 **Study Planner** | Organize academic tasks |
+| 🎯 **Focus Timer** | Maintain focused study sessions |
+| 🧩 **AI Quiz** | Test knowledge with AI-generated quizzes |
+| 📄 **PDF Analyzer** | Convert documents into learning material |
+| 🎙️ **Voice Tutor** | Voice-based conversational learning |
+| 📊 **Analytics** | Track learning performance |
+| 🏆 **Gamification** | Maintain motivation and consistency |
 
 ---
 
@@ -445,12 +447,12 @@ Every production deployment should be tested to ensure that:
 
 CodeCrafters is primarily designed for:
 
-* 🎓 College students
-* 📚 School students
-* 💻 Computer science learners
-* 🧑‍💻 Self-learners
-* 📝 Students preparing for exams
-* 🚀 Students building consistent study habits
+- 🎓 College students
+- 📚 School students
+- 💻 Computer science learners
+- 🧑‍💻 Self-learners
+- 📝 Students preparing for exams
+- 🚀 Students building consistent study habits
 
 ---
 
@@ -472,6 +474,15 @@ Built with modern web technologies and AI to create a more personalized and prod
 
 ---
 
+## 🔗 Important Links
+
+| Resource | Link |
+|---|---|
+| 🚀 **Live Demo** | https://code-crafters-git-main-diyaghosh030805-3811s-projects.vercel.app/ |
+| 📂 **GitHub Repository** | https://github.com/Diya030805/CodeCrafters |
+
+---
+
 <p align="center">
   <strong>🚀 Learn Smarter. Stay Focused. Build Better Habits.</strong>
 </p>
@@ -479,5 +490,3 @@ Built with modern web technologies and AI to create a more personalized and prod
 <p align="center">
   Made with ❤️ for students.
 </p>
-```
-
