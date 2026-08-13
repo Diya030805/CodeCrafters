@@ -1,6 +1,9 @@
+
+
+````markdown
 # 🎓 CodeCrafters
 
-### AI-powered learning & productivity platform for students
+### AI-Powered Learning & Productivity Platform for Students
 
 <p align="center">
   <strong>Learn Smarter • Stay Focused • Track Progress</strong>
@@ -12,65 +15,69 @@
   📝 AI Notes &nbsp; • &nbsp;
   📅 Study Planner &nbsp; • &nbsp;
   🎯 Focus Timer &nbsp; • &nbsp;
+  🧩 AI Quiz &nbsp; • &nbsp;
+  📄 PDF Analyzer &nbsp; • &nbsp;
+  🎙️ Voice Tutor &nbsp; • &nbsp;
   📊 Analytics
 </p>
 
 <p align="center">
-  <a href="https://code-crafters-git-main-diyaghosh030805-3811s-projects.vercel.app/">🚀 Live Demo</a>
+  <a href="https://code-crafters-git-main-diyaghosh030805-3811s-projects.vercel.app/">
+    🚀 Live Demo
+  </a>
   &nbsp; • &nbsp;
-  <a href="https://github.com/Diya030805/CodeCrafters">📂 GitHub Repository</a>
+  <a href="https://github.com/Diya030805/CodeCrafters">
+    📂 GitHub Repository
+  </a>
 </p>
 
 ---
 
-## 🚀 Live URLs
+## 📖 About CodeCrafters
 
-| Service | URL |
-|---|---|
-| **Web App (Vercel)** | [[https://code-crafters-q1ka.vercel.app/](https://code-crafters-git-main-diyaghosh030805-3811s-projects.vercel.app/)) |
+**CodeCrafters** is an AI-powered learning and productivity platform designed to help students **learn smarter, stay organized, maintain focus, and track their academic progress** from one unified workspace.
 
----
+Instead of switching between multiple applications for studying, revision, planning, note-taking, productivity, and performance tracking, CodeCrafters brings these experiences together into a single intelligent learning environment.
 
-## 📖 What is CodeCrafters?
+The platform combines **AI-powered learning tools** with productivity and analytics features to create a personalized digital study companion.
 
-**CodeCrafters** is an AI-powered learning and productivity platform designed to help students learn smarter, stay organized, and track their academic progress from one unified workspace.
+### 💡 The Learning Cycle
 
-Instead of switching between multiple applications for studying, planning, note-taking, revision, and productivity, CodeCrafters brings everything together into a single intelligent learning environment.
+> **Learn → Practice → Plan → Focus → Analyze → Improve**
 
-It combines **AI-powered learning tools** with productivity features such as:
-
-- 🤖 AI Tutor
-- 🧠 Smart Flashcards
-- 📝 AI Notes
-- 📅 Study Planner
-- 🎯 Focus Timer
-- 🧩 AI Quiz
-- 📄 PDF Analyzer
-- 🎙️ Voice Tutor
-- 📊 Learning Analytics
-- 🏆 Gamification & Streaks
+CodeCrafters is designed around this complete learning cycle, helping students turn scattered study activities into a more structured and productive workflow.
 
 ---
 
 ## ✨ Why CodeCrafters?
 
-Students often use multiple applications for different parts of their study routine.
+Students often depend on different applications for different parts of their academic routine.
 
-**CodeCrafters** brings these experiences together into one centralized workspace.
+CodeCrafters brings these essential experiences together into **one centralized workspace**.
 
-> **Learn → Practice → Plan → Focus → Analyze → Improve**
+### 🎯 Our Goal
 
-The goal is to create a personalized digital study companion that helps students build consistent and productive learning habits.
+To create an intelligent study companion that helps students:
+
+- Understand difficult concepts
+- Create and revise learning material
+- Organize academic tasks
+- Maintain focused study sessions
+- Track learning performance
+- Build consistent study habits
+- Stay motivated through progress and achievements
 
 ---
 
-## 🚀 Core Features
+# 🚀 Core Features
 
-### 🤖 AI Tutor
+## 🤖 AI Tutor
 
-An interactive AI-powered study assistant designed to help students understand difficult concepts.
+An interactive AI-powered study assistant designed to help students understand difficult concepts through conversational learning.
 
-- Gemini AI integration
+### Features
+
+- Google Gemini AI integration
 - Conversational learning interface
 - Context-aware explanations
 - Structured AI responses
@@ -79,9 +86,11 @@ An interactive AI-powered study assistant designed to help students understand d
 
 ---
 
-### 🧠 Smart Flashcards
+## 🧠 Smart Flashcards
 
-An interactive flashcard system for active recall and revision.
+An interactive flashcard system designed for **active recall and revision**.
+
+### Features
 
 - AI-assisted flashcard generation
 - Interactive card flipping
@@ -91,11 +100,13 @@ An interactive flashcard system for active recall and revision.
 
 ---
 
-### 📝 AI Notes
+## 📝 AI Notes
 
-A focused workspace for creating and managing academic notes.
+A focused workspace for creating, organizing, and reviewing academic notes.
 
-- Create and organize notes
+### Features
+
+- Create and manage notes
 - AI-assisted summaries
 - Structured learning content
 - Persistent storage
@@ -103,9 +114,11 @@ A focused workspace for creating and managing academic notes.
 
 ---
 
-### 📅 Study Planner
+## 📅 Study Planner
 
-A productivity workspace that helps students organize their academic workload.
+A productivity workspace that helps students organize their academic workload and plan their study routine.
+
+### Features
 
 - Daily study planning
 - Weekly schedule
@@ -116,21 +129,25 @@ A productivity workspace that helps students organize their academic workload.
 
 ---
 
-### 🎯 Focus Timer
+## 🎯 Focus Timer
 
 A dedicated study timer designed to help students maintain focused study sessions.
+
+### Features
 
 - Custom focus sessions
 - Countdown timer
 - Active session tracking
 - Productivity monitoring
-- Study-session history
+- Study-session tracking
 
 ---
 
-### 🧩 AI Quiz
+## 🧩 AI Quiz
 
-An AI-powered quiz system for testing knowledge and reinforcing concepts.
+An AI-powered quiz experience designed to test knowledge and reinforce learning.
+
+### Features
 
 - Dynamic AI-generated questions
 - Interactive quiz interface
@@ -140,9 +157,11 @@ An AI-powered quiz system for testing knowledge and reinforcing concepts.
 
 ---
 
-### 📄 PDF Analyzer
+## 📄 PDF Analyzer
 
-Turn study documents into interactive learning material.
+A learning tool that helps students transform study documents into more useful learning material.
+
+### Features
 
 - Upload study PDFs
 - AI-powered document analysis
@@ -152,9 +171,11 @@ Turn study documents into interactive learning material.
 
 ---
 
-### 🎙️ Voice Tutor
+## 🎙️ Voice Tutor
 
-An interactive voice-based learning experience.
+An interactive voice-based learning experience designed for conversational and hands-free studying.
+
+### Features
 
 - Voice interaction interface
 - Conversational learning
@@ -163,9 +184,11 @@ An interactive voice-based learning experience.
 
 ---
 
-### 📊 Learning Analytics
+## 📊 Learning Analytics
 
-Visualize learning activity and academic progress.
+A visual analytics system that helps students understand their study activity and learning progress.
+
+### Features
 
 - Study statistics
 - Progress visualization
@@ -175,9 +198,11 @@ Visualize learning activity and academic progress.
 
 ---
 
-### 🏆 Gamification
+## 🏆 Gamification & Streaks
 
-Stay motivated through consistent learning.
+A motivation system designed to encourage consistent learning habits.
+
+### Features
 
 - XP progression
 - Daily streaks
@@ -187,28 +212,75 @@ Stay motivated through consistent learning.
 
 ---
 
-## 🛠️ Tech Stack
+# 🖥️ Platform Experience
 
-| Category | Technologies |
-|---|---|
-| **Framework** | Next.js 15 |
-| **Frontend** | React |
-| **Language** | TypeScript |
-| **Styling** | Tailwind CSS |
-| **UI Components** | shadcn/ui |
-| **Animations** | Framer Motion |
-| **Icons** | Lucide React |
-| **Backend** | Next.js API Routes |
-| **Database** | Supabase / PostgreSQL |
-| **Authentication** | Supabase Auth |
-| **AI** | Google Gemini API |
-| **Charts** | Recharts |
-| **Version Control** | Git & GitHub |
-| **Deployment** | Vercel |
+CodeCrafters provides a unified student workspace where users can move between different learning and productivity tools without leaving the platform.
 
---- 
+### Main Experience
 
-## 🏗️ Project Structure
+```text
+Landing Page
+      ↓
+Dashboard
+      ↓
+┌─────────────────────────────────────┐
+│                                     │
+│  AI Tutor        Smart Flashcards   │
+│  AI Notes        Study Planner      │
+│  Focus Timer     AI Quiz            │
+│  PDF Analyzer    Voice Tutor        │
+│  Analytics       Gamification       │
+│                                     │
+└─────────────────────────────────────┘
+      ↓
+Track Progress
+      ↓
+Improve Learning Habits
+````
+
+---
+
+# 🎨 UI & UX
+
+CodeCrafters focuses on providing a modern, interactive, and student-friendly experience.
+
+### Design Highlights
+
+* Modern dashboard interface
+* Responsive design
+* Light and dark themes
+* Interactive components
+* Smooth animations
+* Micro-interactions
+* Visual learning analytics
+* Focused productivity workspace
+* Clean navigation
+* Mobile-friendly experience
+
+---
+
+# 🛠️ Tech Stack
+
+| Category            | Technologies          |
+| ------------------- | --------------------- |
+| **Framework**       | Next.js 15            |
+| **Frontend**        | React                 |
+| **Language**        | TypeScript            |
+| **Styling**         | Tailwind CSS          |
+| **UI Components**   | shadcn/ui             |
+| **Animations**      | Framer Motion         |
+| **Icons**           | Lucide React          |
+| **Backend**         | Next.js API Routes    |
+| **Database**        | Supabase / PostgreSQL |
+| **Authentication**  | Supabase Auth         |
+| **AI**              | Google Gemini API     |
+| **Charts**          | Recharts              |
+| **Version Control** | Git & GitHub          |
+| **Deployment**      | Vercel                |
+
+---
+
+# 🏗️ Project Structure
 
 ```text
 CodeCrafters/
@@ -237,3 +309,175 @@ CodeCrafters/
 ├── package.json
 ├── package-lock.json
 └── README.md
+```
+
+---
+
+# ⚡ Getting Started
+
+Follow these steps to run CodeCrafters locally.
+
+## 1️⃣ Clone the Repository
+
+```bash
+git clone https://github.com/Diya030805/CodeCrafters.git
+```
+
+## 2️⃣ Navigate to the Project
+
+```bash
+cd CodeCrafters
+```
+
+## 3️⃣ Install Dependencies
+
+```bash
+npm install
+```
+
+## 4️⃣ Configure Environment Variables
+
+Create a `.env.local` file in the root directory.
+
+Add the required environment variables used by the project.
+
+```env
+NEXT_PUBLIC_SUPABASE_URL=your_supabase_url
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
+GEMINI_API_KEY=your_gemini_api_key
+```
+
+> ⚠️ Never commit `.env.local` or any private API keys to GitHub.
+
+## 5️⃣ Start the Development Server
+
+```bash
+npm run dev
+```
+
+Open:
+
+```text
+http://localhost:3000
+```
+
+---
+
+# 🌐 Live Demo
+
+### 🚀 Web Application
+
+**Live Website:**
+
+[https://code-crafters-git-main-diyaghosh030805-3811s-projects.vercel.app/](https://code-crafters-git-main-diyaghosh030805-3811s-projects.vercel.app/)
+
+### 📂 GitHub Repository
+
+**Source Code:**
+
+[https://github.com/Diya030805/CodeCrafters](https://github.com/Diya030805/CodeCrafters)
+
+---
+
+# 🔐 Security & Environment Variables
+
+CodeCrafters uses environment variables for external services and API integrations.
+
+Sensitive credentials should **never be committed to the repository**.
+
+Make sure the following are configured in the deployment environment when required:
+
+* Supabase URL
+* Supabase API key
+* Gemini API key
+* Other required application secrets
+
+---
+
+# 🚀 Deployment
+
+CodeCrafters is deployed using **Vercel**.
+
+### Deployment Workflow
+
+```text
+Development
+     ↓
+Git
+     ↓
+GitHub
+     ↓
+Vercel
+     ↓
+Production
+```
+
+Every production deployment should be tested to ensure that:
+
+* The application loads correctly
+* Navigation works
+* Dashboard works
+* AI features work
+* Database connectivity works
+* Authentication works
+* Responsive layouts work correctly
+
+---
+
+# 🧪 Main Modules
+
+| Module               | Purpose                                  |
+| -------------------- | ---------------------------------------- |
+| 🤖 **AI Tutor**      | Understand concepts with AI assistance   |
+| 🧠 **Flashcards**    | Active recall and revision               |
+| 📝 **AI Notes**      | Create and organize study notes          |
+| 📅 **Study Planner** | Organize academic tasks                  |
+| 🎯 **Focus Timer**   | Maintain focused study sessions          |
+| 🧩 **AI Quiz**       | Test knowledge with AI-generated quizzes |
+| 📄 **PDF Analyzer**  | Convert documents into learning material |
+| 🎙️ **Voice Tutor**  | Voice-based conversational learning      |
+| 📊 **Analytics**     | Track learning performance               |
+| 🏆 **Gamification**  | Maintain motivation and consistency      |
+
+---
+
+# 🎯 Target Users
+
+CodeCrafters is primarily designed for:
+
+* 🎓 College students
+* 📚 School students
+* 💻 Computer science learners
+* 🧑‍💻 Self-learners
+* 📝 Students preparing for exams
+* 🚀 Students building consistent study habits
+
+---
+
+# 🌟 Vision
+
+The long-term vision of CodeCrafters is to create a **single intelligent learning ecosystem** where students can understand, practice, plan, focus, and analyze their learning journey from one platform.
+
+> **One Workspace. Smarter Learning. Better Progress.**
+
+---
+
+# 👥 Project
+
+### CodeCrafters
+
+**AI-Powered Learning & Productivity Platform for Students**
+
+Built with modern web technologies and AI to create a more personalized and productive learning experience.
+
+---
+
+<p align="center">
+  <strong>🚀 Learn Smarter. Stay Focused. Build Better Habits.</strong>
+</p>
+
+<p align="center">
+  Made with ❤️ for students.
+</p>
+```
+
