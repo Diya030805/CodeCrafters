@@ -19,7 +19,7 @@
 </p>
 
 <p align="center">
-  <a href="https://code-crafters-git-main-diyaghosh030805-3811s-projects.vercel.app/">
+  <a href="https://brain-boost-ai-delta.vercel.app/">
     🚀 Live Demo
   </a>
   &nbsp; • &nbsp;
@@ -366,7 +366,7 @@ http://localhost:3000
 
 **Live Website:**
 
-https://code-crafters-git-main-diyaghosh030805-3811s-projects.vercel.app/
+https://brain-boost-ai-delta.vercel.app/
 
 ## 📂 GitHub Repository
 
@@ -478,7 +478,7 @@ Built with modern web technologies and AI to create a more personalized and prod
 
 | Resource | Link |
 |---|---|
-| 🚀 **Live Demo** | https://code-crafters-git-main-diyaghosh030805-3811s-projects.vercel.app/ |
+| 🚀 **Live Demo** | https://brain-boost-ai-delta.vercel.app/ |
 | 📂 **GitHub Repository** | https://github.com/Diya030805/CodeCrafters |
 
 ---
